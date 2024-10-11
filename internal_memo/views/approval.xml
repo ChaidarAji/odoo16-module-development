@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="approval_category_custom_view_form" model="ir.ui.view">
+        <field name="name">approval.category.custom.model.view.form</field>
+        <field name="model">approval.category</field>
+        <field name="inherit_id" ref="weha_smart_approvals.approval_category_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='description']" position="after">
+                <field name="type_id" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="approval_request_custom_view_form" model="ir.ui.view">
+        <field name="name">approval.request.custom.model.view.form</field>
+        <field name="model">approval.request</field>
+        <field name="inherit_id" ref="weha_smart_approvals.approval_request_view_form" />
+        <field name="arch" type="xml">
+            <field name="mpr_ump_wilayah" position="replace">
+                <field name="mpr_ump_wilayah_id" string="UMP / UMK Wilayah" attrs="{'readonly': ['|',('locked','=',True), ('request_status', '!=', 'new')]}"/>
+            </field>
+            <field name="mpr_ump" position="replace">
+                <field name="mpr_ump_wilayah_nilai" attrs="{'readonly': ['|',('locked','=',True), ('request_status', '!=', 'new')]}"/>
+            </field>
+            <field name="employment_status" position="after">
+                <field name="mpr_job_status_domain" invisible="1"/>                          
+                <field name="mpr_job_status_id" attrs="{'required':[('sequence_code','=','MPR')], 'readonly': [('request_status', '!=', 'new')]}"/>                          
+            </field>
+        </field>
+    </record>
+
+</odoo>

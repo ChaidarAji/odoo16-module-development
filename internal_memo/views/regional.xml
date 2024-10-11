@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="hr_payroll_regional_setting_view_tree" model="ir.ui.view">
+        <field name="name">hr.payroll.regional.setting.view.tree</field>
+        <field name="model">hr.payroll.regional.setting</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+	<record id="hr_payroll_regional_setting_value_view_tree" model="ir.ui.view">
+        <field name="name">hr.payroll.regional.setting.value.view.tree</field>
+        <field name="model">hr.payroll.regional.setting.value</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="name"/>
+				<field name="year"/>
+				<field name="value"/>
+				<field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+	<record id="hr_payroll_regional_setting_view_form" model="ir.ui.view">
+		<field name="name">hr.payroll.regional.setting.view.form</field>
+		<field name="model">hr.payroll.regional.setting</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+						<group>
+							<field name="name" />
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="hr_payroll_regional_setting_value_view_form" model="ir.ui.view">
+		<field name="name">hr.payroll.regional.setting.value.view.form</field>
+		<field name="model">hr.payroll.regional.setting.value</field>
+		<field name="arch" type="xml">
+			<form string="">
+                <header>
+                    <button name="button_active" string="Set Active" class="oe_highlight" type="object" states="inactive"/>
+                    <field name="state" widget="statusbar" readonly="1"/>
+                </header>
+				<sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="year" />
+                        <field name="value" />
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	
+
+	<record id="hr_payroll_regional_setting_value_inherited_tree_view" model="ir.ui.view">
+		<field name="name">hr.payroll.regional.setting.value.view.tree.inherit</field>
+		<field name="model">hr.payroll.regional.setting.value</field>
+		<field name="inherit_id" ref="internal_memo.hr_payroll_regional_setting_value_view_tree"/>
+		<field name="arch" type="xml">
+			<xpath expr="//tree" position="attributes">
+				<attribute name="js_class">button_regional_value_button</attribute>
+			</xpath>
+		</field>
+	</record>
+
+
+
+
+	<record id="import_regional_value_wizard" model="ir.ui.view">
+       <field name="name">import.regional.value.wizard</field>
+       <field name="model">import.payroll.regional.wizard</field>
+       <field name="arch" type="xml">
+           <form string="Import UMK Regional">
+               <group>
+                   <group>
+                       <field name="file"/>
+                   </group>
+               </group>
+               <footer>
+                   <button
+                       name="import_regional_save"
+                       string="Import"
+                       type="object"
+                       class="btn-primary"
+                   />
+               </footer>
+           </form>
+       </field>
+   </record>
+
+
+	<record id="import_regional_value_action" model="ir.actions.act_window">
+       <field name="name">Import UMK Regional</field>
+       <field name="res_model">import.payroll.regional.wizard</field>
+       <field name="view_mode">form</field>
+       <field name="view_id" ref="import_regional_value_wizard" />
+       <field name="target">new</field>
+   </record>
+
+
+   
+
+
+
+
+   
+
+    <record id="hr_payroll_regional_setting_action" model="ir.actions.act_window">
+		<field name="name">Payroll Regional Setting</field>
+		<field name="res_model">hr.payroll.regional.setting</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<record id="hr_payroll_regional_setting_value_action" model="ir.actions.act_window">
+		<field name="name">Nilai UMK Regional</field>
+		<field name="res_model">hr.payroll.regional.setting.value</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<record id="regional_value_tree_inherit_js_class" model="ir.ui.view">
+       <field name="name">regional.value.tree.inherit</field>
+       <field name="model">hr.payroll.regional.setting.value</field>
+       <field name="inherit_id" ref="internal_memo.hr_payroll_regional_setting_value_view_tree"/>
+       <field name="arch" type="xml">
+           <xpath expr="//tree" position="attributes">
+               <attribute name="js_class">button_in_tree</attribute>
+           </xpath>
+       </field>
+   </record>
+
+
+
+    <menuitem
+        id="menu_hr_payroll_regional_setting"
+        action="hr_payroll_regional_setting_action"
+        parent="om_hr_payroll.menu_hr_payroll_configuration"
+        sequence="57"
+        groups="internal_memo.custom_payroll_access_regional_grant_group"/>
+
+	<menuitem
+        id="menu_hr_payroll_regional_setting_value"
+        action="hr_payroll_regional_setting_value_action"
+        parent="om_hr_payroll.menu_hr_payroll_configuration"
+        sequence="58"
+        groups="internal_memo.custom_payroll_access_regional_grant_group"/>
+
+</odoo>

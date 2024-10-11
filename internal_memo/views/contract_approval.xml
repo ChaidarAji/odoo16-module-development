@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="hr_contract_request_view_tree" model="ir.ui.view">
+        <field name="name">hr.contract.request.view.tree</field>
+        <field name="model">hr.contract.approval</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="name"/>
+				<field name="start_date" />
+                <field name="end_date"/>
+				<field name="date" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_contract_request_view_form" model="ir.ui.view">
+		<field name="name">hr.contract.request.view.form</field>
+		<field name="model">hr.contract.approval</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<group>
+							<field name="date"/>
+                            <field name="name"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="salary_structure_type"/>
+                            <field name="calendar_id"/>
+                            <field name="start_date_before" invisible="1"/>
+                            <field name="end_date_before" invisible="1"/>
+                            <field name="salary_structure_type_before" invisible="1"/>
+                            <field name="calendar_id_before" invisible="1"/>
+						</group> 
+                        <group>
+							<field name="department_id"/>
+                            <field name="struct_id"/>
+                            <field name="contract_type"/>
+                            <field name="job_id"/>
+                            <field name="responsible_id"/>
+                            
+                            <field name="department_id_before" invisible="1"/>
+                            <field name="struct_id_before" invisible="1"/>
+                            <field name="contract_type_before" invisible="1"/>
+                            <field name="job_id_before" invisible="1"/>
+                            <field name="responsible_id_before" invisible="1"/>
+						</group>  
+					</group>
+                    <notebook>
+                        <page string="Salary Information" name="information" class="o_hr_contract_salary_information">
+                            <group>
+                                <field name="wage"/>
+                                <field name="da_allowance"/>
+                                <field name="acting_allowance"/>
+                                <field name="competency_allowance"/>
+                                <field name="location_allowance"/>
+                                <field name="position_allowance"/>
+                                <field name="daily_allowance"/>
+                                <field name="handphone_allowance"/>
+                                <field name="performance_allowance"/>
+                                <field name="travel_allowance"/>
+                                <field name="meal_allowance"/>
+                                <field name="medical_allowance"/>
+                                <field name="housing_allowance"/>
+                                <field name="other_allowance"/>
+                                <field name="description_request"/>
+
+                                <field name="wage_before" invisible="1"/>
+                                <field name="da_allowance_before" invisible="1"/>
+                                <field name="acting_allowance_before" invisible="1"/>
+                                <field name="competency_allowance_before" invisible="1"/>
+                                <field name="location_allowance_before" invisible="1"/>
+                                <field name="position_allowance_before" invisible="1"/>
+                                <field name="daily_allowance_before" invisible="1"/>
+                                <field name="handphone_allowance_before" invisible="1"/>
+                                <field name="performance_allowance_before" invisible="1"/>
+                                <field name="travel_allowance_before" invisible="1"/>
+                                <field name="meal_allowance_before" invisible="1"/>
+                                <field name="medical_allowance_before" invisible="1"/>
+                                <field name="housing_allowance_before" invisible="1"/>
+                                <field name="other_allowance_before" invisible="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+    <record id="hr_contract_review_view_tree" model="ir.ui.view">
+        <field name="name">hr.contract.review.view.tree</field>
+        <field name="model">hr.contract.approval</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="name"/>
+				<field name="start_date" />
+                <field name="end_date"/>
+				<field name="date" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_contract_review_view_form" model="ir.ui.view">
+		<field name="name">hr.contract.review.view.form</field>
+		<field name="model">hr.contract.approval</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<group>
+							<field name="date" readonly="1"/>
+                            <field name="name" readonly="1"/>
+                            <field name="start_date" readonly="1"/>
+                            <field name="end_date" readonly="1"/>
+                            <field name="salary_structure_type" readonly="1"/>
+                            <field name="calendar_id" readonly="1"/>
+                            <field name="department_id" readonly="1"/>
+                            <field name="struct_id" readonly="1"/>
+                            <field name="contract_type" readonly="1"/>
+                            <field name="job_id" readonly="1"/>
+                            <field name="responsible_id" readonly="1"/>
+                            <field name="wage" readonly="1"/>
+                            <field name="da_allowance" readonly="1"/>
+                            <field name="acting_allowance" readonly="1"/>
+                            <field name="competency_allowance" readonly="1"/>
+                            <field name="location_allowance" readonly="1"/>
+                            <field name="position_allowance" readonly="1"/>
+                            <field name="daily_allowance" readonly="1"/>
+                            <field name="handphone_allowance" readonly="1"/>
+                            <field name="performance_allowance" readonly="1"/>
+                            <field name="travel_allowance" readonly="1"/>
+                            <field name="meal_allowance" readonly="1"/>
+                            <field name="medical_allowance" readonly="1"/>
+                            <field name="housing_allowance" readonly="1"/>
+                            <field name="other_allowance" readonly="1"/>
+						</group> 
+                        <group>
+                            <field name="start_date_before" readonly="1"/>
+                            <field name="end_date_before" readonly="1"/>
+                            <field name="salary_structure_type_before" readonly="1"/>
+                            <field name="calendar_id_before" readonly="1"/>
+                            <field name="department_id_before" readonly="1"/>
+                            <field name="struct_id_before" readonly="1"/>
+                            <field name="contract_type_before" readonly="1"/>
+                            <field name="job_id_before" readonly="1"/>
+                            <field name="responsible_id_before" readonly="1"/>
+                            <field name="wage_before" readonly="1"/>
+                            <field name="da_allowance_before" readonly="1"/>
+                            <field name="acting_allowance_before" readonly="1"/>
+                            <field name="competency_allowance_before" readonly="1"/>
+                            <field name="location_allowance_before" readonly="1"/>
+                            <field name="position_allowance_before" readonly="1"/>
+                            <field name="daily_allowance_before" readonly="1"/>
+                            <field name="handphone_allowance_before" readonly="1"/>
+                            <field name="performance_allowance_before" readonly="1"/>
+                            <field name="travel_allowance_before" readonly="1"/>
+                            <field name="meal_allowance_before" readonly="1"/>
+                            <field name="medical_allowance_before" readonly="1"/>
+                            <field name="housing_allowance_before" readonly="1"/>
+                            <field name="other_allowance_before" readonly="1"/>
+						</group>  
+					</group>
+                    <notebook>
+                        <page string="Approval Information" name="information" class="o_hr_contract_salary_information">
+                            <group>
+                                <field name="state"/>
+                                <field name="description"/>
+                            </group>
+                        </page>
+                    </notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+
+
+
+    <record id="action_hr_contract_request" model="ir.actions.act_window">
+            <field name="name">Contract Update Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.contract.approval</field>
+            <field name="view_ids" eval="[(5,0,0),(0,0,{'view_mode':'tree','view_id':ref('hr_contract_request_view_tree')}),(0,0,{'view_mode':'form','view_id':ref('hr_contract_request_view_form')})]" />
+            <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_hr_contract_approval" model="ir.actions.act_window">
+            <field name="name">Contract Update Review</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.contract.approval</field>
+            <field name="view_ids" eval="[(5,0,0),(0,0,{'view_mode':'tree','view_id':ref('hr_contract_review_view_tree')}),(0,0,{'view_mode':'form','view_id':ref('hr_contract_review_view_form')})]" />
+            <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_hr_contract_request" 
+                name="Contract Update Request"
+                parent="hr.menu_hr_employee_payroll"
+                sequence="11"
+                action="action_hr_contract_request"
+                groups="internal_memo.hr_contract_approval_request"/>
+
+    <menuitem id="menu_hr_contract_approval" 
+                name="Contract Update Approval"
+                parent="hr.menu_hr_employee_payroll"
+                sequence="12"
+                action="action_hr_contract_approval"
+                groups="internal_memo.hr_contract_approval_review"/>
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <record model="internal.memo.setting" id="internal_memo_setting_manual">
+            <field name="name">Is Manual</field>
+            <field name="code">MANUAL</field>
+            <field name="value">Yes</field>
+        </record>
+    </data>
+</odoo>

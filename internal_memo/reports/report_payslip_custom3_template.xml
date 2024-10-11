@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_slim_internal3" model="report.paperformat">
+        <field name="name">Slim Report Paper Format (Employee)</field>
+        <field name="default" eval="True" />
+        <field name="format">custom</field>
+        <field name="page_height">280</field>
+        <field name="page_width">100</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">5</field>
+        <field name="dpi">125</field>
+    </record>
+
+    <report
+        id="menu_report_payslip_custom_id3_internal"
+        model="hr.payslip"
+        string="Virtus Payslip (Employee)"
+        report_type="qweb-pdf"
+        name="internal_memo.report_payslip_custom_id3_internal"
+        file="internal_memo.report_payslip_custom_id3_internal"
+        />
+
+    <record id="menu_report_payslip_custom_id3_internal" model="ir.actions.report">
+        <field name="paperformat_id" ref="internal_memo.paperformat_slim_internal3" />
+    </record>
+
+
+    <template id="report_payslip_custom_id3_internal">
+        <t t-call="web.html_container">	
+                
+            <t  t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">	
+                <div style="width:100%;text-align:center;">
+                    <img t-att-src="image_data_uri(res_company.logo)" style="width:130px;" />
+                </div>
+            
+                <div class="page" style="padding-top:0px;">
+                    <style>
+                        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900');
+                    
+                        .label-title {
+                            font-family: "Lato", sans-serif;
+                            font-weight: 400;
+                            font-style: normal;
+                            font-size:12px;
+                        }
+
+                        .label-title-bold {
+                            font-family: "Lato", sans-serif;
+                            font-weight: 700;
+                            font-style: normal;
+                            font-size:12px;
+                        }
+
+                        .label-orange {
+                            font-family: "Lato", sans-serif;
+                            font-weight: 600;
+                            font-style: bold;
+                            font-size:18px;
+                            color:rgb(245,137,38) !important;
+                        }
+
+                        .label-title-super {
+                            font-family: "Lato", sans-serif;
+                            font-weight: 600;
+                            font-style: normal;
+                            font-size:28px;
+                            color:rgb(245,137,38) !important;
+                            width:100%;
+                            text-align:center;
+                        }
+
+                        .label-title-salary {
+                            font-family: "Lato", sans-serif;
+                            font-weight: 700;
+                            font-style: normal;
+                            font-size:32px;
+                            width:100%;
+                            text-align:center;
+                        }
+                    </style>
+                    
+                    <table style="border:0px !important;" width="100%">
+                        <tr style="padding:10px;border:0px !important;">
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.5cm;" ><span>Nama Karyawan</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:0.5cm;"><span>:</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.0cm;"><span t-field="o.employee_id.name" /></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.5cm;" ><span>Tax Ref No</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:0.5cm;"><span>:</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.0cm;"><span t-field="o.employee_id.npwp_nomor" /></td>
+                        </tr>
+                        <tr style="padding:10px;border:0px !important;">
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.5cm;"><span>NIK</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:0.5cm"><span>:</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.0cm;"><span t-field="o.employee_id.nip" /></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.5cm;"><span>Marital Status</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:0.5cm" ><span>:</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.0cm;"><span t-field="o.ptkp_id.name" /></td>
+                        </tr>
+                        <tr style="padding:10px;border:0px !important;">
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.5cm;"><span>Job Position</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:0.5cm" ><span>:</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.0cm;"><span t-field="o.position_id.name" /></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.5cm;" ><span>Total Overtime (Hours)</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:0.5cm"><span>:</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.0cm;">
+                                <t t-foreach="o.line_ids" t-as="overtime">
+                                    <t t-if="overtime.code == 'OVTINDEX'">
+                                        <span t-field="overtime.amount" />
+                                    </t>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr style="padding:10px;border:0px !important;">
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.5cm;" ><span>Cost Center</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:0.5cm;" ><span>:</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.0cm;"><span t-field="o.employee_id.area.name" /></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.5cm;" ><span>Total Workdays</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:0.5cm;"><span>:</span></td>
+                            <td class="label-title" style="padding:2px;border:0px !important;width:2.0cm;"><span t-field="o.total_hari_hadir" /></td>
+                        </tr>
+                       
+
+                    </table>
+                    
+                    <hr/>
+                    <div class="label-title-super" style="padding-top:10px;padding-bottom:20px;">
+                        Slip Gaji
+                    </div>
+                    <div class="label-title" style="width:100%;text-align:center;padding-bottom:20px;">
+                        <t t-esc="o.date_to.strftime('%d %B %Y')"/>
+                    </div>
+                    <div class="label-title-salary">
+                        <t t-foreach="o.line_ids" t-as="earning">
+                            <t t-if="earning.code == 'NETPAY'">
+                                IDR <span t-field="earning.amount" t-options='{"widget": "float", "precision": 2}' />
+                            </t>
+                        </t>
+                    </div>
+
+                    <hr/>
+                    <table style="border:0px !important;" width="100%">
+                        <tr style="padding:10px;border:0px !important;padding-bottom:20px;">
+                            <td style="padding:2px;border:0px !important;width:70mm !important;" class="label-orange"><span>Total Pendapatan</span></td>
+                            <td style="text-align:center;width:10mm" class="label-title-bold">IDR</td>
+                            <td style="text-align:right;" class="label-title-bold">
+                                <t t-foreach="o.line_ids" t-as="earning">
+                                    <t t-if="earning.code == 'BRUTOINCOME'">
+                                        <span t-field="earning.amount" t-options='{"widget": "float", "precision": 2}' />
+                                    </t>
+                                </t>
+                            </td>
+                        </tr>
+                        <t t-foreach="o.line_ids" t-as="earning">
+                            <t t-if="earning.salary_rule_id.category_id.code == 'BASIC' or earning.salary_rule_id.category_id.code == 'ALW' or earning.salary_rule_id.category_id.code == 'CODE_INCOME' or earning.salary_rule_id.category_id.code == 'BENEFIT_TAX' or earning.salary_rule_id.category_id.code == 'BENEFIT_NON_TAX'">
+                                <t t-if="earning.amount > 0">
+                                    <tr style="padding:10px;border:0px !important;">
+                                        <td style="padding:2px;border:0px !important;" class="label-title"><span t-field="earning.name" /></td>
+                                        <td style="text-align:center;" class="label-title">IDR</td>
+                                        <td style="text-align:right;" class="label-title"><span t-field="earning.amount" t-options='{"widget": "float", "precision": 2}' /></td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </t>
+                        <tr>
+                            <td colspan="3" style="padding-top:10px;padding-bottom:10px;"><hr/></td>
+                        </tr>
+                        <tr style="padding:10px;border:0px !important;">
+                            <td style="padding:2px;border:0px !important;width:70mm !important;" class="label-orange"><span>Total Potongan</span></td>
+                            <td style="text-align:center;width:10mm" class="label-title-bold">IDR</td>
+                            <td style="text-align:right;" class="label-title-bold">
+                                <t t-foreach="o.line_ids" t-as="earning">
+                                    <t t-if="earning.code == 'BRUTODEDUCTION'">
+                                        <span t-field="earning.amount" t-options='{"widget": "float", "precision": 2}' />
+                                    </t>
+                                </t>
+                            </td>
+                        </tr>
+                        <t t-foreach="o.line_ids" t-as="earning">
+                            <t t-if="earning.salary_rule_id.category_id.code == 'DED' or earning.salary_rule_id.category_id.code == 'DEDUCTION_TAX' or earning.salary_rule_id.category_id.code == 'DEDUCTION_NON_TAX'">
+                                <t t-if="earning.amount > 0">
+                                    <tr style="padding:10px;border:0px !important;">
+                                        <td style="padding:2px;border:0px !important;" class="label-title"><span t-field="earning.name" /></td>
+                                        <td style="text-align:center;" class="label-title">IDR</td>
+                                        <td style="text-align:right;" class="label-title"><span t-field="earning.amount"  t-options='{"widget": "float", "precision": 2}' /></td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </t>
+                     
+
+                        <tr>
+                            <td colspan="3" style="padding-top:10px;padding-bottom:10px;"><hr/></td>
+                        </tr>
+                        <tr style="padding:10px;border:0px !important;">
+                            <td style="padding:2px;border:0px !important;" class="label-orange"><span>Sub Total</span></td>
+                            <td style="text-align:center;width:10mm" class="label-title-bold"></td>
+                            <td style="text-align:right;" class="label-title-bold">
+                                <t t-foreach="o.line_ids" t-as="earning">
+                                    <t t-if="earning.code == 'NETTOPPH'">
+                                        <span t-field="earning.amount" t-options='{"widget": "float", "precision": 2}' />
+                                    </t>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr style="padding:10px;border:0px !important;">
+                            <td style="padding:2px;border:0px !important;" class="label-title"><span>Pajak</span></td>
+                            <td style="text-align:center;width:10mm" class="label-title"></td>
+                            <td style="text-align:right;" class="label-title">
+                                <t t-foreach="o.line_ids" t-as="earning">
+                                    <t t-if="earning.code == 'PPH21'">
+                                        <span t-field="earning.amount" t-options='{"widget": "float", "precision": 2}' />
+                                    </t>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="padding-top:10px;padding-bottom:10px;"><hr/></td>
+                        </tr>
+                        <tr style="padding:10px;border:0px !important;">
+                            <td style="padding:2px;border:0px !important;" class="label-orange"><span>Gaji Bersih</span></td>
+                            <td style="text-align:center;width:10mm" class="label-title-bold"></td>
+                            <td style="text-align:right;" class="label-title-bold">
+                                <t t-foreach="o.line_ids" t-as="earning">
+                                    <t t-if="earning.code == 'NETPAY'">
+                                        <span t-field="earning.amount" t-options='{"widget": "float", "precision": 2}' />
+                                    </t>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="padding-top:10px;padding-bottom:10px;"><hr/></td>
+                        </tr>
+                        
+                        
+
+
+                    </table>
+                    <table style="border:0px !important;" width="100%">
+                        <tr style="padding:10px;border:0px !important;">
+                            <td style="padding:2px;border:0px !important;" class="label-orange"><span>Info Bank</span></td>   
+                            <td style="text-align:right;" class="label-title">
+                               
+                            </td>
+                        </tr>
+
+                        <tr style="padding:10px;border:0px !important;">
+                                <td style="padding:2px;border:0px !important;" class="label-title"><span>Nama Bank</span></td>
+                                <td  class="label-title">
+                                    <span t-field="o.bank_name" />
+                                </td>
+                            </tr>
+                            <tr style="padding:10px;border:0px !important;">
+                                <td style="padding:2px;border:0px !important;" class="label-title"><span>Pemilik Rekening</span></td>
+                            
+                                <td class="label-title">
+                                    <span t-field="o.bank_owner" />
+                                </td>
+                            </tr>
+                            <tr style="padding:10px;border:0px !important;">
+                                <td style="padding:2px;border:0px !important;" class="label-title"><span>Nomor Rekening</span></td>
+                            
+                                <td class="label-title">
+                                    <span t-field="o.bank_number" />
+                                </td>
+                            </tr>
+                    </table>
+                </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

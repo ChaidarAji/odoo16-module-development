@@ -1,0 +1,250 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="hr_periode_view_tree" model="ir.ui.view">
+        <field name="name">hr.periode.view.tree</field>
+        <field name="model">hr.periode</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="category_id"/>
+                <field name="name"/>
+                <field name="salarystartdate"/>
+				<field name="salaryenddate"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_periode_category_view_tree" model="ir.ui.view">
+        <field name="name">hr.periode.category.view.tree</field>
+        <field name="model">hr.periode.category</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="code"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+
+	<record id="hr_periode_view_form" model="ir.ui.view">
+		<field name="name">hr.periode.view.form</field>
+		<field name="model">hr.periode</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<group>
+                            <field name="category_id"/>
+							<field name="name"/>
+                            <field name="status_id"/>
+                            <field name="currency_code"/>
+							<field name="lookupperiod" invisible="1" />
+                            <field name="backpayperiod" invisible="1" />
+                            <field name="remark"/>
+                            <field name="usesalary" invisible="1" />
+                            <field name="frequency" invisible="1" />
+							<field name="paydate"/>
+						</group>  
+                        <group>
+                            <field name="taxdate"/>
+                            <field name="limitdate" invisible="1" />
+                            <field name="calculatetax" invisible="1" />
+                            <field name="salarystartdate"/>
+							<field name="salaryenddate"/>
+                            <field name="salarymonthend" invisible="1" />
+                            <field name="useattend" invisible="1" />
+                            <field name="attendstartdate"/>
+                            <field name="attendenddate"/>
+                            <field name="attendmonthend" invisible="1" />
+                        </group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+    <record id="hr_periode_category_view_form" model="ir.ui.view">
+		<field name="name">hr.periode.category.view.form</field>
+		<field name="model">hr.periode.category</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<group>
+							<field name="code"/>
+                            <field name="name"/>
+						</group>  
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+
+    <record id="action_hr_periode" model="ir.actions.act_window">
+            <field name="name">HR Periode</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.periode</field>
+            <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_hr_periode_category" model="ir.actions.act_window">
+            <field name="name">HR Periode Category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.periode.category</field>
+            <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_hr_periode" name="HR Periode"
+                  parent="om_hr_payroll.menu_hr_payroll_configuration"
+                  sequence="11"
+                  action="action_hr_periode"
+                  groups="base.group_system"/>
+
+    <menuitem id="menu_hr_periode_category" name="HR Periode category"
+                  parent="om_hr_payroll.menu_hr_payroll_configuration"
+                  sequence="12"
+                  action="action_hr_periode_category"
+                  groups="base.group_system"/>
+
+    <record model="ir.ui.view" id="hr_employee_additional_filter">
+        <field name="name">hr.employee.form.filter</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <field name="job_id" position="after">
+                <filter string="Active Employees" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Inactive Employees" name="inactive" domain="[('active', '=', False)]"/>
+            </field>
+        </field>
+    </record>
+
+
+    <record id="hr.open_view_employee_tree" model="ir.actions.act_window">
+		<field name="context">{"search_default_active":1}</field>
+	</record>
+
+    <record id="hr.open_view_employee_list_my" model="ir.actions.act_window">
+		<field name="context">{"search_default_active":1}</field>
+	</record>
+
+    <record id="hr.open_view_employee_list" model="ir.actions.act_window">
+		<field name="context">{"search_default_active":1}</field>
+	</record>
+
+    
+    <record id="hr_employee_custom3_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.custom3.model.view.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='active']" position="after">    
+                <field name="info_work" invisible="1"/>
+                <field name="info_private" invisible="1"/>
+                <field name="info_badge" invisible="1"/>
+                <field name="info_academic" invisible="1"/>
+                <field name="info_certificate" invisible="1"/>
+                <field name="info_profesional" invisible="1"/>
+                <field name="info_summary" invisible="1"/>
+                <field name="info_history" invisible="1"/>
+                <field name="info_hr" invisible="1"/>
+            </xpath>
+            <xpath expr="//page[@name='public']" position="attributes">                   
+                <attribute name="attrs">{'invisible': [('info_work','=',False)]}</attribute>               
+            </xpath>
+            <xpath expr="//page[@name='personal_information']" position="attributes">                   
+                <attribute name="attrs">{'invisible': [('info_private','=',False)]}</attribute>               
+            </xpath>
+
+            <xpath expr="//page[@name='hr_settings']" position="attributes">                   
+                <attribute name="attrs">{'invisible': [('info_hr','=',False)]}</attribute>               
+            </xpath>
+
+            <xpath expr="//field[@name='employee_type']" position="after">    
+                <field name="pembayaran_ids" />
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="hr_employee_custom4_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.custom4.model.view.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr_gamification.hr_hr_employee_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='received_badge']" position="attributes">                   
+                <attribute name="attrs">{'invisible': [('info_badge','=',False)]}</attribute>               
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_custom5_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.custom5.model.view.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="job_portal_kanak.employee_educational_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='academic_details']" position="attributes">                   
+                <attribute name="attrs">{'invisible': [('info_academic','=',False)]}</attribute>               
+            </xpath>
+            <xpath expr="//page[@name='certificate_detail']" position="attributes">                   
+                <attribute name="attrs">{'invisible': [('info_certificate','=',False)]}</attribute>               
+            </xpath>
+            <xpath expr="//page[@name='profesional_detail']" position="attributes">                   
+                <attribute name="attrs">{'invisible': [('info_profesional','=',False)]}</attribute>               
+            </xpath>
+            <xpath expr="//page[@name='employee_summary']" position="attributes">                   
+                <attribute name="attrs">{'invisible': [('info_summary','=',False)]}</attribute>               
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="hr_employee_custom6_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.custom6.model.view.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="bms_inherit_employee.hr_employee_add_custom_field_primary" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='history']" position="attributes">                   
+                <attribute name="attrs">{'invisible': [('info_history','=',False)]}</attribute>               
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_pembayaran_view_tree" model="ir.ui.view">
+        <field name="name">hr.employee.pembayaran.view.tree</field>
+        <field name="model">hr.employee.pembayaran</field>
+        <field name="arch" type="xml">
+            <tree create="bottom">
+                <field name="category"/>
+                <field name="method"/>
+                <field name="rekening"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_employee_pembayaran_view_form" model="ir.ui.view">
+		<field name="name">hr.employee.pembayaran.view.form</field>
+		<field name="model">hr.employee.pembayaran</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+                        <field name="name"/>
+                        <field name="partner_id" invisible="1"/>
+                        <field name="category"/>
+                        <field name="method"/>
+                        <field name="rekening"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_employee_pembayaran_action" model="ir.actions.act_window">
+		<field name="name">Cara Pembayaran Gaji</field>
+		<field name="res_model">hr.employee.pembayaran</field>
+		<field name="view_mode">tree, form</field>
+	</record>
+
+
+    
+</odoo>

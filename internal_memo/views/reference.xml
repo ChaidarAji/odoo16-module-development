@@ -1,0 +1,246 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="internal_overtime_type_view_tree" model="ir.ui.view">
+        <field name="name">overtime.type.view.tree</field>
+        <field name="model">overtime.type</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="code"/>
+                <field name="name"/>
+				<field name="overtime_tipe"/>
+				<field name="overtime_schema" />
+            </tree>
+        </field>
+    </record>
+	<record id="internal_overtime_type_view_search" model="ir.ui.view">
+        <field name="name">vertime.type.view.search</field>
+        <field name="model">overtime.type</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="internal_overtime_type_view_form" model="ir.ui.view">
+		<field name="name">overtime.type.view.form</field>
+		<field name="model">overtime.type</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<group>
+							<field name="code" />
+							<field name="name" />
+							<field name="overtime_tipe" />
+							<field name="overtime_schema" />
+						</group> 
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+    <record id="internal_overtime_pay_view_tree" model="ir.ui.view">
+        <field name="name">internal.overtime.type.pay.view.tree</field>
+        <field name="model">overtime.type.pay</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="name"/>
+                <field name="libur"/>
+                <field name="urutan"/>
+                <field name="operator"/>
+                <field name="duration"/>
+                <field name="value"/>
+                <field name="multiplier"/>
+                <field name="master_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="gt_overtime_payment_view_form" model="ir.ui.view">
+		<field name="name">internal.overtime.type.pay.view.form</field>
+		<field name="model">overtime.type.pay</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<group>
+							<field name="type_id" />
+							<field name="libur" />
+							<field name="urutan" />
+							<field name="operator" />
+							<field name="duration" />
+							<field name="value" />
+							<field name="multiplier" />
+							<field name="master_id" />
+						</group> 
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+
+    <record id="internal_deduction_view_tree" model="ir.ui.view">
+        <field name="name">internal.deduction.view.tree</field>
+        <field name="model">internal.deduction</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="name"/>
+                <field name="nilai"/>
+				<field name="multiplier"/>
+				<field name="master_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="internal_deduction_view_form" model="ir.ui.view">
+		<field name="name">internal.deduction.view.form</field>
+		<field name="model">internal.deduction</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" />
+							<field name="nilai" />
+							<field name="multiplier" />
+							<field name="master_id" />
+						</group> 
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+    <record id="internal_long_shift_view_tree" model="ir.ui.view">
+        <field name="name">internal.long.shift.view.tree</field>
+        <field name="model">internal.long.shift</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="name"/>
+                <field name="nilai"/>
+				<field name="master_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="internal_long_shift_view_form" model="ir.ui.view">
+		<field name="name">internal.long.shift.view.form</field>
+		<field name="model">internal.long.shift</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" />
+							<field name="nilai" />
+							<field name="master_id" />
+						</group> 
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+    <record id="internal_backup_view_tree" model="ir.ui.view">
+        <field name="name">internal.backup.view.tree</field>
+        <field name="model">internal.backup</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="name"/>
+                <field name="nilai"/>
+				<field name="master_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="internal_backup_view_form" model="ir.ui.view">
+		<field name="name">internal.backup.view.form</field>
+		<field name="model">internal.backup</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<group>
+							<field name="name" />
+							<field name="nilai" />
+							<field name="master_id" />
+						</group> 
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+    <record id="internal_memo_type_view_tree" model="ir.ui.view">
+        <field name="name">internal.memo.type.view.tree</field>
+        <field name="model">internal.memo.type</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+				<field name="code"/>
+                <field name="name"/>
+                <field name="type"/>
+				<field name="condition" />
+            </tree>
+        </field>
+    </record>
+    <record id="internal_memo_type_view_form" model="ir.ui.view">
+		<field name="name">internal.memo.type.view.form</field>
+		<field name="model">internal.memo.type</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<group>
+							<field name="code" />
+							<field name="name" />
+							<field name="type" />
+							<field name="condition" />
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+
+
+    <record id="internal_memo_jenis_lembur_action" model="ir.actions.act_window">
+		<field name="name">Jenis Lembur</field>
+		<field name="res_model">overtime.type</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+    <record id="internal_memo_nilai_lembur_action" model="ir.actions.act_window">
+		<field name="name">Nilai Lembur</field>
+		<field name="res_model">overtime.type.pay</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+    <record id="internal_memo_rapel_action" model="ir.actions.act_window">
+		<field name="name">Jenis Rapel</field>
+		<field name="res_model">internal.deduction</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+    <record id="internal_memo_shift_action" model="ir.actions.act_window">
+		<field name="name">Jenis Shift</field>
+		<field name="res_model">internal.long.shift</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+    <record id="internal_memo_backup_action" model="ir.actions.act_window">
+		<field name="name">Jenis Backup</field>
+		<field name="res_model">internal.backup</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+    <record id="internal_memo_type_action" model="ir.actions.act_window">
+		<field name="name">Jenis Memo</field>
+		<field name="res_model">internal.memo.type</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+    <menuitem id="menu_internal_memo" name="Internal Memo" sequence="9000"/>
+    <menuitem id="menu_internal_memo_configuration" name="Konfigurasi" parent="menu_internal_memo" sequence="9001"/>
+    <menuitem id="menu_internal_memo_configuration_overtime_jenis" groups="internal_memo_admin_id" name="Jenis Lembur" parent="menu_internal_memo_configuration" action="internal_memo_jenis_lembur_action" sequence="9002"/>
+    <menuitem id="menu_internal_memo_configuration_overtime_nilai" groups="internal_memo_admin_id" name="Nilai Lembur" parent="menu_internal_memo_configuration" action="internal_memo_nilai_lembur_action" sequence="9003"/>
+    <menuitem id="menu_internal_memo_configuration_tapel" groups="internal_memo_admin_id" name="Jenis Potongan Rapel" parent="menu_internal_memo_configuration" action="internal_memo_rapel_action" sequence="9004"/>
+    <menuitem id="menu_internal_memo_configuration_shift" groups="internal_memo_admin_id" name="Jenis Shift" parent="menu_internal_memo_configuration" action="internal_memo_shift_action" sequence="9005"/>
+    <menuitem id="menu_internal_memo_configuration_backup" groups="internal_memo_admin_id" name="Jenis All Backup" parent="menu_internal_memo_configuration" action="internal_memo_backup_action" sequence="9006"/>
+    <menuitem id="menu_internal_memo_configuration_type" groups="internal_memo_admin_id" name="Jenis Memo" parent="menu_internal_memo_configuration" action="internal_memo_type_action" sequence="9007"/>
+</odoo>

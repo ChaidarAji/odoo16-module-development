@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template_regional_value_button" xml:space="preserve">
+	<t t-name="internal_memo.RegionalValueImportButtonView.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary" owl="1">
+		<xpath expr="//t[@t-if='props.showButtons']" position="after">
+			<button type="button" t-on-click="OnImportRegional" class="btn btn-primary" style="margin-left:5px;">
+				Import Data
+			</button>
+		</xpath>
+	</t>
+	<t t-name="internal_memo.KoreksiGajiImportButtonView.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary" owl="1">
+		<xpath expr="//t[@t-if='props.showButtons']" position="after">
+			<button type="button" t-on-click="OnImportKoreksiGaji" class="btn btn-primary" style="margin-left:5px;">
+				Import Data
+			</button>
+			<button type="button" t-on-click="OnExportKoreksiGaji" class="btn btn-primary" style="margin-left:5px;">
+				Export Data
+			</button>
+		</xpath>
+	</t>
+
+	<t t-name="internal_memo.ContractImportButtonView.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary" owl="1">
+		<xpath expr="//t[@t-if='props.showButtons']" position="after">
+			<button type="button" t-on-click="OnImportContract" class="btn btn-primary" style="margin-left:5px;">
+				Import Data
+			</button>
+		</xpath>
+	</t>
+
+	<t t-name="internal_memo.PayslipExportButtonView.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary" owl="1">
+		<xpath expr="//t[@t-if='props.showButtons']" position="after">
+			<button type="button" t-on-click="OnExportPayslip" class="btn btn-primary" style="margin-left:5px;">
+				Laporan Excel
+			</button>
+			<button type="button" t-on-click="OnFilterPayslip" class="btn btn-primary" style="margin-left:5px;">
+				Advanced Filter
+			</button>
+		</xpath>
+	</t>
+	<t t-name="internal_memo.EmployeeButtonView.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary" owl="1">
+		<xpath expr="//t[@t-if='props.showButtons']" position="after">
+			<button type="button" t-on-click="OnFilterEmployee" class="btn btn-primary" style="margin-left:5px;">
+				Advanced Filter
+			</button>
+		</xpath>
+	</t>
+
+
+	<t t-name="internal_memo.EmployeeButtonKanbanView.Buttons" t-inherit="web.KanbanView.Buttons" t-inherit-mode="primary" owl="1">
+		<xpath expr="//*[@class='btn btn-primary o-kanban-button-new']" position="after">
+			<button type="button" t-on-click="OnFilterKanbanEmployee" class="btn btn-primary" style="margin-left:5px;">
+				Advanced Filter
+			</button>
+		</xpath>
+	</t>
+
+	<t t-name="internal_memo.PrePayrollButtonView.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary" owl="1">
+		<xpath expr="//t[@t-if='props.showButtons']" position="after">
+			<button type="button" t-on-click="OnImportPrepayroll" class="btn btn-primary" style="margin-left:5px;">
+				Import Data Payroll
+			</button>
+			<button type="button" t-on-click="OnExportPrepayroll" class="btn btn-primary" style="margin-left:5px;">
+				Export Data Payroll
+			</button>
+		</xpath>
+	</t>
+</templates>

@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="hr_payslip_run_employee_custom_view_form" model="ir.ui.view">
+        <field name="name">hr.payslip.employees.custom.model.view.form</field>
+        <field name="model">hr.payslip.employees</field>
+        <field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_by_employees" />
+        <field name="arch" type="xml">
+            <xpath expr="//form/header" position="inside">
+                <button icon="fa-cogs" string="Pilih Pegawai Berdasarkan kriteria" name="wizard_payslip_employee" type="object" class="oe_highlight"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="hr_payslip_run_custom_view_form" model="ir.ui.view">
+        <field name="name">hr.payslip.run.custom.model.view.form</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="inherit_id" ref="om_hr_payroll.hr_payslip_run_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet[1]" position="replace">
+                <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        
+                        <group col="4">
+                            <label for="year" string="Month and Year"/>
+                            <div>
+                                <field name="month" class="oe_inline"/>
+                                -
+                                <field name="year" class="oe_inline" widget="char"/>
+                            </div>
+                            <label for="periode_id" string="Salary Type"/>
+                            <div>
+                                <field name="periode_id" class="oe_inline"/>
+                            </div>
+                            
+                            <label for="date_start" string="Period"  attrs="{'invisible': True }" />
+                            <div attrs="{'invisible': True }">
+                                <field name="date_start" class="oe_inline"  invisible="1" />
+                                -
+                                <field name="date_end" class="oe_inline"  invisible="1" />
+                            </div>
+                            <field name="credit_note"/>
+                        </group>
+                        <separator string="Payslips"/>
+                        <field name="slip_ids"/>
+                        <separator string="Payslip Belum Diproses"/>
+                        <field name="invalid_ids"/>
+            </xpath>
+
+
+         </field>
+    </record>
+
+
+    <record id="hr_payslip_run_invalid_view_tree" model="ir.ui.view">
+        <field name="name">hr.payslip.run.invalid.view.tree</field>
+        <field name="model">hr.payslip.run.invalid</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="name"/>
+                <field name="position_id"/>
+				<field name="location_id" />
+                <field name="area_id"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="hr_payslip_run_invalid_action" model="ir.actions.act_window">
+		<field name="name">HR Payslip Run</field>
+		<field name="res_model">hr.payslip.run.invalid</field>
+		<field name="view_mode">tree</field>
+    </record>
+
+
+    
+
+</odoo>       

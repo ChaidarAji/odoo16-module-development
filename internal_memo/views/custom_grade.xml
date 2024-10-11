@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="hr_employee_custom_grade_view_form" model="ir.ui.view">
+        <field name="name">hr.grade.custom.model.view.form</field>
+        <field name="model">hr.grade</field>
+        <field name="inherit_id" ref="bms_inherit_employee.hr_grade_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="parent_id" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

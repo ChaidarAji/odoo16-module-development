@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  
+  <t t-name="internal_memo.ItemTemplate">
+    <div t-if="item" class="items">
+      <div class="head" t-att-data-job-id="item.id">
+        <div class="count">
+          <t t-esc="item.children_num > 0 ? item.children_num : ''" />
+        </div>        
+        <div class="text-wrapper">
+          <span class="label">
+            <t t-esc="item.name"/>
+          </span>
+          <span>
+            <t t-esc="item.divisi_id[1]"/>
+          </span>
+        </div>
+      </div>
+      <div t-if="item.children" style="width: 100%;">
+        <div t-if="item.children.length" class="children">
+          <t t-foreach="item.children" t-as="ch">
+            <t t-call="internal_memo.ItemTemplate">
+              <t t-set="item" t-value="ch"/>]
+            </t>
+          </t>
+        </div>
+      </div>
+    </div>
+  </t>
+
+  <t t-name="internal_memo.PositionChart">
+    <div class="position_chart_page container-fluid">
+      <div class="o_kanban_view o_kanban_dashboard">
+        <div class="page-header">
+          <h1>Position Master Chart</h1>
+          <button id="create-job" class="btn btn-primary">New</button>
+        </div>
+        <div t-if="jobs" class="organization-container">
+          <t t-foreach="jobs" t-as="job">
+            <t t-call="internal_memo.ItemTemplate">
+              <t t-set="item" t-value="job"/>]
+            </t>
+          </t>
+        </div>
+      </div>
+    </div>
+  </t>
+</templates>

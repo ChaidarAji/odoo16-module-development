@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record id="hr_employee_custom_komponen_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.custom.komponen.model.view.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="bms_inherit_employee.hr_employee_add_custom_field_primary" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='nip']" position="after">
+                <field name="applicant_id" invisible="1" />
+                <field name="employment_status"/>
+                <field name="resiko_kerja"/>
+                <field name="ptkp_id"/>
+                <field name="divisi"/>
+                <field name="area"/>
+                <field name="cabang" string="Branch"/>
+            </xpath>
+
+            <xpath expr="//field[@name='job_id']" position="replace">
+                <field name="job_id" invisible="1" />
+            </xpath>
+
+            <xpath expr="//field[@name='identification_id']" position="after">
+                <field name="religion_id"/>
+            </xpath>
+
+            <xpath expr="//field[@name='religion_id']" position="after">
+                <field name="code"/>
+            </xpath>
+
+            <xpath expr="//group[@name='managers']" position="before">
+                <group name="custom_field" string="Custom Field">
+                    <field name="job_status"/>
+                    <field name="custom1"/>
+                    <field name="custom2"/>
+                    <field name="custom3"/>
+                    <field name="custom4"/>
+                    <field name="custom7"/>
+                    <field name="custom8"/>
+                    <field name="custom9"/>
+                    <field name="custom10"/>
+                    <field name="custom11"/>
+                    <field name="custom12"/>
+                </group>
+            </xpath>
+            
+            
+            <xpath expr="//field[@name='cabang']" position="after">
+                <field name="work_location_id" context="{'default_area_id': area}" domain="{'area_id': area}" position="move" />
+            </xpath>
+            <xpath expr="//field[@name='work_location_id']" position="attributes">
+                <attribute name="context">{'default_area_id': area}</attribute>
+                <attribute name="domain">{'area_id': area}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='employee_status_id']" position="after">
+                <field name="send_mail"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_employee_tree_custom_inherit" model="ir.ui.view">
+        <field name="name">employee.tree.custom.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search/searchpanel[1]" position="replace">
+                
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_employee_search_custom_inherit" model="ir.ui.view">
+        <field name="name">employee.search.custom.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="weha_smart_approvals.view_employee_tree_custom"/>
+        <field name="arch" type="xml">
+            <field name="nip" position="after">
+                <field name="gender" class="nowrap" width="80px" />
+                <field name="master_id" class="nowrap" width="250px" />
+                <field name="department_id" class="nowrap" width="250px" />
+                <field name="area" class="nowrap" width="250px" />
+                <field name="work_location_id" class="nowrap" width="250px" />
+                <field name="grade_id" class="nowrap" width="150px"/>
+                <field name="employment_status" class="nowrap" width="120px"/>
+                <field name="join_date" class="nowrap" width="120px"/>
+                <field name="end_date" class="nowrap" width="120px" />
+                <field name="work_email" class="nowrap" width="200px"/>
+            </field>
+
+            <xpath expr="//field[@name='nip']" position= "attributes">
+                <attribute name="width">100px</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position= "attributes">
+                <attribute name="width">200px</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+
+     <record id="inherit_hr_kanban_view_employees2" model="ir.ui.view">
+            <field name="name">inherit.hr.kanban.view.employees2</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.hr_kanban_view_employees" />
+            <field name="arch" type="xml">
+                <xpath expr="//t[@t-name='kanban-box']/div/div/ul[1]" position="replace">
+                <ul>
+                    <li id="last_login"/>
+                    <li class="o_text_overflow"><field name="area"/></li>
+                    <li class="o_text_overflow"><field name="work_location_id"/></li>
+                </ul>
+                </xpath>
+            </field>
+  </record>
+
+
+</odoo>

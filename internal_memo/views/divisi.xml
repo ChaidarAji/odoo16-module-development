@@ -1,0 +1,568 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="divisi_custom_model_view_tree" model="ir.ui.view">
+        <field name="name">divisi.model.view.tree</field>
+        <field name="model">divisi</field>
+        <field name="inherit_id" ref="weha_smart_approvals.view_divisi_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pemenuhan']" position="after">
+                <field name="daily_work_days" />
+            </xpath>
+            <xpath expr="//field[@name='daily_work_days']" position="after">
+                <field name="monthly_work_days" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="divisi_custom_model_view_form" model="ir.ui.view">
+        <field name="name">divisi.model.view.form</field>
+        <field name="model">divisi</field>
+        <field name="inherit_id" ref="weha_smart_approvals.view_divisi_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pemenuhan']" position="after">
+                <field name="daily_work_days" />
+            </xpath>
+            <xpath expr="//field[@name='daily_work_days']" position="after">
+                <field name="monthly_work_days" />
+            </xpath>
+            <xpath expr="//field[@name='monthly_work_days']" position="after">
+                <field name="periode" />
+                <field name="start" />
+                <field name="end" />
+
+                <field name="periode_attend" />
+                <field name="attend_start" />
+                <field name="attend_end" />
+                <field name="periode_tax" />
+                <field name="tax" />
+                <field name="order_id" />
+            </xpath>
+            <xpath expr="//field[@name='order_id']" position="after">
+                <field name="job_status" />
+            </xpath>
+            <xpath expr="//field[@name='job_status']" position="after">
+                <field name="job_title" />
+            </xpath>
+            <xpath expr="//field[@name='job_title']" position="after">
+                <field name="active" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="area_custom_model_view_form" model="ir.ui.view">
+        <field name="name">area.model.view.form</field>
+        <field name="model">area</field>
+        <field name="inherit_id" ref="weha_smart_approvals.view_area_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pic']" position="before">
+                <field name="parent_id" />
+            </xpath>
+            <xpath expr="//field[@name='divisi']" position="after">
+                <field name="active" />
+            </xpath>
+            <xpath expr="//field[@name='alamat']" position="after">
+                <field name="depth" />
+            </xpath>
+            <xpath expr="//field[@name='depth']" position="after">
+                <field name="flag" />
+            </xpath>
+            <xpath expr="//field[@name='code']" position="after">
+                <field name="code2" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_department_internal_custom_model_view_form" model="ir.ui.view">
+        <field name="name">hr.department.custom.model.view.form</field>
+        <field name="model">hr.department</field>
+        <field name="inherit_id" ref="hr.view_department_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="division_id" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_status_custom_model_view_tree" model="ir.ui.view">
+        <field name="name">hr.employee.status.model.view.tree</field>
+        <field name="model">hr.employee.status</field>
+        <field name="inherit_id" ref="bms_inherit_employee.hr_employee_status_view_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="code" />
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="hr_discipline_category_custom_model_view_tree" model="ir.ui.view">
+        <field name="name">discipline.category.custom.model.view.tree</field>
+        <field name="model">discipline.category</field>
+        <field name="inherit_id" ref="hr_disciplinary_tracking.disciplinary_category_view_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="code" />
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="type_id" />
+            </xpath>
+            <xpath expr="//field[@name='type_id']" position="after">
+                <field name="month" />
+            </xpath>
+            <xpath expr="//field[@name='month']" position="after">
+                <field name="point" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_discipline_category_custom_model_view_form" model="ir.ui.view">
+        <field name="name">discipline.category.custom.model.view.form</field>
+        <field name="model">discipline.category</field>
+        <field name="inherit_id" ref="hr_disciplinary_tracking.disciplinary_category_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="code" />
+            </xpath>
+            <xpath expr="//field[@name='category_type']" position="before">
+                <field name="type_id" />
+            </xpath>
+            <xpath expr="//field[@name='type_id']" position="before">
+                <field name="month" />
+            </xpath>
+            <xpath expr="//field[@name='month']" position="before">
+                <field name="point" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_status_custom_model_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.status.model.view.form</field>
+        <field name="model">hr.employee.status</field>
+        <field name="inherit_id" ref="bms_inherit_employee.hr_employee_status_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="code" />
+            </xpath>
+            
+        </field>
+    </record>
+
+    <record id="hr_master_job_title_view_tree" model="ir.ui.view">
+        <field name="name">master.job.title.view.tree</field>
+        <field name="model">master.job.title</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="code"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_master_job_status_view_tree" model="ir.ui.view">
+        <field name="name">master.job.status.view.tree</field>
+        <field name="model">master.job.status</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="code"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_discipline_category_type_view_tree" model="ir.ui.view">
+        <field name="name">discipline.category.type.view.tree</field>
+        <field name="model">discipline.category.type</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="code"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_discipline_category_type_view_form" model="ir.ui.view">
+		<field name="name">discipline.category.type.view.form</field>
+		<field name="model">discipline.category.type</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<field name="code" />
+						<field name="name" />
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+
+    <record id="hr_resignation_type_view_tree" model="ir.ui.view">
+        <field name="name">hr.resignation.type.view.tree</field>
+        <field name="model">hr.resignation.type</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="code"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_resignation_type_view_form" model="ir.ui.view">
+		<field name="name">hr.resignation.type.view.form</field>
+		<field name="model">hr.resignation.type</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<field name="code" />
+						<field name="name" />
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+
+    <record id="hr_resignation_reason_view_tree" model="ir.ui.view">
+        <field name="name">hr.resignation.reason.view.tree</field>
+        <field name="model">hr.resignation.reason</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="type_id"/>
+                <field name="code"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_resignation_reason_view_form" model="ir.ui.view">
+		<field name="name">hr.resignation.reason.view.form</field>
+		<field name="model">hr.resignation.reason</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+                        <field name="type_id"/>
+						<field name="code" />
+						<field name="name" /> 
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+    <record id="hr_leave_grade_view_tree" model="ir.ui.view">
+        <field name="name">hr.leave.grade.view.tree</field>
+        <field name="model">hr.leave.grade</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="order_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_leave_grade_view_form" model="ir.ui.view">
+		<field name="name">hr.leave.grade.view.form</field>
+		<field name="model">hr.leave.grade</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="order_id"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+    <record id="hr_leave_type_custom_model_view_form" model="ir.ui.view">
+        <field name="name">hr.leave.type.custom.model.view.form</field>
+        <field name="model">hr.leave.type</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='requires_allocation']" position="before">
+                <field name="day_count" />
+            </xpath>
+            <xpath expr="//field[@name='day_count']" position="after">
+                <field name="available_after" />
+            </xpath>
+            <xpath expr="//field[@name='available_after']" position="after">
+                <field name="valid_periode" />
+            </xpath>
+            <xpath expr="//field[@name='valid_periode']" position="after">
+                <field name="repeat_flag" />
+            </xpath>
+            <xpath expr="//field[@name='repeat_flag']" position="after">
+                <field name="repeat_periode" />
+            </xpath>
+            <xpath expr="//field[@name='repeat_periode']" position="after">
+                <field name="availability" />
+            </xpath>
+            <xpath expr="//field[@name='availability']" position="after">
+                <field name="min_day_request" />
+            </xpath>
+            <xpath expr="//field[@name='min_day_request']" position="after">
+                <field name="formula" />
+            </xpath>
+        </field>
+    </record>
+
+
+
+    <record id="hr_master_job_title_action" model="ir.actions.act_window">
+		<field name="name">Job Title</field>
+		<field name="res_model">master.job.title</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+    <record id="hr_master_job_status_action" model="ir.actions.act_window">
+		<field name="name">Job Status</field>
+		<field name="res_model">master.job.status</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+    <record id="hr_discipline_category_type_action" model="ir.actions.act_window">
+		<field name="name">Discipline Category Types</field>
+		<field name="res_model">discipline.category.type</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+    <record id="hr_resignation_type_action" model="ir.actions.act_window">
+		<field name="name">Resignation Type</field>
+		<field name="res_model">hr.resignation.type</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+    <record id="hr_resignation_reason_action" model="ir.actions.act_window">
+		<field name="name">Resignation Reason</field>
+		<field name="res_model">hr.resignation.reason</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+    <record id="hr_leave_grade_action" model="ir.actions.act_window">
+		<field name="name">Leave Grade</field>
+		<field name="res_model">hr.leave.grade</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+    <record id="res_bank_custom_model_view_tree" model="ir.ui.view">
+        <field name="name">res.bank.custom.model.view.tree</field>
+        <field name="model">res.bank</field>
+        <field name="inherit_id" ref="base.view_res_bank_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="code" />
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="branch" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_bank_custom_model_view_form" model="ir.ui.view">
+        <field name="name">res.bank.custom.model.view.form</field>
+        <field name="model">res.bank</field>
+        <field name="inherit_id" ref="base.view_res_bank_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="group_id" />
+            </xpath>
+            <xpath expr="//field[@name='group_id']" position="after">
+                <field name="code" />
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="branch" />
+            </xpath>
+            <xpath expr="//field[@name='branch']" position="after">
+                <field name="bi_code" />
+            </xpath>
+            <xpath expr="//field[@name='bi_code']" position="after">
+                <field name="clr_code" />
+            </xpath>
+            <xpath expr="//field[@name='clr_code']" position="after">
+                <field name="branch_code" />
+            </xpath>
+            <xpath expr="//field[@name='branch_code']" position="after">
+                <field name="branch_scode" />
+            </xpath>
+            <xpath expr="//field[@name='branch_scode']" position="after">
+                <field name="atm_code" />
+            </xpath>
+            <xpath expr="//field[@name='atm_code']" position="after">
+                <field name="rtgs_code" />
+            </xpath>
+            <xpath expr="//field[@name='rtgs_code']" position="after">
+                <field name="ach_code" />
+            </xpath>
+            <xpath expr="//field[@name='ach_code']" position="after">
+                <field name="ibg_code" />
+            </xpath>
+            <xpath expr="//field[@name='ibg_code']" position="after">
+                <field name="bnm_code" />
+            </xpath>
+            <xpath expr="//field[@name='bnm_code']" position="after">
+                <field name="rentas_code" />
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="hr_payroll_structure_custom_model_view_tree" model="ir.ui.view">
+        <field name="name">hr.payroll.structure.model.view.tree</field>
+        <field name="model">hr.payroll.structure</field>
+        <field name="inherit_id" ref="om_hr_payroll.view_hr_payroll_structure_list_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="periode_id" />
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="hr_payroll_structure_custom_model_view_form" model="ir.ui.view">
+        <field name="name">hr.payroll.structure.model.view.form</field>
+        <field name="model">hr.payroll.structure</field>
+        <field name="inherit_id" ref="om_hr_payroll.view_hr_employee_grade_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="periode_id" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="job_position_request_custom2_model_view_form" model="ir.ui.view">
+        <field name="name">job.position.request.custom2.model.view.form</field>
+        <field name="model">job.position.request</field>
+        <field name="inherit_id" ref="bms_inherit_recruitment.job_position_request_inherit_work_location" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='work_location_id']" position="after">
+                <field name="work_area_id" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="job_position_work_area_custom2_model_view_form" model="ir.ui.view">
+        <field name="name">job.position.work.area.custom2.model.view.form</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="bms_inherit_recruitment.inherit_view_hr_job_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='work_area_line']" position="replace">
+                <field name="work_area_line">
+                        <tree create="0" edit="0" delete="0">
+                            <field name="work_area_id"/>
+                            <field name="expected_new_employees"/>
+                            <field name="outstanding"/>
+                            <field name="age_days"/>
+                        </tree>
+                        <form>
+                            <group>
+                                <group>
+                                    <field name="work_area_id" readonly="1"/>
+                                    <field name="expected_new_employees" readonly="1"/>
+                                    <field name="outstanding" readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="age_days"/>
+                                </group>
+                            </group>
+                            <field name="approval_request_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="mpr_jml_req"/>
+                                    <field name="mpr_jumlah_pemenuhan"/>
+                                </tree>
+                            </field>
+                        </form>
+                    </field>
+            </xpath>
+        </field>
+    </record>
+
+
+
+
+    <menuitem
+                id="menu_hr_master_job_title_tree"
+                action="hr_master_job_title_action"
+                parent="hr.menu_config_employee"
+                sequence="57"
+                groups="hr.group_hr_user"/>
+
+    <menuitem
+                id="menu_hr_master_job_status_tree"
+                action="hr_master_job_status_action"
+                parent="hr.menu_config_employee"
+                sequence="58"
+                groups="hr.group_hr_user"/>
+
+
+
+
+    <menuitem
+                id="menu_discipline_category_type_tree"
+                action="hr_discipline_category_type_action"
+                parent="hr_disciplinary_tracking.disciplinary_action"
+                sequence="5"
+                groups="hr.group_hr_user"/>
+
+
+    <menuitem
+                id="hr_resignation_reference_tree"
+                parent="hr_resignation.employee_resignation"
+                name="Referensi"
+                sequence="5"
+                groups="hr.group_hr_user"/>
+
+    <menuitem
+                id="hr_resignation_type_tree"
+                action="hr_resignation_type_action"
+                parent="hr_resignation_reference_tree"
+                sequence="6"
+                groups="hr.group_hr_user"/>
+
+    <menuitem
+                id="hr_resignation_reason_tree"
+                action="hr_resignation_reason_action"
+                parent="hr_resignation_reference_tree"
+                sequence="7"
+                groups="hr.group_hr_user"/>
+
+
+    
+     <menuitem 
+        id="hr_holidays_menu_hr_leave_grade"
+        action="hr_leave_grade_action"
+        parent="hr_holidays.menu_hr_holidays_configuration"
+        groups="hr.group_hr_user"
+        sequence="8"
+    />
+
+
+    <record id="hr_contract_bank_custom_model_view_tree" model="ir.ui.view">
+        <field name="name">hr.contact.bank.custom.model.view.tree</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.res_partner_view_form_private" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bank_ids']" position="replace">
+                <field name="bank_ids">
+                    <tree editable="bottom">
+                        <field name="bank_id"/>
+                        <field name="acc_number"/>
+                        <field name="acc_holder_name"/>
+                        <field name="allow_out_payment"/>
+                        <field name="is_default"/>
+                        <field name="active"/>
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+
+
+    
+
+</odoo>

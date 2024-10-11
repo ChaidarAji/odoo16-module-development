@@ -1,0 +1,286 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    
+
+    <record id="hr_employee_salary_contract_custom_model_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.salary.contract.custom.model.view.form</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="om_hr_payroll.hr_contract_form_inherit" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='salary']" position="replace">
+                <group name="salary">
+                    <label for="wage"/>
+                    <div class="o_row mw-50" name="wage">
+                        <field name="wage" class="oe_inline o_hr_narrow_field" nolabel="1"/>
+                        <div class="mb-3"></div>
+                    </div>
+                </group>
+            </xpath>       
+            
+            <xpath expr="//field[@name='job_id']" position="replace">
+                <field name="master_id" />
+                <field name="tax_type_id" />
+                <field name="tax_location_id" />
+                <field name="notes" />
+                <field name="schedule_pay" />
+            </xpath>    
+
+
+            <xpath expr="//group[@name='allowances']" position="replace">
+                <group string="Tunjangan Bulanan" name="allowances">
+                    <!-- <label for="da"/>
+                    <div class="o_row">
+                        <field name="da" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div> -->
+                    <label for="acting_allowance"/>
+                    <div class="o_row">
+                        <field name="acting_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="competency_allowance"/>
+                    <div class="o_row">
+                        <field name="competency_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="location_allowance"/>
+                    <div class="o_row">
+                        <field name="location_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="allow_locationsm"/>
+                    <div class="o_row">
+                        <field name="allow_locationsm" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+
+                    <label for="position_allowance"/>
+                    <div class="o_row">
+                        <field name="position_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="daily_allowance"/>
+                    <div class="o_row">
+                        <field name="daily_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="tor_allowance"/>
+                    <div class="o_row">
+                        <field name="tor_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="handphone_allowance"/>
+                    <div class="o_row">
+                        <field name="handphone_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="performance_allowance"/>
+                    <div class="o_row">
+                        <field name="performance_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="travel_allowance"/>
+                    <div class="o_row">
+
+                        <field name="travel_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="meal_allowance"/>
+                    <div class="o_row">
+
+                        <field name="meal_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="medical_allowance"/>
+                    <div class="o_row">
+
+                        <field name="medical_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="housing_allowance"/>
+                    <div class="o_row">
+                        <field name="housing_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="shift_allowance"/>
+                    <div class="o_row">
+                        <field name="shift_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="guarantine_allowance"/>
+                    <div class="o_row">
+                        <field name="guarantine_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="allow_incentive"/>
+                    <div class="o_row">
+                        <field name="allow_incentive" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+
+                    <label for="adjustment_plus"/>
+                    <div class="o_row">
+
+                        <field name="adjustment_plus" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+
+                    <label for="all_backup"/>
+                    <div class="o_row">
+
+                        <field name="all_backup" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+
+                    <label for="national_allowance"/>
+                    <div class="o_row">
+
+                        <field name="national_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+
+                    <label for="netral_allowance"/>
+                    <div class="o_row">
+
+                        <field name="netral_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="rapel_allowance"/>
+                    <div class="o_row">
+
+                        <field name="rapel_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="tax_adjustment"/>
+                    <div class="o_row">
+
+                        <field name="tax_adjustment" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="travel2_allowance"/>
+                    <div class="o_row">
+
+                        <field name="travel2_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="bonus"/>
+                    <div class="o_row">
+
+                        <field name="bonus" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="car_allowance"/>
+                    <div class="o_row">
+
+                        <field name="car_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="deduct_adv"/>
+                    <div class="o_row">
+
+                        <field name="deduct_adv" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="deduct_car"/>
+                    <div class="o_row">
+
+                        <field name="deduct_car" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="deduct_dormit"/>
+                    <div class="o_row">
+
+                        <field name="deduct_dormit" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="deduct_meal"/>
+                    <div class="o_row">
+
+                        <field name="deduct_meal" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="deduct_rapel"/>
+                    <div class="o_row">
+
+                        <field name="deduct_rapel" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="deduct_seragam"/>
+                    <div class="o_row">
+
+                        <field name="deduct_seragam" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="deduct_sepatu"/>
+                    <div class="o_row">
+
+                        <field name="deduct_sepatu" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+
+                    <label for="deduct_training"/>
+                    <div class="o_row">
+
+                        <field name="deduct_training" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="deduct_security"/>
+                    <div class="o_row">
+
+                        <field name="deduct_security" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+
+
+
+
+                    <label for="other_allowance"/>
+                    <div class="o_row">
+
+                        <field name="other_allowance" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+
+
+
+                    <label for="bpjs_ks_mitra"/>
+                    <div class="o_row">
+                        <field name="bpjs_ks_mitra" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+                    <label for="bpjs_tk_mitra"/>
+                    <div class="o_row">
+                        <field name="bpjs_tk_mitra" nolabel="1"/>
+                        <span>/ bulan</span>
+                    </div>
+
+                    
+                   
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_contract_type_custom_view" model="ir.ui.view">
+        <field name="name">hr.contract.type.custom.model.view</field>
+        <field name="model">hr.contract.type</field>
+        <field name="inherit_id" ref="hr.hr_contract_type_view_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="code" />
+            </xpath>
+            <!-- <xpath expr="//field[@name='code']" position="after">
+                <field name="salary_type" />
+            </xpath> -->
+            <xpath expr="//field[@name='code']" position="after">
+                <field name="salary_amount" />
+            </xpath>
+            <xpath expr="//field[@name='salary_amount']" position="after">
+                <field name="periode" />
+            </xpath>
+            <xpath expr="//field[@name='periode']" position="after">
+                <field name="salary_structure" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,404 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="import_pre_payroll_wizard" model="ir.ui.view">
+        <field name="name">import.pre.payroll.wizard.wizard</field>
+        <field name="model">import.pre.payroll.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import Data Payroll">
+                <group>
+                        <field name="name"/>
+                        <field name="file"/>
+                        <field name="all_employee_number"/>
+                        <field name="employee_number"/>
+                        <field name="error_ids"/>
+                </group>
+                <footer>
+                    <button
+                        name="import_pre_payroll_save"
+                        string="Upload"
+                        type="object"
+                        class="btn-primary"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="export_koreksi_gaji_wizard" model="ir.ui.view">
+        <field name="name">export.payroll.koreksi.gaji.wizard</field>
+        <field name="model">export.payroll.koreksi.gaji.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Eksport Koreksi Gaji">
+                <group>
+                    <group>
+                        <field name="only_template"/>
+                        <field name="excel_file" invisible="1"/>
+                    </group>
+                    <field name="export_rule_ids">
+                        <tree editable="bottom">
+                            <field name="wizard_id" invisible="1"/>
+                            <field name="rule_id"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button
+                        name="button_export_data"
+                        string="Export"
+                        type="object"
+                        class="btn-primary"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="import_koreksi_gaji_wizard" model="ir.ui.view">
+        <field name="name">import.payroll.koreksi.gaji.wizard</field>
+        <field name="model">import.payroll.koreksi.gaji.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import Koreksi Gaji">
+                <group>
+                    <group>
+                        <field name="file"/>
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="import_koreksi_gaji_save"
+                        string="Import"
+                        type="object"
+                        class="btn-primary"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="import_contract_wizard" model="ir.ui.view">
+        <field name="name">import.contract.wizard</field>
+        <field name="model">import.contract.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import Career History">
+                <group>
+                    <group>
+                        <field name="file"/>
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="import_contract_save"
+                        string="Import"
+                        type="object"
+                        class="btn-primary"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="export_payslip_wizard" model="ir.ui.view">
+        <field name="name">export.payslip.wizard</field>
+        <field name="model">export.payslip.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Export Payslip">
+                <group>
+                    <group>
+                        <field name="year"/>
+                        <field name="month"/>
+                        <field name="category"/>
+                        <field name="payroll_periode"/>
+                        <field name="cost_center"/>
+                        <field name="work_location"/>
+                        <field name="pay_freq"/>
+                        <field name="tax_location"/>
+                        <field name="tax_type"/>
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="export_payslip_save"
+                        string="Export Excel"
+                        type="object"
+                        class="btn-primary"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="filter_payslip_wizard" model="ir.ui.view">
+        <field name="name">filter.payslip.wizard</field>
+        <field name="model">filter.payslip.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Filter Payslip">
+                <group>
+                    <group>
+                        <field name="year"/>
+                        <field name="month"/>
+                        <field name="category"/>
+                        <field name="payroll_periode"/>
+                        <field name="cost_center"/>
+                        <field name="work_location"/>
+                        <field name="pay_freq"/>
+                        <field name="tax_location"/>
+                        <field name="tax_type"/>
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="filter_payslip_save"
+                        string="Filter Data"
+                        type="object"
+                        class="btn-primary"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="filter_employee_wizard" model="ir.ui.view">
+        <field name="name">filter.employee.wizard</field>
+        <field name="model">filter.employee.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Filter Pegawai">
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="nik"/>
+                        <field name="payroll_periode"/>
+                        <field name="cost_center"/>
+                        <field name="work_location"/>
+                        <field name="pay_freq"/>
+                        <field name="divisi"/>
+                        <field name="cabang"/>
+                        <field name="department"/>
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="filter_employee_save"
+                        string="Filter Data"
+                        type="object"
+                        class="btn-primary"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="filter_hr_payslip_generate_wizard_form" model="ir.ui.view">
+        <field name="name">filter.hr.payslip.generate.wizard.view.form</field>
+        <field name="model">filter.hr.payslip.generate.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Filter Pegawai">
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="nik"/>
+                        <field name="payroll_periode"/>
+                        <field name="cost_center"/>
+                        <field name="work_location"/>
+                        <field name="pay_freq"/>
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="filter_payslip_generate_save"
+                        string="Generate Payslip"
+                        type="object"
+                        class="btn-primary"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+
+    <record id="hr_payroll_koreksi_gaji_inherited_tree_view" model="ir.ui.view">
+		<field name="name">hr.payroll.koreksi.gaji.view.tree.inherit</field>
+		<field name="model">hr.payslip.line</field>
+		<field name="inherit_id" ref="internal_memo.internal_memo_multiupdate_payslip_view_tree"/>
+		<field name="arch" type="xml">
+			<xpath expr="//tree" position="attributes">
+				<attribute name="js_class">button_koreksi_gaji_button</attribute>
+			</xpath>
+		</field>
+	</record>
+
+    <record id="hr_contract2_inherited_tree_view" model="ir.ui.view">
+		<field name="name">hr.contract2.view.tree.inherit</field>
+		<field name="model">hr.contract.history</field>
+		<field name="inherit_id" ref="hr_contract.hr_contract_history_view_list"/>
+		<field name="arch" type="xml">
+			<xpath expr="//tree" position="attributes">
+				<attribute name="js_class">button_contract_button</attribute>
+			</xpath>
+		</field>
+	</record>
+
+    <record id="hr_payslip2_inherited_tree_view" model="ir.ui.view">
+		<field name="name">hr.payslip2.view.tree.inherit</field>
+		<field name="model">hr.payslip</field>
+		<field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_tree"/>
+		<field name="arch" type="xml">
+			<xpath expr="//tree" position="attributes">
+				<attribute name="js_class">button_payslip_export_button</attribute>
+			</xpath>
+		</field>
+	</record>
+
+    <record id="hr_employee2_inherited_tree_view" model="ir.ui.view">
+		<field name="name">hr.employee2.view.tree.inherit</field>
+		<field name="model">hr.employee</field>
+		<field name="inherit_id" ref="weha_smart_approvals.view_employee_tree_custom"/>
+		<field name="arch" type="xml">
+			<xpath expr="//tree" position="attributes">
+				<attribute name="js_class">button_employee_button</attribute>
+			</xpath>
+		</field>
+	</record>
+
+    <record id="hr_employee2_inherited_kanban_view" model="ir.ui.view">
+		<field name="name">hr.employee2.view.kanban.inherit</field>
+		<field name="model">hr.employee</field>
+		<field name="inherit_id" ref="bms_inherit_employee.inherit_hr_kanban_view_employees"/>
+		<field name="arch" type="xml">
+			<xpath expr="//kanban" position="attributes">
+				<attribute name="js_class">button_employee_kanban_button</attribute>
+			</xpath>
+		</field>
+	</record>
+
+    <record id="hr_pre_payroll_inherited_tree_view" model="ir.ui.view">
+		<field name="name">hr.pre.payroll.view.tree.inherit</field>
+		<field name="model">hr.pre.payroll</field>
+		<field name="inherit_id" ref="internal_memo.hr_pre_payroll_view_tree"/>
+		<field name="arch" type="xml">
+			<xpath expr="//tree" position="attributes">
+				<attribute name="js_class">button_pre_payroll_button</attribute>
+			</xpath>
+		</field>
+	</record>
+
+
+
+
+
+    <record id="internal_memo_pre_payroll_error_view_tree" model="ir.ui.view">
+        <field name="name">import.pre.payroll.error.wizard.view.tree</field>
+        <field name="model">import.pre.payroll.error.wizard</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="nik"/>
+                <field name="employee"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="internal_memo_pre_payroll_error_view_form" model="ir.ui.view">
+		<field name="name">import.pre.payroll.error.wizard.view.form</field>
+		<field name="model">import.pre.payroll.error.wizard</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<field name="nik"/>
+                        <field name="employee"/>
+                        <field name="description"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+
+    <record id="internal_memo_pre_payroll_error_action" model="ir.actions.act_window">
+		<field name="name">Error Upload Payroll</field>
+		<field name="res_model">import.pre.payroll.error.wizard</field>
+		<field name="view_mode">tree,form</field>
+    </record>
+
+
+    <record id="internal_memo_export_pre_payroll_view_tree" model="ir.ui.view">
+        <field name="name">export.pre.payroll.wizard.view.tree</field>
+        <field name="model">export.pre.payroll.wizard</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="name"/>
+                <field name="only_template"/>
+                <field name="is_active"/>
+                <field name="year"/>
+                <field name="month"/>
+                <field name="rule_ids"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="internal_memo_export_pre_payroll_view_form" model="ir.ui.view">
+		<field name="name">export.pre.payroll.wizard.view.form</field>
+		<field name="model">export.pre.payroll.wizard</field>
+		<field name="arch" type="xml">
+			<form string="">
+					<group>
+						<field name="name"/>
+                        <field name="only_template"/>
+                        <field name="is_active"/>
+                        <field name="year"/>
+                        <field name="month"/>
+                        <field name="rule_ids"/>
+					</group>
+                    <footer>
+                    <button
+                        name="export_pre_payroll_save"
+                        string="Export Excel"
+                        type="object"
+                        class="btn-primary"
+                    />
+                </footer>
+			</form>
+		</field>
+	</record>
+
+
+    <record id="internal_memo_export_pre_payroll_component_view_tree" model="ir.ui.view">
+        <field name="name">export.pre.payroll.component.wizard.view.tree</field>
+        <field name="model">export.pre.payroll.component.wizard</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="rule_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="internal_memo_export_pre_payroll_component_view_form" model="ir.ui.view">
+		<field name="name">export.pre.payroll.component.wizard.view.form</field>
+		<field name="model">export.pre.payroll.component.wizard</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<field name="name"/>
+                        <field name="rule_id"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+    <record id="internal_memo_pre_payroll_export_action" model="ir.actions.act_window">
+		<field name="name">Export Upload Payroll</field>
+		<field name="res_model">export.pre.payroll.wizard</field>
+		<field name="view_mode">tree,form</field>
+    </record>
+    <record id="internal_memo_pre_payroll_export_component_action" model="ir.actions.act_window">
+		<field name="name">Export Upload Payroll</field>
+		<field name="res_model">export.pre.payroll.component.wizard</field>
+		<field name="view_mode">tree,form</field>
+    </record>
+    
+
+</odoo>

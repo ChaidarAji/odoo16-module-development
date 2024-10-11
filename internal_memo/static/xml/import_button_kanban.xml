@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+   <t t-name="button_sale.KanbanView.Buttons" t-inherit="web.KanbanView.Buttons">
+       <xpath expr="//*[@class='btn btn-primary o-kanban-button-new']" position="after">
+           <button type="button" class="btn btn-primary" style="margin-left: 10px;"  t-on-click="OnImportRegional">
+               Import Data
+           </button>
+       </xpath>
+   </t>
+</odoo>

@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+
+    <record id="action_position_chart" model="ir.actions.client">
+      <field name="name">Position Chart</field>
+      <field name="tag">position_chart</field>
+      <field name="target">current</field>
+    </record>
+
+    <menuitem id="menu_position_chart"
+      name="Position Master Chart"
+      action="action_position_chart"
+      parent="hr.menu_config_employee"
+      sequence="56"/>
+
+  </data>
+</odoo>

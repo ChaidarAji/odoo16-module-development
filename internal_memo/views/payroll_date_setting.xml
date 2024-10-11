@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="hr_payroll_date_setting_view_tree" model="ir.ui.view">
+        <field name="name">rhr.payroll.date.setting.view.tree</field>
+        <field name="model">hr.payroll.date.setting</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="name"/>
+                <field name="date"/>
+            </tree>
+        </field>
+    </record>
+	<record id="hr_payroll_date_setting_view_form" model="ir.ui.view">
+		<field name="name">hr.payroll.date.setting.view.form</field>
+		<field name="model">hr.payroll.date.setting</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+						<group>
+							<field name="name" />
+							<field name="date" />
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+
+   
+
+    <record id="hr_payroll_date_setting_action" model="ir.actions.act_window">
+		<field name="name">Payroll Date Setting</field>
+		<field name="res_model">hr.payroll.date.setting</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+    <menuitem
+        id="menu_hr_payroll_date_setting"
+        action="hr_payroll_date_setting_action"
+        parent="om_hr_payroll.menu_hr_payroll_configuration"
+        sequence="57"
+        groups="hr.group_hr_user"/>
+</odoo>

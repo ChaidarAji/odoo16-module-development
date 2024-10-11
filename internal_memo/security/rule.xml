@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.module.category" id="internal_memo_management">
+        <field name="name">Internal Memo</field>
+        <field name="description">User access level for Internal Memo</field>
+        <field name="sequence">20</field>
+    </record>
+
+
+
+    <record id="internal_memo_creator_id" model="res.groups">
+		<field name="name">Pengajuan Internal Memo</field>
+        <field name="category_id" ref="internal_memo_management"/>
+	</record>
+    <record id="internal_memo_validate1_id" model="res.groups">
+		<field name="name">Persetujuan Sr. Ops Manager</field>
+        <field name="category_id" ref="internal_memo_management"/>
+	</record>
+    <record id="internal_memo_validate2_id" model="res.groups">
+		<field name="name">Persetujuan General Manager CFS</field>
+        <field name="category_id" ref="internal_memo_management"/>
+	</record>
+    <record id="internal_memo_validate_id" model="res.groups">
+		<field name="name">Persetujuan Direktur of HRM</field>
+        <field name="category_id" ref="internal_memo_management"/>
+	</record>
+    <record id="internal_memo_admin_id" model="res.groups">
+		<field name="name">Administrator</field>
+        <field name="category_id" ref="internal_memo_management"/>
+	</record>
+
+    <record id="internal_memo_creator_rule" model="ir.rule">
+		<field name="name">Area Manager</field>
+		<field name="model_id" ref="model_internal_memo"/>
+		<field name="groups" eval="[(4,ref('internal_memo_creator_id'))]"/>
+        <field name="domain_force">[('creator_id','=',user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+    <record id="internal_memo_validate1_rule" model="ir.rule">
+		<field name="name">Sr. Ops Manager</field>
+		<field name="model_id" ref="model_internal_memo"/>
+		<field name="groups" eval="[(4,ref('internal_memo_validate1_id'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+    <record id="internal_memo_validate2_rule" model="ir.rule">
+		<field name="name">General Manager CFS</field>
+		<field name="model_id" ref="model_internal_memo"/>
+		<field name="groups" eval="[(4,ref('internal_memo_validate2_id'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+
+    <record id="internal_memo_validate_id_rule" model="ir.rule">
+		<field name="name">Direktur of HRM</field>
+		<field name="model_id" ref="model_internal_memo"/>
+		<field name="groups" eval="[(4,ref('internal_memo_validate_id'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+
+    <record id="internal_memo_admin_id_rule" model="ir.rule">
+		<field name="name">Administrator</field>
+		<field name="model_id" ref="model_internal_memo"/>
+		<field name="groups" eval="[(4,ref('internal_memo_admin_id'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+
+    <record model="ir.module.category" id="hr_contract_approval">
+        <field name="name">Contract Approval</field>
+        <field name="description">User access level for Contract Approval</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="hr_contract_approval_request" model="res.groups">
+		<field name="name">Contract Update Request</field>
+        <field name="category_id" ref="hr_contract_approval"/>
+	</record>
+    <record id="hr_contract_approval_review" model="res.groups">
+		<field name="name">Contract Update Approval</field>
+        <field name="category_id" ref="hr_contract_approval"/>
+	</record>
+
+    <record id="hr_contract_approval_request_rule" model="ir.rule">
+		<field name="name">Contract Update Request</field>
+		<field name="model_id" ref="model_hr_contract_approval"/>
+		<field name="groups" eval="[(4,ref('hr_contract_approval_request'))]"/>
+        <field name="domain_force">[('state','in',['submit'])]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+
+    <record id="hr_contract_approval_review_rule" model="ir.rule">
+		<field name="name">Contract Update Approval</field>
+		<field name="model_id" ref="model_hr_contract_approval"/>
+		<field name="groups" eval="[(4,ref('hr_contract_approval_review'))]"/>
+        <field name="domain_force">[('state','in',['approve','reject'])]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+	</record>
+
+    
+
+    <record model="ir.module.category" id="custom_payroll_access_setting">
+        <field name="name">Payroll Access Setting</field>
+        <field name="description">Payroll Access Setting</field>
+        <field name="sequence">40</field>
+    </record>
+    <record id="custom_payroll_payfield_access_all_grant_group" model="res.groups">
+		<field name="name">Penambahan, Pengubahan, dan Penghapusan Payfield</field>
+        <field name="category_id" ref="custom_payroll_access_setting"/>
+	</record>
+    <record id="custom_payroll_payfield_access_read_grant_group" model="res.groups">
+		<field name="name">Melihat Payfield</field>
+        <field name="category_id" ref="custom_payroll_access_setting"/>
+	</record>
+
+    <record id="custom_payroll_dayup_access_read_grant_group" model="res.groups">
+		<field name="name">Melihat Day Up</field>
+        <field name="category_id" ref="custom_payroll_access_setting"/>
+	</record>
+
+    <record id="custom_payroll_dayup_access_all_grant_group" model="res.groups">
+		<field name="name">Penambahan, Pengubahan, dan Penghapusan  Day Up</field>
+        <field name="category_id" ref="custom_payroll_access_setting"/>
+	</record>
+
+    <record id="custom_payroll_multiupdate_access_all_grant_group" model="res.groups">
+		<field name="name">Koreksi Nilai Komponen Payroll</field>
+        <field name="category_id" ref="custom_payroll_access_setting"/>
+	</record>
+
+    <record id="custom_payroll_access_smart_presence_grant_group" model="res.groups">
+		<field name="name">Pengaturan Pengambilan Presensi Smart Presence</field>
+        <field name="category_id" ref="custom_payroll_access_setting"/>
+	</record>
+    <record id="custom_payroll_access_regional_grant_group" model="res.groups">
+		<field name="name">Pengaturan UMR Regional</field>
+        <field name="category_id" ref="custom_payroll_access_setting"/>
+	</record>
+
+    <record id="custom_payroll_access_salary_rule_grant_group" model="res.groups">
+		<field name="name">Pengaturan Salary Rule</field>
+        <field name="category_id" ref="custom_payroll_access_setting"/>
+	</record>
+
+    <record id="custom_payroll_access_salary_structure_grant_group" model="res.groups">
+		<field name="name">Pengaturan Payroll Component</field>
+        <field name="category_id" ref="custom_payroll_access_setting"/>
+	</record>
+
+    <record id="om_hr_payroll.menu_action_hr_salary_rule_form" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4,ref('internal_memo.custom_payroll_access_salary_rule_grant_group'))]"/>
+    </record>
+    <record id="om_hr_payroll.menu_hr_payroll_structure_view" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4,ref('internal_memo.custom_payroll_access_salary_structure_grant_group'))]"/>
+    </record>
+
+    
+
+
+    <record id="custom_payroll_payfield_access_all_grant_rule" model="ir.rule">
+		<field name="name">Payfield</field>
+		<field name="model_id" ref="model_hr_payfield"/>
+		<field name="groups" eval="[(4,ref('custom_payroll_payfield_access_all_grant_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+
+    <record id="custom_payroll_payfield_input_access_all_grant_rule" model="ir.rule">
+		<field name="name">Payfield Input</field>
+		<field name="model_id" ref="model_hr_payfield_input"/>
+		<field name="groups" eval="[(4,ref('custom_payroll_payfield_access_all_grant_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+
+    <record id="custom_payroll_payfield_input_line_access_all_grant_rule" model="ir.rule">
+		<field name="name">Payfield Line</field>
+		<field name="model_id" ref="model_hr_payfield_input_line"/>
+		<field name="groups" eval="[(4,ref('custom_payroll_payfield_access_all_grant_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+
+    <record id="custom_payroll_payfield_access_read_grant_rule" model="ir.rule">
+		<field name="name">Payfield</field>
+		<field name="model_id" ref="model_hr_payfield"/>
+		<field name="groups" eval="[(4,ref('custom_payroll_payfield_access_read_grant_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+	</record>
+
+    <record id="custom_payroll_payfield_input_access_read_grant_rule" model="ir.rule">
+		<field name="name">Payfield Input</field>
+		<field name="model_id" ref="model_hr_payfield_input"/>
+		<field name="groups" eval="[(4,ref('custom_payroll_payfield_access_read_grant_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+	</record>
+
+    <record id="custom_payroll_payfield_input_line_access_read_grant_rule" model="ir.rule">
+		<field name="name">Payfield Line</field>
+		<field name="model_id" ref="model_hr_payfield_input_line"/>
+		<field name="groups" eval="[(4,ref('custom_payroll_payfield_access_read_grant_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+	</record>
+
+    <record id="custom_payroll_dayup_access_all_grant_rule" model="ir.rule">
+		<field name="name">Payfield</field>
+		<field name="model_id" ref="model_hr_payroll_dayup"/>
+		<field name="groups" eval="[(4,ref('custom_payroll_dayup_access_all_grant_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+
+    <record id="custom_payroll_dayup_access_read_grant_rule" model="ir.rule">
+		<field name="name">Payfield</field>
+		<field name="model_id" ref="model_hr_payroll_dayup"/>
+		<field name="groups" eval="[(4,ref('custom_payroll_dayup_access_read_grant_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+	</record>
+
+    <record id="custom_payroll_multiupdate_access_all_grant_rule" model="ir.rule">
+		<field name="name">Payslip Line</field>
+		<field name="model_id" ref="model_hr_payslip_line"/>
+		<field name="groups" eval="[(4,ref('custom_payroll_multiupdate_access_all_grant_group'))]"/>
+        <field name="domain_force">[('id','!=','0')]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+
+
+    <record model="ir.module.category" id="custom_employee_status_access_setting">
+        <field name="name">Employee Status Access</field>
+        <field name="description">Employee Status Access</field>
+        <field name="sequence">41</field>
+    </record>
+
+    <record id="custom_employee_status_access_setting_staff_group" model="res.groups">
+		<field name="name">Staff</field>
+        <field name="category_id" ref="custom_employee_status_access_setting"/>
+	</record>
+    <record id="custom_employee_status_access_setting_operator_group" model="res.groups">
+		<field name="name">Operator</field>
+        <field name="category_id" ref="custom_employee_status_access_setting"/>
+	</record>
+    <record id="custom_employee_status_access_setting_mitra1_group" model="res.groups">
+		<field name="name">Mitra 1</field>
+        <field name="category_id" ref="custom_employee_status_access_setting"/>
+	</record>
+    <record id="custom_employee_status_access_setting_mitra2_group" model="res.groups">
+		<field name="name">Mitra 2</field>
+        <field name="category_id" ref="custom_employee_status_access_setting"/>
+	</record>
+
+    <record id="custom_employee_status_access_setting_staff_rule" model="ir.rule">
+		<field name="name">Payslip Line</field>
+		<field name="model_id" ref="model_hr_payslip_line"/>
+		<field name="groups" eval="[(4,ref('custom_employee_status_access_setting_staff_group'))]"/>
+        <field name="domain_force">[('employee_status_code','=','STAFF')]</field>
+	</record>
+    <record id="custom_employee_status_access_setting_operator_rule" model="ir.rule">
+		<field name="name">Payslip Line</field>
+		<field name="model_id" ref="model_hr_payslip_line"/>
+		<field name="groups" eval="[(4,ref('custom_employee_status_access_setting_operator_group'))]"/>
+        <field name="domain_force">[('employee_status_code','=','OP')]</field>
+	</record>
+
+    <record id="custom_employee_status_access_setting_mitra1_rule" model="ir.rule">
+		<field name="name">Payslip Line</field>
+		<field name="model_id" ref="model_hr_payslip_line"/>
+		<field name="groups" eval="[(4,ref('custom_employee_status_access_setting_mitra1_group'))]"/>
+        <field name="domain_force">[('employee_status_code','=','MITRA1')]</field>
+	</record>
+    <record id="custom_employee_status_access_setting_mitra2_rule" model="ir.rule">
+		<field name="name">Payslip Line</field>
+		<field name="model_id" ref="model_hr_payslip_line"/>
+		<field name="groups" eval="[(4,ref('custom_employee_status_access_setting_mitra2_group'))]"/>
+        <field name="domain_force">[('employee_status_code','=','MITRA2')]</field>
+	</record>
+
+    <record id="custom_employee_payslip_access_setting_staff_rule" model="ir.rule">
+		<field name="name">Payslip</field>
+		<field name="model_id" ref="model_hr_payslip"/>
+		<field name="groups" eval="[(4,ref('custom_employee_status_access_setting_staff_group'))]"/>
+        <field name="domain_force">[('employee_id.employee_status_id.code','=','STAFF')]</field>
+	</record>
+    <record id="custom_employee_payslip_access_setting_operator_rule" model="ir.rule">
+		<field name="name">Payslip</field>
+		<field name="model_id" ref="model_hr_payslip"/>
+		<field name="groups" eval="[(4,ref('custom_employee_status_access_setting_operator_group'))]"/>
+        <field name="domain_force">[('employee_id.employee_status_id.code','=','OP')]</field>
+	</record>
+
+    <record id="custom_employee_payslip_access_setting_mitra1_rule" model="ir.rule">
+		<field name="name">Payslip</field>
+		<field name="model_id" ref="model_hr_payslip"/>
+		<field name="groups" eval="[(4,ref('custom_employee_status_access_setting_mitra1_group'))]"/>
+        <field name="domain_force">[('employee_id.employee_status_id.code','=','MITRA1')]</field>
+	</record>
+    <record id="custom_employee_payslip_access_setting_mitra2_rule" model="ir.rule">
+		<field name="name">Payslip</field>
+		<field name="model_id" ref="model_hr_payslip"/>
+		<field name="groups" eval="[(4,ref('custom_employee_status_access_setting_mitra2_group'))]"/>
+        <field name="domain_force">[('employee_id.employee_status_id.code','=','MITRA2')]</field>
+	</record>
+
+    <record id="custom_employee_general_access_setting_staff_rule" model="ir.rule">
+		<field name="name">Employee</field>
+		<field name="model_id" ref="model_hr_employee"/>
+		<field name="groups" eval="[(4,ref('custom_employee_status_access_setting_staff_group'))]"/>
+        <field name="domain_force">['|',('employee_status_id.code','=','STAFF'),('employee_status_id','=', False)]</field>
+	</record>
+    <record id="custom_employee_general_access_setting_operator_rule" model="ir.rule">
+		<field name="name">Employee</field>
+		<field name="model_id" ref="model_hr_employee"/>
+		<field name="groups" eval="[(4,ref('custom_employee_status_access_setting_operator_group'))]"/>
+        <field name="domain_force">['|',('employee_status_id.code','=','OP'),('employee_status_id','=', False)]</field>
+	</record>
+
+    <record id="custom_employee_general_access_setting_mitra1_rule" model="ir.rule">
+		<field name="name">Employee</field>
+		<field name="model_id" ref="model_hr_employee"/>
+		<field name="groups" eval="[(4,ref('custom_employee_status_access_setting_mitra1_group'))]"/>
+        <field name="domain_force">['|',('employee_status_id.code','=','MITRA1'),('employee_status_id','=', False)]</field>
+	</record>
+    <record id="custom_employee_general_access_setting_mitra2_rule" model="ir.rule">
+		<field name="name">Employee</field>
+		<field name="model_id" ref="model_hr_employee"/>
+		<field name="groups" eval="[(4,ref('custom_employee_status_access_setting_mitra2_group'))]"/>
+        <field name="domain_force">['|',('employee_status_id.code','=','MITRA2'),('employee_status_id','=', False)]</field>
+	</record>
+
+
+
+     <record model="ir.module.category" id="custom_employee_limitation_access_setting">
+        <field name="name">Employee Field Access Limitation</field>
+        <field name="description">Employee Field Access Limitation</field>
+        <field name="sequence">42</field>
+    </record>
+
+    <record id="custom_employee_field_access_setting_work_group" model="res.groups">
+		<field name="name">Work Information</field>
+        <field name="category_id" ref="custom_employee_limitation_access_setting"/>
+	</record>
+
+    <record id="custom_employee_field_access_setting_badge_group" model="res.groups">
+		<field name="name">Received Badge</field>
+        <field name="category_id" ref="custom_employee_limitation_access_setting"/>
+	</record>
+
+    <record id="custom_employee_field_access_setting_private_group" model="res.groups">
+		<field name="name">Private Information</field>
+        <field name="category_id" ref="custom_employee_limitation_access_setting"/>
+	</record>
+
+    <record id="custom_employee_field_access_setting_academic_group" model="res.groups">
+		<field name="name">Academic Detail</field>
+        <field name="category_id" ref="custom_employee_limitation_access_setting"/>
+	</record>
+
+    <record id="custom_employee_field_access_setting_certificate_group" model="res.groups">
+		<field name="name">Certificate Detail</field>
+        <field name="category_id" ref="custom_employee_limitation_access_setting"/>
+	</record>
+
+    <record id="custom_employee_field_access_setting_profesional_group" model="res.groups">
+		<field name="name">Profesional Detail</field>
+        <field name="category_id" ref="custom_employee_limitation_access_setting"/>
+	</record>
+
+    <record id="custom_employee_field_access_setting_summary_group" model="res.groups">
+		<field name="name">Employee Summary</field>
+        <field name="category_id" ref="custom_employee_limitation_access_setting"/>
+	</record>
+
+    <record id="custom_employee_field_access_setting_hr_group" model="res.groups">
+		<field name="name">Hr Setting</field>
+        <field name="category_id" ref="custom_employee_limitation_access_setting"/>
+	</record>
+
+    <record id="custom_employee_field_access_setting_history_group" model="res.groups">
+		<field name="name">Employee History</field>
+        <field name="category_id" ref="custom_employee_limitation_access_setting"/>
+	</record>
+
+
+</odoo>

@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="internal_memo_setting_view_tree" model="ir.ui.view">
+        <field name="name">internal.memo.setting.view.tree</field>
+        <field name="model">internal.memo.setting</field>
+        <field name="arch" type="xml">
+            <tree create="false">
+                <field name="code"/>
+                <field name="name"/>
+				<field name="value" />
+            </tree>
+        </field>
+    </record>
+    <record id="internal_memo_setting_view_form" model="ir.ui.view">
+		<field name="name">internal.memo.setting.view.form</field>
+		<field name="model">internal.memo.setting</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<group>
+							<field name="code" readonly="1"  />
+							<field name="name" readonly="1"  />
+							<field name="value" />
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+    <record id="internal_memo_setting_action" model="ir.actions.act_window">
+		<field name="name">Setting Internal Memo</field>
+		<field name="res_model">internal.memo.setting</field>
+		<field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_internal_memo_setting" groups="internal_memo_admin_id" name="Setting" parent="menu_internal_memo_configuration" action="internal_memo_setting_action" sequence="9020"/>
+
+	<record id="res_config_settings_view_form_virtus" model="ir.ui.view">
+		<field name="name">res.config.settings.view.form.inherit.hr.recruitment.virtus</field>
+		<field name="model">res.config.settings</field>
+		<field name="priority" eval="75"/>
+		<field name="inherit_id" ref="hr_recruitment.res_config_settings_view_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//div[@name='online_posting_setting_container']" position="inside">
+				<div class="col-12 col-lg-6 o_setting_box" id="rec_email_setting">
+					<div class="o_setting_left_pane">
+					</div>
+					<div class="o_setting_right_pane">
+						<label for="recruitment_email" string="Outstanding Recruitment Email"/>
+						<div class="text-muted">
+							E-mail for outstanding recruitment reminder
+						</div>
+						<field name="recruitment_email"/>
+					</div>
+				</div>
+			</xpath>
+		</field>
+	</record>
+
+</odoo>

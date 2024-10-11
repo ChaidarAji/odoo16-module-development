@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="internal_memo_multiupdate_payslip_view_tree" model="ir.ui.view">
+		<field name="name">hr.payslip.line.view.tree</field>
+		<field name="model">hr.payslip.line</field>
+		<field name="arch" type="xml">
+			<tree string="Koreksi Gaji" editable="bottom">
+				<field name="employee_id" readonly="1"/>
+                <field name="nik" readonly="1"/>
+                <field name="name" readonly="1"/>
+                <field name="batch" readonly="1"/>
+				<field name="amount" readonly="1"/>
+                <field name="amount_correction"/>
+                <field name="is_override" readonly="1"/>
+                <button name="correction_confirm" string="Confirm" type="object" class="btn btn-primary"/>
+                <button name="correction_cancel" string="Reverse" type="object" class="btn btn-danger"/>
+			</tree>
+		</field>
+	</record>
+
+    <record id="internal_memo_multiupdate_payslip_view_search" model="ir.ui.view">
+        <field name="name">hr.payslip.line.multi.view.search</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="Acting Allowance" name="internal_memo_payroll_multi_acting" domain="[('code','=','ALACT')]"/>
+                <filter string="Adjustment Allowance" name="internal_memo_payroll_multi_adjust" domain="[('code','=','ALADJ')]"/>
+                <filter string="Competency Allowance" name="internal_memo_payroll_multi_comp" domain="[('code','=','ALCOMP')]"/>
+                <filter string="Guaranteed Incentive" name="internal_memo_payroll_multi_guaranted" domain="[('code','=','ALGUARAN')]"/>
+                <filter string="Housing Allowance" name="internal_memo_payroll_multi_housing" domain="[('code','in',['ALHOME','ALHOMEOPR'])]"/>
+                <filter string="Handphone Allowance" name="internal_memo_payroll_multi_handphone" domain="[('code','in',['ALHP','ALHPOPS'])]"/>
+                <filter string="Allnetral" name="internal_memo_payroll_multi_netral" domain="[('code','=','ALNETRAL')]"/>
+                <filter string="Insentif Libur Nasional" name="internal_memo_payroll_multi_nasional" domain="[('code','=','Alinslin')]"/>
+                <filter string="Insentif" name="internal_memo_payroll_multi_insentif" domain="[('code','=','ALINS')]"/>
+                <filter string="Location Allowance" name="internal_memo_payroll_multi_alloc" domain="[('code','in',['ALLOC','ALLOCTSM'])]"/>
+                <filter string="Long Shift Allowance" name="internal_memo_payroll_multi_allong" domain="[('code','=','ALLONG')]"/>
+                <filter string="Position Allowance" name="internal_memo_payroll_multi_position" domain="[('code','in',['ALPOSOPR','ALPOS'])]"/>
+                <filter string="RAPEL" name="internal_memo_payroll_multi_rapel" domain="[('code','=','ALRAPEL')]"/>
+                <filter string="Meal Allowance" name="internal_memo_payroll_multi_meal" domain="[('code','=','ALMEAL')]"/>
+                <filter string="Travel Allowance" name="internal_memo_payroll_multi_travel" domain="[('code','=','ALTRAV')]"/>
+                <filter string="Performance Allowance" name="internal_memo_payroll_multi_performance" domain="[('code','=','ALPERFORM')]"/>
+                <filter string="Transport Allowance" name="internal_memo_payroll_multi_transport" domain="[('code','=','ALTRANS')]"/>
+                <filter string="TOR Allowance" name="internal_memo_payroll_multi_tor" domain="[('code','=','ALTOR')]"/>
+                <filter string="Potongan Advance/Pot.Koperasi" name="internal_memo_payroll_multi_dedadv" domain="[('code','=','DEADV')]"/>
+                <filter string="BONUS" name="internal_memo_payroll_multi_bonus" domain="[('code','=','BONUS')]"/>
+                <filter string="Car Allowance" name="internal_memo_payroll_multi_carall" domain="[('code','=','CARALL')]"/>
+                <filter string="Pot. Lebih Bayar All" name="internal_memo_payroll_multi_delba" domain="[('code','=','DELBA')]"/>
+                <filter string="POTONGAN UANG MAKAN/POT MEDICAL" name="internal_memo_payroll_multi_demeal" domain="[('code','=','DEMEAL')]"/>
+                <filter string="Uang Jaminan Seragam" name="internal_memo_payroll_multi_seragam" domain="[('code','in',['DESERAGAM','DESRGM'])]"/>
+                <filter string="Uang Jaminan Training" name="internal_memo_payroll_multi_training" domain="[('code','=','DETRAIN')]"/>
+                <filter string="Uang Jaminan Training Sec. Guard" name="internal_memo_payroll_multi_training2" domain="[('code','=','DETRAIN2')]"/>
+                <filter string="Potongan Asrama" name="internal_memo_payroll_multi_deddormit" domain="[('code','=','DEDORMIT')]"/>
+                <filter string="Potongan CAR" name="internal_memo_payroll_multi_decar" domain="[('code','=','DECAR')]"/>
+                <filter string="Potongan Parkir Kendaraan" name="internal_memo_payroll_multi_depotmob" domain="[('code','=','DEPOTMOB')]"/>
+                <filter string="Potongan Rapel" name="internal_memo_payroll_multi_derapel" domain="[('code','=','DERAPEL')]"/>
+                <filter string="Incentive Return" name="internal_memo_payroll_multi_insreturn" domain="[('code','=','INSRETURN')]"/>
+                <filter string="Medical Reimburshment" name="internal_memo_payroll_multi_medreim" domain="[('code','=','MEDREIM')]"/>
+                <filter string="Overtime" name="internal_memo_payroll_multi_overtime" domain="[('code','in',['OVTINDEX','ALOVT'])]"/>
+                
+                <field name="batch" />
+                <field name="employee_id" />
+                <field name="nik" />
+            </search>
+        </field>
+    </record>
+
+
+    <record id="hr_pmultiple_payslip_update_action" model="ir.actions.act_window">
+		<field name="name">Koreksi Nilai Gaji</field>
+		<field name="res_model">hr.payslip.line</field>
+		<field name="view_mode">tree</field>
+        <field name="view_ids" eval="[(5,0,0),(0,0,{'view_mode':'tree','view_id':ref('internal_memo_multiupdate_payslip_view_tree')})]" />
+        <field name="context">{"search_default_internal_memo_payroll_multi_acting":1}</field>
+        <field name="domain">[('can_override', '=', True),('slip_id.state','=','draft')]</field>
+        <field name="search_view_id" ref="internal_memo_multiupdate_payslip_view_search"/>
+    </record>
+
+
+    <menuitem
+        id="menu_hr_payroll_multiple_payslip_update"
+        action="hr_pmultiple_payslip_update_action"
+        parent="internal_memo.menu_internal_memo_payroll_process"
+        sequence="60"
+        groups="custom_payroll_multiupdate_access_all_grant_group" />
+
+
+</odoo>

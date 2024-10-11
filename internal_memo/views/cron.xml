@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Definisi scheduler -->
+        <record id="ir_cron_schedule_hr_payroll_presensi" model="ir.cron">
+            <field name="name">Schedule Presensi</field>
+            <field name="model_id" ref="model_hr_payroll_presensi"/>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="state">code</field>
+            <field name="code">model.schedule_presensi()</field>
+            <field name="active" eval="False"/>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(minutes=15)).strftime('%Y-%m-%d %H:%M:%S')" />
+        </record>
+        <record id="contract_activation" model="ir.cron">
+            <field name="name">Aktivasi Kontrak</field>
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall">0</field>
+            <field name="model_id" ref="model_hr_contract"/>
+            <field name="code">model.aktivasi_kontrak()</field>
+            <field name="nextcall" eval="DateTime.now().strftime('%Y-%m-%d 18:00:00')" />
+            <field name="priority">10</field>
+        </record>
+</odoo>

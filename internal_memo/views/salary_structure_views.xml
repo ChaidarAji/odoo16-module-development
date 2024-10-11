@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="om_hr_payroll.action_view_hr_payroll_structure_list_form" model="ir.actions.act_window">
+        <field name="name">Payroll Component</field>
+        <field name="res_model">hr.payroll.structure</field>
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
+
+    <menuitem
+        id="om_hr_payroll.menu_hr_payroll_structure_view"
+        action="om_hr_payroll.action_view_hr_payroll_structure_list_form"
+        parent="om_hr_payroll.menu_hr_payroll_configuration"
+        sequence="2"
+        name="Payroll Component"
+    />
+</odoo>

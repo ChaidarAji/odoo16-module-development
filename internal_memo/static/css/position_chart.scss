@@ -1,0 +1,123 @@
+.position_chart_page {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+  padding-top: 20px;
+
+  .o_kanban_view.o_kanban_dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .organization-container {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    min-width: 500px;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    flex-grow: 1;
+
+    @media screen and (max-width: 480px) {
+      & {
+        overflow-x: scroll;
+      }
+    }
+
+    .items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 20px;
+        top: 8px;
+        height: 100%;
+        border-left: 1px solid #b6b6b6;
+        z-index: 0;
+      }
+
+      .head {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        position: relative;
+        z-index: 1;
+        padding: 4px;
+
+        &:hover {
+          background-color: #dddddd;
+          cursor: pointer;
+        }
+
+        .text-wrapper {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+      }
+
+      .children {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+        justify-content: space-between;
+        margin-left: 40px;
+        width: 100%;
+
+        .items .head::before {
+          content: '';
+          position: absolute;
+          border-top: 1px solid #b6b6b6;
+          width: 40px;
+          left: -20px;
+          height: 100%;
+          transform: translateY(50%);
+          z-index: 0;
+        }
+      }
+
+      .label {
+        font-size: 18px;
+        font-weight: 600;
+        color: black;
+      }
+      .count {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid #dddddd;
+        font-size: 14px;
+        color: #3b3b3b;
+        background-color: white;
+        box-sizing: border-box;
+        text-align: center;
+        z-index: 1;
+      }
+      
+    }
+  }
+}
+
+
+.nowrap {
+  white-space: nowrap;
+}

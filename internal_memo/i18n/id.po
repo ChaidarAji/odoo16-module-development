@@ -1,0 +1,1276 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* internal_memo
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0-20240513\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-21 13:53+0000\n"
+"PO-Revision-Date: 2024-05-21 13:53+0000\n"
+"Last-Translator: Refactory \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: internal_memo
+#: model_terms:ir.ui.view,arch_db:internal_memo.hr_employee_salary_contract_custom_model_view_form
+msgid "<span>/ month</span>"
+msgstr "<span>/ bulan</span>"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_contract__acting_allowance
+msgid "Acting Allowance"
+msgstr "Tunjangan Pelaksanaan"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__adjustment
+msgid "Adjustment"
+msgstr "Penyesuaian"
+
+#. module: internal_memo
+#: model:res.groups,name:internal_memo.internal_memo_admin_id
+msgid "Administrator"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_internal_backup
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__all_backup
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo_type__type__backup
+msgid "All Backup"
+msgstr "Semua Candangan"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo__status__validate
+msgid "Approved By Direktur of HRM"
+msgstr "Disetujui oleh Direktur HRM"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo__status__validate2
+msgid "Approved By General Manager CFS"
+msgstr "Disetujui oleh General Manager CFS"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo__status__validate1
+msgid "Approved By Ops Manager"
+msgstr "Disetujui oleh Ops Manager"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip__month__04
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip_run__month__04
+msgid "April"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__attachment
+msgid "Attachment"
+msgstr "Lampiran"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip__month__08
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip_run__month__08
+msgid "August"
+msgstr "Agustus"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_bpjs
+msgid "BPJS Deduction"
+msgstr "Potongan BPJS"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_bpjs_kesehatan
+msgid "BPJS Kesehatan Perusahaan"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_bpjs_pensiun
+msgid "BPJS Pensiun Perusahaan"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__overtime_type__overtime_schema__stage
+msgid "Bertingkat"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_contract_type__salary_type__monthly
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_employee__salary_type__monthly
+msgid "Bulanan"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_setting__code
+msgid "Code"
+msgstr "Kode"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_contract__competency_allowance
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_competency
+msgid "Competency Allowance"
+msgstr "Tunjangan Kompetensi"
+
+#. module: internal_memo
+#: model_terms:ir.ui.view,arch_db:internal_memo.hr_payslip_run_custom_view_form
+msgid "Contract"
+msgstr "Kontrak"
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_hr_contract_type
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__contract_type
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip_run__contract_id
+msgid "Contract Type"
+msgstr "Jenis Kontrak"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__location_id
+msgid "Cost Centre"
+msgstr "Pusat Biaya"
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_res_country_state
+msgid "Country state"
+msgstr "Negara bagian"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_periode__create_uid
+#: model:ir.model.fields,field_description:internal_memo.field_internal_backup__create_uid
+#: model:ir.model.fields,field_description:internal_memo.field_internal_deduction__create_uid
+#: model:ir.model.fields,field_description:internal_memo.field_internal_long_shift__create_uid
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__create_uid
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_employee__create_uid
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_setting__create_uid
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_type__create_uid
+#: model:ir.model.fields,field_description:internal_memo.field_master_job__create_uid
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type__create_uid
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay__create_uid
+msgid "Created by"
+msgstr "Dibuat Oleh"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_periode__create_date
+#: model:ir.model.fields,field_description:internal_memo.field_internal_backup__create_date
+#: model:ir.model.fields,field_description:internal_memo.field_internal_deduction__create_date
+#: model:ir.model.fields,field_description:internal_memo.field_internal_long_shift__create_date
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__create_date
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_employee__create_date
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_setting__create_date
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_type__create_date
+#: model:ir.model.fields,field_description:internal_memo.field_master_job__create_date
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type__create_date
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay__create_date
+msgid "Created on"
+msgstr "Dibuat Pada"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__currency_id
+msgid "Currency"
+msgstr "Mata Uang"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_contract__daily_allowance
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_daily
+msgid "Daily Allowance"
+msgstr "Tunjangan Harian"
+
+#. module: internal_memo
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_memo_view_search
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_validate1_view_search
+msgid "Dalam Pengajuan"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__work_expected
+msgid "Days Expected"
+msgstr "Ekpektasi Hari"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip__month__12
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip_run__month__12
+msgid "December"
+msgstr "Desember"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__departement_id
+msgid "Departement"
+msgstr "Departemen"
+
+#. module: internal_memo
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_memo_view_search
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_validate1_view_search
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_validate2_view_search
+msgid "Disetujui"
+msgstr ""
+
+#. module: internal_memo
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_memo_view_search
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_validate1_view_search
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_validate2_view_search
+msgid "Disetujui By Ops Manager"
+msgstr ""
+
+#. module: internal_memo
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_memo_view_search
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_validate1_view_search
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_validate2_view_search
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_validate_view_search
+msgid "Disetujui Direktur of HRM"
+msgstr ""
+
+#. module: internal_memo
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_memo_view_search
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_validate1_view_search
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_validate2_view_search
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_validate_view_search
+msgid "Disetujui General Manager CFS"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_periode__display_name
+#: model:ir.model.fields,field_description:internal_memo.field_internal_backup__display_name
+#: model:ir.model.fields,field_description:internal_memo.field_internal_deduction__display_name
+#: model:ir.model.fields,field_description:internal_memo.field_internal_long_shift__display_name
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__display_name
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_employee__display_name
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_setting__display_name
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_type__display_name
+#: model:ir.model.fields,field_description:internal_memo.field_master_job__display_name
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type__display_name
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay__display_name
+msgid "Display Name"
+msgstr "Nama Tampilan"
+
+#. module: internal_memo
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_memo_view_search
+#: model_terms:ir.ui.view,arch_db:internal_memo.internal_memo_validate1_view_search
+msgid "Ditolak"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__duration
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__duration_name
+msgid "Durasi"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_hr_employee
+msgid "Employee"
+msgstr "Karyawan"
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_hr_contract
+msgid "Employee Contract"
+msgstr "Kontrak Karyawan"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_periode__end
+msgid "End"
+msgstr "Berakhir"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip__month__02
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip_run__month__02
+msgid "February"
+msgstr "Februari"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_deduction__multiplier__wage
+#: model:ir.model.fields.selection,name:internal_memo.selection__overtime_type_pay__multiplier__wage
+msgid "Gaji Pokok"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_hr_payslip_employees
+msgid "Generate payslips for all selected employees"
+msgstr "Buat Slip Gaji untuk semuar karyawan yang dipilih"
+
+#. module: internal_memo
+#. odoo-python
+#: code:addons/internal_memo/models/custom_payslip.py:0
+#, python-format
+msgid "Global Leaves"
+msgstr "Cuti Global"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__grade_id
+#: model:ir.model.fields,field_description:internal_memo.field_master_job__grade_id
+msgid "Grade"
+msgstr "Golongan"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_guaranteed_incentive
+msgid "Guaranteed Incentive"
+msgstr "Insentif Terjamin"
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_hr_grade
+msgid "HR Grade"
+msgstr "Golongan HR"
+
+#. module: internal_memo
+#: model:ir.actions.act_window,name:internal_memo.action_hr_periode
+#: model:ir.model,name:internal_memo.model_hr_periode
+#: model:ir.ui.menu,name:internal_memo.menu_hr_periode
+msgid "HR Periode"
+msgstr "Periode HR"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_contract__handphone_allowance
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_phone
+msgid "Handphone Allowance"
+msgstr "Tunjangan Telfon Genggam"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__overtime_type_pay__libur__holiday
+msgid "Hari Minggu/Libur"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__overtime_type_pay__libur__normal
+msgid "Hari Normal"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay__duration
+msgid "Hari/jam"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_contract_type__salary_type__daily
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_employee__salary_type__daily
+#: model:ir.model.fields.selection,name:internal_memo.selection__overtime_type__overtime_tipe__daily
+msgid "Harian"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__hide_backup
+msgid "Hide Backup"
+msgstr "Sembunyikan Cadangan"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__hide_overtime
+msgid "Hide Overtime"
+msgstr "Sembunyikan Lembur"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__hide_rapel
+msgid "Hide Rapel"
+msgstr "Sembunyikan Rapel"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__hide_shift
+msgid "Hide Shift"
+msgstr "Sembunyikan Shift"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__hide_total
+msgid "Hide Total"
+msgstr "Sembunyikan Total"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_contract__housing_allowance
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_housing
+msgid "Housing Allowance"
+msgstr "Tunjangan Rumahan"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_periode__id
+#: model:ir.model.fields,field_description:internal_memo.field_internal_backup__id
+#: model:ir.model.fields,field_description:internal_memo.field_internal_deduction__id
+#: model:ir.model.fields,field_description:internal_memo.field_internal_long_shift__id
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__id
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_employee__id
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_setting__id
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_type__id
+#: model:ir.model.fields,field_description:internal_memo.field_master_job__id
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type__id
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay__id
+msgid "ID"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_incentive
+msgid "Incentive"
+msgstr "Terjamin"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_employee__name
+msgid "Info Tambahan"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__national_holiday
+msgid "Ins. National Daily"
+msgstr "Ins. Harian Nasional"
+
+#. module: internal_memo
+#: model:ir.actions.act_window,name:internal_memo.internal_memo_memo_action
+#: model:ir.model,name:internal_memo.model_internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_employee__memo_id
+#: model:ir.module.category,name:internal_memo.internal_memo_management
+#: model:ir.ui.menu,name:internal_memo.menu_internal_memo
+#: model:ir.ui.menu,name:internal_memo.menu_internal_memo_memo
+msgid "Internal Memo"
+msgstr "Memo Internal"
+
+#. module: internal_memo
+#: model:ir.actions.act_window,name:internal_memo.internal_memo_employee_action
+#: model:ir.model,name:internal_memo.model_internal_memo_employee
+msgid "Internal Memo Employee"
+msgstr "Memo Internal Karyawan"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_jht
+msgid "JHT Allowance"
+msgstr "Tunjangan JHT"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_jht
+msgid "JHT Deduction"
+msgstr "Potongan JHT"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_jkk
+msgid "JKK Allowance"
+msgstr "Tunjangan JKK"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_jkm
+msgid "JKM Allowance"
+msgstr "Tunjangan JKM"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__master_id
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_employee__position_id
+msgid "Jabatan"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__overtime_type__overtime_tipe__hour
+msgid "Jam"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip__month__01
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip_run__month__01
+msgid "January"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_type__type
+msgid "Jenis"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.ui.menu,name:internal_memo.menu_internal_memo_configuration_backup
+msgid "Jenis All Backup"
+msgstr "Semua Jenis Cadangan"
+
+#. module: internal_memo
+#: model:ir.actions.act_window,name:internal_memo.internal_memo_backup_action
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__backup_id
+msgid "Jenis Backup"
+msgstr "Jenis Cadangan"
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_internal_memo_type
+msgid "Jenis Internal Memo"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.actions.act_window,name:internal_memo.internal_memo_jenis_lembur_action
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__overtime_id
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type__name
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay__name
+#: model:ir.ui.menu,name:internal_memo.menu_internal_memo_configuration_overtime_jenis
+msgid "Jenis Lembur"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.actions.act_window,name:internal_memo.internal_memo_type_action
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__type_id
+#: model:ir.ui.menu,name:internal_memo.menu_internal_memo_configuration_type
+msgid "Jenis Memo"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_internal_deduction
+msgid "Jenis Potongan"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.ui.menu,name:internal_memo.menu_internal_memo_configuration_tapel
+msgid "Jenis Potongan Rapel"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.actions.act_window,name:internal_memo.internal_memo_rapel_action
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__rapel_id
+msgid "Jenis Rapel"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.actions.act_window,name:internal_memo.internal_memo_shift_action
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__shift_id
+#: model:ir.ui.menu,name:internal_memo.menu_internal_memo_configuration_shift
+msgid "Jenis Shift"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_hr_job
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__position_id
+msgid "Job Position"
+msgstr "Posisi Kerja"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip__month__07
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip_run__month__07
+msgid "July"
+msgstr "Juli"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip__month__06
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip_run__month__06
+msgid "June"
+msgstr "Juni"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__description
+msgid "Keterangan"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__description3
+msgid "Keterangan Persetujuan Direktur of HRM"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__description2
+msgid "Keterangan Persetujuan General Manager CFS"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__description1
+msgid "Keterangan Persetujuan Ops Manager"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_type__code
+msgid "Kode"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type__code
+msgid "Kode Lembur"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_type__condition
+msgid "Kondisi"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.ui.menu,name:internal_memo.menu_internal_memo_configuration
+msgid "Konfigurasi"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_koperasi
+msgid "Koperasi Deduction"
+msgstr "Potongan Koperasi"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo_type__type__other
+msgid "Lainnya"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_periode____last_update
+#: model:ir.model.fields,field_description:internal_memo.field_internal_backup____last_update
+#: model:ir.model.fields,field_description:internal_memo.field_internal_deduction____last_update
+#: model:ir.model.fields,field_description:internal_memo.field_internal_long_shift____last_update
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo____last_update
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_employee____last_update
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_setting____last_update
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_type____last_update
+#: model:ir.model.fields,field_description:internal_memo.field_master_job____last_update
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type____last_update
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay____last_update
+msgid "Last Modified on"
+msgstr "Terakhir Edit Pada"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_periode__write_uid
+#: model:ir.model.fields,field_description:internal_memo.field_internal_backup__write_uid
+#: model:ir.model.fields,field_description:internal_memo.field_internal_deduction__write_uid
+#: model:ir.model.fields,field_description:internal_memo.field_internal_long_shift__write_uid
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__write_uid
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_employee__write_uid
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_setting__write_uid
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_type__write_uid
+#: model:ir.model.fields,field_description:internal_memo.field_master_job__write_uid
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type__write_uid
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay__write_uid
+msgid "Last Updated by"
+msgstr "Terakhir Update Oleh"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_periode__write_date
+#: model:ir.model.fields,field_description:internal_memo.field_internal_backup__write_date
+#: model:ir.model.fields,field_description:internal_memo.field_internal_deduction__write_date
+#: model:ir.model.fields,field_description:internal_memo.field_internal_long_shift__write_date
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__write_date
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_employee__write_date
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_setting__write_date
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_type__write_date
+#: model:ir.model.fields,field_description:internal_memo.field_master_job__write_date
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type__write_date
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay__write_date
+msgid "Last Updated on"
+msgstr "Terakhir Dirubah Pada"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo_type__type__overtime
+msgid "Lembur"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__service_length
+msgid "Length Of Services"
+msgstr "Lama Bekerja"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay__libur
+msgid "Libur"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_contract__location_allowance
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_location
+msgid "Location Allowance"
+msgstr "Tunjangan Lokasi"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_employee__unit_id
+msgid "Lokasi Kerja"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_internal_long_shift
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__long_shift
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo_type__type__shift
+msgid "Long Shift"
+msgstr "Shift Panjang"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip__month__03
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip_run__month__03
+msgid "March"
+msgstr "Maret"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_employee__master_id
+#: model:ir.model.fields,field_description:internal_memo.field_hr_job__master_id
+#: model:ir.model.fields,field_description:internal_memo.field_internal_backup__master_id
+#: model:ir.model.fields,field_description:internal_memo.field_internal_deduction__master_id
+#: model:ir.model.fields,field_description:internal_memo.field_internal_long_shift__master_id
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay__master_id
+msgid "Master Jabatan"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip__month__05
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip_run__month__05
+msgid "May"
+msgstr "Mei"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_meal
+msgid "Meal Allowance"
+msgstr "Uang Makan"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_medical
+msgid "Medical Allowance"
+msgstr "Tunjangan Medis"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_mess
+msgid "Mess Deduction"
+msgstr "Potongan Mess"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_contract_type__salary_type
+#: model:ir.model.fields,field_description:internal_memo.field_hr_employee__salary_type
+#: model:ir.model.fields,field_description:internal_memo.field_hr_periode__periode
+msgid "Model Gaji"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__month
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip_run__month
+msgid "Bulan"
+msgstr ""
+
+#. module: internal_memo
+#: model_terms:ir.ui.view,arch_db:internal_memo.hr_payslip_run_custom_view_form
+msgid "Bulan Dan Tahun"
+msgstr ""
+
+#. module: internal_memo
+#: model_terms:ir.ui.view,arch_db:internal_memo.hr_payslip_run_custom_view_form
+#: model_terms:ir.ui.view,arch_db:internal_memo.hr_payslip_custom_view_form
+msgid "Month and Year"
+msgstr "Bulan Dan Tahun"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_periode__periode__month
+msgid "Monthly"
+msgstr "Bulanan"
+
+#. module: internal_memo
+#: model_terms:ir.ui.view,arch_db:internal_memo.hr_employee_salary_contract_custom_model_view_form
+msgid "Monthly Advantages in Cash"
+msgstr "Keuntungan Bulanan Dalam Bentuk Tunai"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay__multiplier
+msgid "Multiplier"
+msgstr "Pengganda"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_backup__name
+#: model:ir.model.fields,field_description:internal_memo.field_internal_deduction__name
+#: model:ir.model.fields,field_description:internal_memo.field_internal_long_shift__name
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__name
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_type__name
+msgid "Nama"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__approve1_id
+msgid "Nama Ops Manager"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_periode__name
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_setting__name
+#: model:ir.model.fields,field_description:internal_memo.field_master_job__name
+msgid "Name"
+msgstr "Nama"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__accumulation_netto_year
+msgid "Netto Accumulative"
+msgstr "Akumulasi Netto"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_deduction__nilai
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay__value
+msgid "Nilai"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.actions.act_window,name:internal_memo.internal_memo_nilai_lembur_action
+#: model:ir.ui.menu,name:internal_memo.menu_internal_memo_configuration_overtime_nilai
+msgid "Nilai Lembur"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_overtime_type_pay
+msgid "Nilai Pembayaran Lembur"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_backup__nilai
+#: model:ir.model.fields,field_description:internal_memo.field_internal_long_shift__nilai
+msgid "Nilai Pengali"
+msgstr ""
+
+#. module: internal_memo
+#. odoo-python
+#: code:addons/internal_memo/models/custom_payslip.py:0
+#, python-format
+msgid ""
+"No running contract found for the employee: %s or no contract in the given "
+"period"
+msgstr ""
+"Tidak ditemukan kontrak yang sedang berjalan untuk pegawai: %s atau tidak ada kontrak dalam periode yang diberikan"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip__month__11
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip_run__month__11
+msgid "November"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip__month__10
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip_run__month__10
+msgid "Oktober"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay__operator
+msgid "Operator"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__overtime
+msgid "Overtime"
+msgstr "Lembur"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type__overtime_schema
+msgid "Overtime Schema"
+msgstr "Skema Lembur"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type__overtime_tipe
+msgid "Overtime Tipe"
+msgstr "Tipe Lembur"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_grade__parent_id
+#: model:ir.model.fields,field_description:internal_memo.field_master_job__parent_id
+msgid "Parent"
+msgstr "Induk"
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_hr_payslip
+msgid "Pay Slip"
+msgstr "Slip Gaji"
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_hr_payslip_run
+msgid "Payslip Batches"
+msgstr "Slip Gaji Massal"
+
+#. module: internal_memo
+#: model_terms:ir.ui.view,arch_db:internal_memo.hr_payslip_custom_view_form
+msgid "Payslip Inputs"
+msgstr "Masukan Slip Gaji"
+
+#. module: internal_memo
+#: model_terms:ir.ui.view,arch_db:internal_memo.hr_payslip_run_custom_view_form
+msgid "Payslips"
+msgstr "Slip Gaji"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__employee_ids
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_employee__employee_id
+msgid "Pegawai"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__creator_id
+msgid "Pemohon"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo_type__condition__plus
+msgid "Penambah"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.ui.menu,name:internal_memo.menu_internal_memo_memo_create
+#: model:res.groups,name:internal_memo.internal_memo_creator_id
+msgid "Pengajuan Internal Memo"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_deduction__multiplier
+msgid "Pengali"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo_type__condition__minus
+msgid "Pengurangan"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_pensiun
+msgid "Pensiun Deduction"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_contract__performance_allowance
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_performance
+msgid "Performance Allowance"
+msgstr "Tunjangan Performa"
+
+#. module: internal_memo
+#: model_terms:ir.ui.view,arch_db:internal_memo.hr_payslip_custom_view_form
+#: model_terms:ir.ui.view,arch_db:internal_memo.hr_payslip_run_custom_view_form
+msgid "Period"
+msgstr "Periode"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_contract_type__periode
+msgid "Periode Gaji"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_periode__periode__periode
+msgid "Periode Waktu"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_contract_type__salary_amount
+#: model:ir.model.fields,field_description:internal_memo.field_hr_employee__salary_amount
+msgid "Persen Gaji"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.actions.act_window,name:internal_memo.internal_memo_memo_validate_action
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__action3_id
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__approve3_id
+#: model:ir.ui.menu,name:internal_memo.menu_internal_memo_memo_direktur
+#: model:res.groups,name:internal_memo.internal_memo_validate_id
+msgid "Persetujuan Direktur of HRM"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.actions.act_window,name:internal_memo.internal_memo_memo_validate2_action
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__action2_id
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__approve2_id
+#: model:ir.ui.menu,name:internal_memo.menu_internal_memo_memo_gm
+#: model:res.groups,name:internal_memo.internal_memo_validate2_id
+msgid "Persetujuan General Manager CFS"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__action1_id
+msgid "Persetujuan Ops Manager"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.actions.act_window,name:internal_memo.internal_memo_memo_validate1_action
+#: model:ir.ui.menu,name:internal_memo.menu_internal_memo_memo_ops_manager
+#: model:res.groups,name:internal_memo.internal_memo_validate1_id
+msgid "Persetujuan Sr. Ops Manager"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__overtime_type__overtime_schema__opsional
+msgid "Pilihan"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_contract__position_allowance
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_position
+msgid "Position Allowance"
+msgstr "Tunjangan Jabatan"
+
+#. module: internal_memo
+#: model:ir.actions.act_window,name:internal_memo.hr_master_position_action
+#: model:ir.model,name:internal_memo.model_master_job
+#: model:ir.ui.menu,name:internal_memo.menu_hr_master_position_tree
+msgid "Position Master"
+msgstr "Posisi Master"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_advanced
+msgid "Potongan Advanced"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_housing
+msgid "Potongan Asrama"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_seragam
+msgid "Potongan Jaminan Seragam"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_training
+msgid "Potongan Jaminan Training"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_presence
+msgid "Potongan Kehadiran"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_lebih
+msgid "Potongan Lebih Bayar"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_rapel
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo_type__type__rapel
+msgid "Potongan Rapel"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_sec_guard
+msgid "Potongan Training Sec. Guard"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_food
+msgid "Potongan Uang Makan"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_kehadiran
+msgid "Presence Deduction"
+msgstr "Potongan Kehadiran"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__province
+msgid "Province"
+msgstr "Provinsi"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo__status__rejected
+msgid "Rejected By Direktur of HRM"
+msgstr "Ditolak oleh Direktur HRM"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo__status__rejected2
+msgid "Rejected By General Manager CFS"
+msgstr "Ditolak oleh General Manager CFS"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo__status__rejected1
+msgid "Rejected By Ops Manager"
+msgstr "Ditolak oleh Ops Manager"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__is_resign
+msgid "Resign ?"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__salary
+msgid "Salary"
+msgstr "Gaji"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__salary_netto
+msgid "Salary Netto"
+msgstr "Gaji Bersih"
+
+#. module: internal_memo
+#. odoo-python
+#: code:addons/internal_memo/models/custom_payslip.py:0
+#: code:addons/internal_memo/models/custom_payslip.py:0
+#, python-format
+msgid "Salary Slip of %s for %s"
+msgstr "Slip Gaji %s untuk %s"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_contract_type__salary_structure
+msgid "Salary Structure"
+msgstr "Strutur Gaji"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__overtime_type_pay__libur__all
+msgid "Semua Hari"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip__month__09
+#: model:ir.model.fields.selection,name:internal_memo.selection__hr_payslip_run__month__09
+msgid "September"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_internal_memo_setting
+#: model:ir.ui.menu,name:internal_memo.menu_internal_memo_setting
+msgid "Setting"
+msgstr "Pengaturan"
+
+#. module: internal_memo
+#: model:ir.actions.act_window,name:internal_memo.internal_memo_setting_action
+msgid "Setting Internal Memo"
+msgstr "Pengaturan Internal Memo"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo__action1_id__approve
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo__action2_id__approve
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo__action3_id__approve
+msgid "Setujui"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_periode__start
+msgid "Start"
+msgstr "Mulai"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__status
+msgid "Status"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo__status__submit
+msgid "Submitted"
+msgstr "Di Ajukan"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__take_home_pay
+msgid "Take Home Pay"
+msgstr "Gaji Bersih"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__date_memo
+msgid "Tanggal"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__date_approve3
+msgid "Tanggal Persetujuan Direktur of HRM"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__date_approve2
+msgid "Tanggal Persetujuan General Manager CFS"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__date_approve1
+msgid "Tanggal Persetujuan Ops Manager"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__pph21
+msgid "Tax"
+msgstr "Pajak"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__accumulation_pph21_year
+msgid "Tax Accumulative"
+msgstr "Akumulasi Pajak"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__ptkp_id
+msgid "Tax Status"
+msgstr "Pajak Status"
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_deduction__multiplier__none
+#: model:ir.model.fields.selection,name:internal_memo.selection__overtime_type_pay__multiplier__none
+#: model:ir.model.fields.selection,name:internal_memo.selection__overtime_type_pay__operator__none
+msgid "Tidak Ada"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model,name:internal_memo.model_overtime_type
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay__type_id
+msgid "Tipe Lembur"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo__action1_id__reject
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo__action2_id__reject
+#: model:ir.model.fields.selection,name:internal_memo.selection__internal_memo__action3_id__reject
+msgid "Tolak"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_tor
+msgid "Tor Allowance"
+msgstr "Tunjangan Tor"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__total_allowance
+msgid "Total Allowance"
+msgstr "Total Tunjangan"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__total_deduction
+msgid "Total Deduction"
+msgstr "Total Potongan"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_employee__total_amount
+msgid "Total Nilai"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__tax_total
+msgid "Total Tax"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__allow_transport
+msgid "Transport Allowance"
+msgstr "Tunjangan Transportasi"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__travel_performance
+msgid "Travel Allowance"
+msgstr "Tunjangan Perjalanan"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__ump
+#: model:ir.model.fields,field_description:internal_memo.field_res_country_state__ump
+msgid "UMP"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__deduction_shoes
+msgid "Uang Jaminan Sepatu"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_overtime_type_pay__urutan
+msgid "Urutan"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.module.category,description:internal_memo.internal_memo_management
+msgid "User access level for Internal Memo"
+msgstr "Tingkat akses pengguna untuk Internal Memo"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo_setting__value
+msgid "Value"
+msgstr "Nilai"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__date_start
+msgid "Waktu Mulai"
+msgstr ""
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_internal_memo__date_end
+msgid "Waktu Selesai"
+msgstr ""
+
+#. module: internal_memo
+#. odoo-python
+#: code:addons/internal_memo/models/custom_payslip.py:0
+#, python-format
+msgid "Work Day Count"
+msgstr "Jumlah Hari Kerja"
+
+#. module: internal_memo
+#. odoo-python
+#: code:addons/internal_memo/models/custom_payslip.py:0
+#, python-format
+msgid "Work Day Expected"
+msgstr "Hari Kerja yang Diharapkan"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__work_days
+msgid "Work Days"
+msgstr "Hari Kerja"
+
+#. module: internal_memo
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip__year
+#: model:ir.model.fields,field_description:internal_memo.field_hr_payslip_run__year
+msgid "Year"
+msgstr "Tahun"
+
+#. module: internal_memo
+#. odoo-python
+#: code:addons/internal_memo/models/custom_payslip_employee.py:0
+#, python-format
+msgid "You must select employee(s) to generate payslip(s)."
+msgstr "Anda harus memilih karyawan untuk menghasilkan slip gaji."

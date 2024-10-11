@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="hr_ref_religion_view_tree" model="ir.ui.view">
+        <field name="name">ref.religion.view.tree</field>
+        <field name="model">ref.religion</field>
+        <field name="arch" type="xml">
+            <tree create="true">
+                <field name="code2"/>
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+	<record id="hr_ref_religion_view_form" model="ir.ui.view">
+		<field name="name">ref.religion.view.form</field>
+		<field name="model">ref.religion</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<sheet>
+					<group>
+						<field name="name" />
+						<field name="code" /> 
+                        <field name="code2" /> 
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+    <record id="hr_area_view_custom_form" model="ir.ui.view">
+        <field name="name">area.custom.model.view.form</field>
+        <field name="model">area</field>
+        <field name="inherit_id" ref="weha_smart_approvals.view_area_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='code_site_card']" position="after">
+                <field name="code" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_work_location_view_form" model="ir.ui.view">
+        <field name="name">hr.work.location.custom.model.view.form</field>
+        <field name="model">hr.work.location</field>
+        <field name="inherit_id" ref="hr.hr_work_location_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="code" />
+            </xpath>
+            <xpath expr="//field[@name='code']" position="after">
+                <field name="area_id" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_ref_religion_action" model="ir.actions.act_window">
+		<field name="name">Agama</field>
+		<field name="res_model">ref.religion</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+    <menuitem
+        id="menu_ref_relogion"
+        action="hr_ref_religion_action"
+        parent="hr.menu_config_employee"
+        sequence="57"
+        groups="hr.group_hr_user"/>
+</odoo>
