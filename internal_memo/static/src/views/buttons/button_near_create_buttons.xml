@@ -55,6 +55,9 @@
 
 	<t t-name="internal_memo.PrePayrollButtonView.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary" owl="1">
 		<xpath expr="//t[@t-if='props.showButtons']" position="after">
+			<button type="button" t-on-click="OnFilterPrePayroll" class="btn btn-primary" style="margin-left:5px;">
+				Advanced Filter
+			</button>
 			<button type="button" t-on-click="OnImportPrepayroll" class="btn btn-primary" style="margin-left:5px;">
 				Import Data Payroll
 			</button>

@@ -46,6 +46,9 @@ class HrPrePayroll(models.Model):
 		string   = 'Bulan',    
 		required =True, 
 		Default  = datetime.now().strftime("%m"))
+	
+	ignore_formula		= fields.Boolean(string='Ignore Formula')
+	nik					= fields.Char(string='NIK')
 
 	
 

@@ -61,6 +61,8 @@ export const ButtonPrePayrollImportView = {
 
 
 
+
+
 registry.category("views").add("button_regional_value_button", ButtonRegionalValueImportView);
 registry.category("views").add("button_koreksi_gaji_button", ButtonKoreksiGajiImportView);
 registry.category("views").add("button_contract_button", ButtonContractImportView);

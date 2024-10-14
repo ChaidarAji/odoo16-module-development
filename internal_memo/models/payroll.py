@@ -172,6 +172,8 @@ class ExportPayrollKoreksiGajiWizard(models.TransientModel):
 								   ('template', 'Template')], string='Opsi Export', default='template')
 	export_rule_ids = fields.One2many("export.payroll.koreksi.gaji.wizard.rule", 'wizard_id', string="Salary Components")
 	excel_file = fields.Binary(string='Download Report Excel',)
+	period_id = fields.Many2one("hr.periode", string="Payroll Periode")
+
 	
 	def generate_excel_template(self):
 		output 						= io.BytesIO()
@@ -199,15 +201,15 @@ class ExportPayrollKoreksiGajiWizard(models.TransientModel):
 
 		sheet.set_column(0, 0, 20)
 		sheet.set_column(1, 1, 50)
-		sheet.write(1, 0, 'NIK', header)
-		sheet.write(1, 0, 'Nama', header)
+		sheet.write(0, 0, 'NIK', header)
+		sheet.write(0, 1, 'Nama', header)
 		
-		column = 3
+		column = 2
 		for rule in self.export_rule_ids:
-			sheet.write(column, 0, rule.name, header)
+			sheet.write(0, column, rule.rule_id.code, header)
 			column+=1
 		
-		sheet.close()
+		workbook.close()
 		output.seek(0)
 		file_base64 = base64.b64encode(output.read())
 		output.close()
@@ -218,9 +220,77 @@ class ExportPayrollKoreksiGajiWizard(models.TransientModel):
             'target': 'self'
         }
 
+	def generate_excel_data(self):
+		output 						= io.BytesIO()
+		workbook 					= xlsxwriter.Workbook(output, {'in_memory': True})
+		sheet 						= workbook.add_worksheet()
+
+		cell_format 			= workbook.add_format({'font_size': 12, 'align': 'center'})
+		head 					= workbook.add_format({'align': 'center', 'bold': True, 'font_size': 16})
+		header 					= workbook.add_format({'align': 'center', 'bold': True, 'font_size': 10, 'border' : 1})
+		cell_left 				= workbook.add_format({'font_size': 10, 'align': 'left', 'border' : 1})
+		cell_center 			= workbook.add_format({'font_size': 10, 'align': 'center', 'border' : 1})
+		cell_right 				= workbook.add_format({'font_size': 10, 'align': 'right', 'border' : 1})
+		cell_right_number 		= workbook.add_format({'font_size': 10, 'align': 'right', 'border' : 1, 'num_format': '#,##0'})
+
+
+		column_list = [
+						'C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB',
+				 		'AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR',
+						'AS','AT','AU', 'AV','AW','AX', 'AY','AZ','BA','BB',
+				 		'BC','BD','BE','BF','BG','BH','BI','BJ','BK','BL','BM','BN','BO','BP','BQ','BR',
+						'BS','BT','BU', 'BV','BW','BX', 'BY','BZ'
+					 ]
+		
+
+		sheet.set_column(0, 0, 20)
+		sheet.set_column(1, 1, 50)
+		sheet.write(0, 0, 'NIK', header)
+		sheet.write(0, 1, 'Nama', header)
+		header_names = {}
+		column = 2
+		for rule_line in self.export_rule_ids:
+			sheet.write(0, column, rule_line.rule_id.code, header)
+			header_names[rule_line.rule_id.code] = column
+			column+=1
+
+		all_data = {}
+		payslip_line_ids = self.env['hr.payslip.line'].sudo().search([('slip_id.state','=','draft'), ('slip_id.payroll_periode','=', self.period_id.id)], order='nik asc')
+		employee_ids = payslip_line_ids.mapped('employee_id')
+		for employee in employee_ids.with_progress(msg="Generating Data"):
+			rule_data = {}
+			for header in header_names.keys():
+				#Get rule data
+				payslip_line_ids = payslip_line_ids.filtered(lambda p: p.employee_id.id == employee.id and p.salary_rule_id.code == header)
+				print('===========================',header, employee.name, payslip_line_ids[0].amount if payslip_line_ids else 0)
+				rule_data[header] = payslip_line_ids[0].amount if payslip_line_ids else 0
+			all_data[employee.id] = rule_data
+		print('=========================', all_data)
+		current_row = 1
+		for employee, data in all_data.items():
+			employee_id = self.env['hr.employee'].sudo().browse(employee)
+			sheet.write(current_row, 0, employee_id.nip, cell_left)
+			sheet.write(current_row, 1, employee_id.name, cell_left)
+			for header, value in data.items():
+				sheet.write(current_row, header_names[header], value, cell_right_number)
+			current_row+=1
+		
+		workbook.close()
+		output.seek(0)
+		file_base64 = base64.b64encode(output.read())
+		output.close()
+		self.excel_file = file_base64
+		return {
+            'type': 'ir.actions.act_url',
+            'url': 'web/content/?model=export.payroll.koreksi.gaji.wizard&field=excel_file&download=true&id=%s&filename=%s' % (self.id, "Koreksi_Nilai_Gaji_Data.xlsx"),
+            'target': 'self'
+        }
+
 	def button_export_data(self):
 		if self.only_template == "template":
-			self.generate_excel_template()
+			return self.generate_excel_template()
+		else:
+			return self.generate_excel_data()
 
 class ExportPayrollKoreksiGajiWizardRule(models.TransientModel):
 	_name = "export.payroll.koreksi.gaji.wizard.rule"
@@ -232,24 +302,75 @@ class ImportPayrollKoreksiGajiWizard(models.TransientModel):
 	_name = "import.payroll.koreksi.gaji.wizard"
    
 	file = fields.Binary(string="File", required=True)
+	filename = fields.Char(string="Filename")
+	period_id = fields.Many2one("hr.periode", string="Payroll Periode", required=True)
+	total_employee_count = fields.Integer(string="Jumlah Pegawai Terhitung")
+	total_employee_processed = fields.Integer(string="Jumlah Pegawai Terproses")
+	error_ids = fields.One2many("import.payroll.koreksi.gaji.error.wizard", "wizard_id", string="Data Error")
+	is_override = fields.Boolean(string='Override', default = True)
+	ignore_formula = fields.Boolean(string='Ignore Formula', default = False)
 
 	def import_koreksi_gaji_save(self):
 		#try :
 		wb = openpyxl.load_workbook(filename=BytesIO(base64.b64decode(self.file)), read_only=True)
 
 		ws = wb.active
+		#get column name
+		column_name = {}
+		for record in ws.iter_rows(min_row=1, max_row=1, min_col=3,max_col=None, values_only=True):
+			for index, header_name in enumerate(record):
+				column_name[str(index)] = header_name
+
+		all_data = []
 		for record in ws.iter_rows(min_row=2, max_row=None, min_col=None,max_col=None, values_only=True):
-			payslip_line_info = self.env['hr.payslip.line'].sudo().search([('slip_id.state','=','draft'),'&',('nik','=', record[0]),'&',('slip_id.year','=',record[3]),'&',('slip_id.month','=', record[4]),'|',('salary_rule_id.name','=', record[2]),('salary_rule_id.code','=', record[2])])
+			all_data.append(record)
 
+		updated_line = []
+		employee_count = 0
+		for record in self.web_progress_iter(all_data, msg="Reading Excel Data"):
+			nik = record[0]
+			employee_name = record[1]
+			data_gaji = record[2:]
+			for index, value in enumerate(data_gaji):
+				payslip_line_info = self.env['hr.payslip.line'].sudo().search([('slip_id.state','=','draft'),('nik','=', nik),('code','=', column_name[str(index)]), ('slip_id.payroll_periode', '=', self.period_id.id)])
 			#if len(payslip_line_info) > 0:
-			if payslip_line_info.id != False:
-				for line in payslip_line_info:
-					line.write({'is_override' : True, 'amount' : record[5], 'amount_correction' : record[5]})
+				if payslip_line_info:
+					for line in payslip_line_info:
+						line.write({
+							'is_override' : self.is_override,
+							'amount_correction' : float(value),
+							'ignore_formula' : self.ignore_formula
+						})
+						updated_line.append(line.id)
+				else:
+					self.error_ids = [(0,0,{'nik' : nik, 'employee' : employee_name, 'name' : 'Komponen Gaji [%s] tidak ditemukan'%(column_name[str(index)])})]
+			employee_count+=1
 
-					payslip_id = self.env['hr.payslip'].sudo().search([('id','=', line.slip_id.id)])
-					payslip_id.compute_sheet_update()
-			else:
-				raise UserError('Gaji pegawai dengan NIK '+record[0]+' ('+str(record[1])+') tidak ditemukan atau komponen gaji tidak ada')
+		self.total_employee_count = employee_count
+		payslip_line_ids = self.env['hr.payslip.line'].sudo().browse(updated_line)
+		employee_processed_count = 0
+		employee_processed = []
+		if payslip_line_ids:
+			slip_id = payslip_line_ids.mapped('slip_id')
+			for slip in slip_id.with_progress(msg="Processing Data Koreksi Nilai Gaji"):
+				slip.compute_sheet_update()
+				if slip.employee_id.id not in employee_processed:
+					employee_processed_count += 1
+					employee_processed.append(slip.employee_id.id)
+		
+		self.total_employee_processed = employee_processed_count
+
+		if len(self.error_ids) > 0 :
+			return { 
+				'context'	: self.env.context, 
+				'view_type'	: 'form', 
+				'view_mode'	: 'form', 
+				'res_model'	: 'import.payroll.koreksi.gaji.wizard', 
+				'res_id'	: self.id, 
+				'type'		: 'ir.actions.act_window', 
+				'target'	: 'new' 
+			}
+
 		#except:
 		#	raise UserError(_('Please insert a valid file'))
 
@@ -290,7 +411,13 @@ class ImportPayrollKoreksiGajiWizard(models.TransientModel):
 		#except:
 		#	raise UserError(_('Please insert a valid file'))
 
+class ImportPayrollKoreksiGajiErrorWizard(models.TransientModel):
+	_name = "import.payroll.koreksi.gaji.error.wizard"
 
+	nik = fields.Char(string="NIK")
+	employee = fields.Char(string="Pegawai")
+	name = fields.Text(string="Keterangan")
+	wizard_id = fields.Many2one("import.payroll.koreksi.gaji.wizard")
 
 class FilterPrePayrollWizard(models.TransientModel):
 	_name = "filter.pre.payroll.wizard"
@@ -313,12 +440,13 @@ class FilterPrePayrollWizard(models.TransientModel):
 			('12', 'December')
 		], 
 		string   = 'Month',    
-		required =True, 
+		required =False, 
 		Default  = datetime.now().strftime("%m"))
 	
 	periode 		= fields.Many2one(string = "Payroll Periode" ,comodel_name = "hr.periode") 
 	name			= fields.Many2one(string = "Pegawai" ,comodel_name = "hr.employee")
-	rule_id			= fields.Many2one(string = "Komponen Payroll" ,comodel_name = "hr.salary.rule")
+	nik				= fields.Char(string='NIK')
+	rule_id			= fields.Many2one(string = "Komponen Payroll" ,comodel_name = "hr.salary.rule", domain="[('can_override','=', True),('active','=', True)]")
 	status			= fields.Selection([('active','Aktif'),('inactive','Tidak Aktif')], string='Status Payroll', default='active')
 
 	def search_last(self):
@@ -333,6 +461,114 @@ class FilterPrePayrollWizard(models.TransientModel):
 
 
 		return data
+	
+	def filter_pre_payroll_save(self):
+		current_uid = self.env.uid
+		search_info = self.env['ir.ui.view'].sudo().search([('name','=','internal_memo.hr_pre_payroll_view_search')])
+		
+		# updating filter first to match filtering
+		#raise UserError(str(current_uid))
+		wizard_info = self.env['filter.pre.payroll.wizard'].sudo().search([('create_uid','=',current_uid)], order="create_uid desc", limit=1)
+
+		if wizard_info.id != False:
+			wizard_info.write(
+				{
+					'year' 					: self.year,
+					'month'					: self.month,
+					'periode'				: self.periode.id,
+					'name'					: self.name.id,
+					'nik'					: self.nik,
+					'rule_id'				: self.rule_id.id,
+					'status'				: self.status
+				}
+			)
+		else:
+			self.env['filter.pre.payroll.wizard'].create({
+				'year' 					: self.year,
+				'month'					: self.month,
+				'periode'				: self.periode.id,
+				'name'					: self.name.id,
+				'nik'					: self.nik,
+				'rule_id'				: self.rule_id.id,
+				'status'				: self.status
+			})
+
+		# name based on filter
+		string_filter = ''
+
+		domain = []
+
+		if self.month != False:
+			if self.month =='01':
+				string_filter = string_filter + 'Januari'
+			elif self.month =='02':
+				string_filter = string_filter + 'Februari'
+			elif self.month =='03':
+				string_filter = string_filter + 'Maret'
+			elif self.month =='04':
+				string_filter = string_filter + 'April'
+			elif self.month =='05':
+				string_filter = string_filter + 'Mei'
+			elif self.month =='06':
+				string_filter = string_filter + 'Juni'
+			elif self.month =='07':
+				string_filter = string_filter + 'Juli'
+			elif self.month =='08':
+				string_filter = string_filter + 'Agustus'
+			elif self.month =='09':
+				string_filter = string_filter + 'September'
+			elif self.month =='10':
+				string_filter = string_filter + 'Oktober'
+			elif self.month =='11':
+				string_filter = string_filter + 'November'
+			elif self.month =='12':
+				string_filter = string_filter + 'Desember'
+
+			domain.append(('bulan','=',self.month))
+
+		
+
+		if self.year != False:
+			string_filter = string_filter + ' '+str(self.year)
+			domain.append(('year','=',self.year))
+
+
+		if self.periode.id != False:
+			string_filter = string_filter + ' '+self.periode.name
+			domain.append(('periode','=',self.periode.id))
+
+		if self.name.id != False:
+			string_filter = string_filter + ' '+ self.name.name
+			domain.append(('name','=',self.name.id))
+
+		if self.nik != False:
+			string_filter = string_filter + ' '+ self.nik
+			domain.append(('nik','=',self.nik))
+
+		if self.rule_id.id != False:
+			string_filter = string_filter + ' '+ self.rule_id.name
+			domain.append(('rule_id','=',self.rule_id.id))
+
+		if self.status != False:
+			string_filter = string_filter + ' '+ self.status
+			domain.append(('status','=',self.status))
+
+		
+		return {
+			'type'					: 'ir.actions.act_window',
+			'name'					: 'Payroll Data '+string_filter,
+			'res_model'				: 'hr.pre.payroll',
+			'view_id'				: False,
+			'views'					: [(False, 'tree'),(False,'form')],
+			'view_type' 			: 'tree',
+			'view_mode' 			: 'tree,form',
+			'target' 				: 'main',
+			'nodestroy' 			: False,
+			'search_view_id'      	: search_info.id,
+			'domain'				: domain
+			#'context'             	: { 'search_default_payroll_advanced': 1 }
+		}
+	
 
 
 class ExportPrePayrollWizard(models.TransientModel):
@@ -540,6 +776,7 @@ class ImportPrePayrollWizard(models.TransientModel):
    
 	name 				= fields.Many2one(string = "Payroll Periode" ,comodel_name = "hr.periode", required=True) 
 	file 				= fields.Binary(string="File", required=True)
+	ignore_formula		= fields.Boolean(string='Ignore Formula')
 	all_employee_number	= fields.Integer(string='Jumlah Pegawai Terhitung')
 	employee_number		= fields.Integer(string='Jumlah Pegawai Terproses')
 	processed			= fields.Float(string='Progress (%)')
@@ -621,25 +858,29 @@ class ImportPrePayrollWizard(models.TransientModel):
 					if data_active.id == False:
 						# create
 						res = self.env['hr.pre.payroll'].sudo().create({
-							'periode'	: self.name.id,
-							'name' 		: emp_info.id,
-							'rule_id'	: header_id['header_'+str(x)],
-							'value'		: record[x],
-							'status'	: 'active',
-							'year'		: tahun,
-							'bulan'		: bulan
+							'periode'		: self.name.id,
+							'name' 			: emp_info.id,
+							'rule_id'		: header_id['header_'+str(x)],
+							'value'			: record[x],
+							'status'		: 'active',
+							'year'			: tahun,
+							'bulan'			: bulan,
+							'ignore_formula': self.ignore_formula,
+							'nik'			: emp_info.nip
 						})
 
 						
 					else:
 						data_active.sudo().write({
-							'periode'	: self.name.id,
-							'name' 		: emp_info.id,
-							'rule_id'	: header_id['header_'+str(x)],
-							'value'		: record[x],
-							'status'	: 'active',
-							'year'		: tahun,
-							'bulan'		: bulan
+							'periode'		: self.name.id,
+							'name' 			: emp_info.id,
+							'rule_id'		: header_id['header_'+str(x)],
+							'value'			: record[x],
+							'status'		: 'active',
+							'year'			: tahun,
+							'bulan'			: bulan,
+							'ignore_formula': self.ignore_formula,
+							'nik'			: emp_info.nip
 						})
 
 						

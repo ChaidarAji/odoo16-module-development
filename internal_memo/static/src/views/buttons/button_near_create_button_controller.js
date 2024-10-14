@@ -236,6 +236,27 @@ export class ButtonRegionalValueImportController extends ListController {
 
     }
 
+    async OnFilterPrePayroll() {
+        // based on last filter
+        var session = require('web.session');
+        var user = session.user_id 
+        var context = {};
+
+        this.actionService.doAction({
+            type: 'ir.actions.act_window',
+            res_model: 'filter.pre.payroll.wizard',
+            name:'Filter Data Payroll',
+            view_mode: 'form',
+            view_type: 'form',
+            views: [[false, 'form']],
+            target: 'new',
+            res_id: false,
+            context  : context
+        });
+
+    }
+
+
     
 }
 

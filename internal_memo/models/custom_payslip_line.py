@@ -28,6 +28,7 @@ class HrPayslipLineCustom(models.Model):
 	payfied_input 			= fields.Char(string="Payfield Input")
 	amount_correction		= fields.Float(string='Correction Amount')
 	is_override				= fields.Boolean(string='Override', default = False)
+	ignore_formula			= fields.Boolean(string='Ignore Formula', default = False)
 	can_override			= fields.Boolean(string='Can Override', related ='salary_rule_id.can_override')
 	nik						= fields.Char(string='NIK', related='employee_id.nip')
 	batch					= fields.Many2one('hr.payslip.run',string="Kelompok Penggajian", related="slip_id.payslip_run_id")				
