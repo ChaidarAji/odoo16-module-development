@@ -192,6 +192,14 @@
         </field>
     </record>
 
+    <record id="om_hr_payroll.action_view_hr_payslip_form" model="ir.actions.act_window">
+        <field name="name">Employee Payslips</field>
+        <field name="res_model">hr.payslip</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('om_hr_payroll.view_hr_payslip_tree')})]"/>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="om_hr_payroll.view_hr_payslip_filter"/>
+    </record>
 
     <record id="hr_pre_payroll_view_tree" model="ir.ui.view">
         <field name="name">hr.pre.payroll.view.tree</field>
@@ -265,5 +273,183 @@
         parent="internal_memo.menu_internal_memo_payroll_process"
         sequence="59"
         groups="custom_payroll_hr_pre_payroll_group" />
+
+
+
+    <!-- SEND EMAIL PAYSLIP MENU -->
+    <record id="hr_payslip_send_email_tree" model="ir.ui.view">
+        <field name="name">hr.payslip.send.email.tree</field>
+        <field name="model">hr.payslip</field>
+        <field name="arch" type="xml">
+            <tree create="False" js_class="button_hr_payslip_send_email_button">
+                <field name="nik"/>
+                <field name="employee_name"/>
+                <field name="position_id"/>
+                <field name="payroll_periode"/>
+                <field name="send_mail" />
+                <field name="send_email_status" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_payslip_send_email_tree_filter" model="ir.ui.view">
+        <field name="name">hr.payslip.send.email.tree.filter</field>
+        <field name="model">hr.payslip</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nik" />
+                <field name="employee_name" />
+                <field name="position_id" />
+                <field name="payroll_periode" />
+                <field name="send_mail" />
+                <field name="send_email_status" />
+                <filter name="default_filter" string="Default" domain="[('send_email_status', 'in', ['error', 'not_send'])]"/>
+                <filter name="month_filter" string="Month" domain="[]" context="{'group_by': 'month'}" />
+            </search>
+        </field>
+    </record>
+
+    <record id="hr_payslip_send_email_action" model="ir.actions.act_window">
+		<field name="name">Payslip Send Email</field>
+		<field name="res_model">hr.payslip</field>
+		<field name="view_mode">tree</field>
+        <field name="context">{'search_default_default_filter':1, 'search_default_month_filter':1}</field>
+        <field name="view_id" ref="hr_payslip_send_email_tree"/>
+        <field name="search_view_id" ref="hr_payslip_send_email_tree_filter"/>
+	</record>
+
+    <menuitem
+        id="hr_payslip_send_email_menu"
+        action="hr_payslip_send_email_action"
+        parent="internal_memo.menu_internal_memo_payroll_process"
+        sequence="100"/>
+
+    <record id="hr_payslip_send_email_wizard_form" model="ir.ui.view">
+        <field name="name">hr.payslip.send.email.wizard.form</field>
+        <field name="model">hr.payslip.send.email.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Payslip Send Email">
+                <group>
+                    <label for="period_id" string="Payroll Periode" attrs="{'invisible': [('error_ids', '!=', [])]}"/>
+                    <div>
+                        <field name="period_id" options="{'no_create_edit': True, 'no_create': True}" class="oe_inline" attrs="{'invisible': [('error_ids', '!=', [])]}"/>
+                        <field name="month" class="oe_inline" placeholder="Bulan" attrs="{'invisible': [('error_ids', '!=', [])]}"/>
+                        <field name="year" class="oe_inline" placeholder="Tahun" attrs="{'invisible': [('error_ids', '!=', [])]}"/>
+                    </div>
+                    <field name="send_email_status" attrs="{'invisible': [('error_ids', '!=', [])]}"/>
+                    <field name="employee_count" readonly="1" attrs="{'invisible': [('error_ids', '!=', [])]}" force_save="1"/>
+                    <field name="employee_ids" options="{'no_create_edit': True, 'no_create': True, 'no_open': True}" attrs="{'invisible': [('error_ids', '!=', [])]}">
+                        <tree create="False">
+                            <field name="nip"/>
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                    <!-- <group>
+                        </group> -->
+                    </group>
+                <label for="error_ids" string="Error" attrs="{'invisible': [('error_ids', '=', [])]}"/>
+                <div>                        
+                    <field name="error_ids" readonly="1" attrs="{'invisible': [('error_ids', '=', [])]}">
+                        <tree>
+                        <field name="wizard_id" invisible="1"/>
+                        <field name="employee_id"/>
+                        <field name="payslip_id"/>
+                            <field name="error"/>
+                        </tree>
+                    </field>
+                </div>
+                <footer>
+                    <button
+                        name="button_send_email"
+                        string="Send"
+                        type="object"
+                        class="btn-primary"
+                        attrs="{'invisible': [('error_ids', '!=', [])]}"
+                    />
+                    <button
+                        name="button_send_email"
+                        string="Re-Send"
+                        type="object"
+                        class="btn-primary"
+                        attrs="{'invisible': [('error_ids', '=', [])]}"
+                    />
+
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_payslip_bank_transfer_tree" model="ir.ui.view">
+        <field name="name">hr.payslip.bank.transfer.tree</field>
+        <field name="model">hr.payslip</field>
+        <field name="arch" type="xml">
+            <tree create="False" js_class="button_hr_payslip_bank_transfer_button">
+                <field name="nik"/>
+                <field name="employee_name"/>
+                <field name="position_id"/>
+                <field name="area_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="payfreq"/>
+                <field name="tax_type"/>
+                <field name="payroll_periode"/>
+                <field name="tax_location_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_bank_transfer_hr_payslip_form" model="ir.actions.act_window">
+        <field name="name">Bank Transfer Process</field>
+        <field name="res_model">hr.payslip</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('internal_memo.hr_payslip_bank_transfer_tree')})]"/>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="om_hr_payroll.view_hr_payslip_filter"/>
+        <field name="domain">[('state','=','done')]</field>
+    </record>
+
+    <menuitem
+        id="hr_payslip_bank_transfer_menu"
+        action="action_bank_transfer_hr_payslip_form"
+        parent="internal_memo.menu_internal_memo_payroll_process"
+        sequence="101"/>
+       
+        
+    <record id="hr_payslip_bank_transfer_wizard_form" model="ir.ui.view">
+        <field name="name">hr.payslip.bank.transfer.wizard.form</field>
+        <field name="model">hr.payslip.bank.transfer.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Bank Transfer Process">
+                <group>
+                    <label for="period_id" string="Payroll Periode"/>
+                    <div>
+                        <field name="period_id" options="{'no_create_edit': True, 'no_create': True}" class="oe_inline"/>
+                        <field name="month" class="oe_inline" placeholder="Bulan"/>
+                        <field name="year" class="oe_inline" placeholder="Tahun"/>
+                    </div>
+                    <field name="employee_count" readonly="1"/>
+                    <field name="all_employee"/>
+                    <field name="employee_ids" attrs="{'invisible': [('all_employee','=',True)]}">
+                        <tree create="False">
+                            <field name="nip"/>
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                    <field name="error_ids" attrs="{'invisible': [('error_ids','=',[])], 'readonly': 1}">
+                        <tree>
+                            <field name="wizard_id" invisible="1"/>
+                            <field name="nik"/>
+                            <field name="employee_id"/>
+                            <field name="error"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button name="button_process" string="Process" type="object" class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
 
 </odoo>

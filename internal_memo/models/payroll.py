@@ -261,9 +261,9 @@ class ExportPayrollKoreksiGajiWizard(models.TransientModel):
 			rule_data = {}
 			for header in header_names.keys():
 				#Get rule data
-				payslip_line_ids = payslip_line_ids.filtered(lambda p: p.employee_id.id == employee.id and p.salary_rule_id.code == header)
-				print('===========================',header, employee.name, payslip_line_ids[0].amount if payslip_line_ids else 0)
-				rule_data[header] = payslip_line_ids[0].amount if payslip_line_ids else 0
+				payslip_line_header = payslip_line_ids.filtered(lambda p: p.employee_id.id == employee.id and p.salary_rule_id.code == header)
+				print('===========================',header, employee.name, payslip_line_header[0].amount if payslip_line_header else 0)
+				rule_data[header] = payslip_line_header[0].amount if payslip_line_header else 0
 			all_data[employee.id] = rule_data
 		print('=========================', all_data)
 		current_row = 1
@@ -418,6 +418,84 @@ class ImportPayrollKoreksiGajiErrorWizard(models.TransientModel):
 	employee = fields.Char(string="Pegawai")
 	name = fields.Text(string="Keterangan")
 	wizard_id = fields.Many2one("import.payroll.koreksi.gaji.wizard")
+
+class FilterPayrollKoreksiGajiWizard(models.TransientModel):
+	_name = "filter.payroll.koreksi.gaji.wizard"
+
+	periode 		= fields.Many2one(string = "Payroll Periode" ,comodel_name = "hr.periode") 
+	employee_ids			= fields.Many2many(string = "Pegawai" ,comodel_name = "hr.employee")
+	# nik				= fields.Char(string='NIK')
+	rule_ids			= fields.Many2many(string = "Payroll Component" ,comodel_name = "hr.salary.rule", domain="[('can_override','=', True),('active','=', True)]")
+	# batch_id		= fields.Many2one(strung="Kelompok Penggajian", comodel_name="hr.payslip.run")
+	
+	def filter_koreksi_gaji_save(self):
+		current_uid = self.env.uid
+		search_info = self.env['ir.ui.view'].sudo().search([('name','=','internal_memo.internal_memo_multiupdate_payslip_view_search')])
+		
+		# updating filter first to match filtering
+		#raise UserError(str(current_uid))
+		wizard_info = self.env['filter.payroll.koreksi.gaji.wizard'].sudo().search([('create_uid','=',current_uid)], order="create_uid desc", limit=1)
+
+		if wizard_info.id != False:
+			wizard_info.write(
+				{
+					'periode'				: self.periode.id,
+					'employee_ids'			: [(6, 0, self.employee_ids.ids)],
+					# 'nik'					: self.nik,
+					'rule_ids'				: [(6, 0, self.rule_ids.ids)],
+					# 'batch_id'				: self.batch_id.id
+				}
+			)
+		else:
+			self.env['filter.payroll.koreksi.gaji.wizard'].create({
+				'periode'				: self.periode.id,
+				'employee_ids'			: [(6, 0, self.employee_ids.ids)],
+				# 'nik'					: self.nik,
+				'rule_ids'				: [(6, 0, self.rule_ids.ids)],
+				# 'batch_id'				: self.batch_id.id
+			})
+
+		# name based on filter
+		string_filter = ''
+
+		domain = []
+
+
+		if self.periode.id != False:
+			string_filter = string_filter + ' '+self.periode.name
+			domain.append(('slip_id.payroll_periode','=',self.periode.id))
+
+		if self.employee_ids:
+			# string_filter = string_filter + ' '+ self.employee_ids.name
+			domain.append(('employee_id','in',self.employee_ids.ids))
+
+		# if self.nik != False:
+		# 	string_filter = string_filter + ' '+ self.nik
+		# 	domain.append(('nik','=',self.nik))
+
+		if self.rule_ids:
+			# string_filter = string_filter + ' '+ self.rule_ids.name
+			domain.append(('salary_rule_id','in',self.rule_ids.ids))
+
+		# if self.batch_id.id != False:
+		# 	string_filter = string_filter + ' '+ self.batch_id.name
+		# 	domain.append(('batch','=',self.batch_id.id))
+
+		
+		return {
+			'type'					: 'ir.actions.act_window',
+			'name'					: 'Koreksi Nilai Gaji '+string_filter,
+			'res_model'				: 'hr.payslip.line',
+			'view_id'				: self.env.ref('internal_memo.internal_memo_multiupdate_payslip_view_tree').id,
+			'views'					: [(self.env.ref('internal_memo.internal_memo_multiupdate_payslip_view_tree').id, 'tree')],
+			'view_type' 			: 'tree',
+			'view_mode' 			: 'tree',
+			'target' 				: 'main',
+			'nodestroy' 			: False,
+			'search_view_id'      	: search_info.id,
+			'domain'				: domain
+			#'context'             	: { 'search_default_payroll_advanced': 1 }
+		}
 
 class FilterPrePayrollWizard(models.TransientModel):
 	_name = "filter.pre.payroll.wizard"
@@ -1632,9 +1710,10 @@ class FilterPayslip(models.TransientModel):
 	payroll_periode		= fields.Many2one('hr.employee.status',string="Payroll Periode")
 	cost_center			= fields.Many2one('area',string="Cost Center")
 	work_location		= fields.Many2one('hr.work.location',string="Work Location")
-	pay_freq			= fields.Selection([('DAILY','DAILY'),('MONTHLY','MONTHLY')], string='Pay Freq')
-	tax_location		= fields.Many2one('tax.location',string="Tax Location")
-	tax_type			= fields.Selection([('local','Local'),('fixed','Fixed')], string='Tax Type')
+	send_email_status = fields.Selection([('not_sent', 'Belum Dikirim'), ('sent', 'Terkirim'), ('error', 'Error')], string='Status Kirim Email', default='not_sent', readonly=False)
+	# pay_freq			= fields.Selection([('DAILY','DAILY'),('MONTHLY','MONTHLY')], string='Pay Freq')
+	# tax_location		= fields.Many2one('tax.location',string="Tax Location")
+	# tax_type			= fields.Selection([('local','Local'),('fixed','Fixed')], string='Tax Type')
 
 
 	def search_last(self):
@@ -1667,9 +1746,10 @@ class FilterPayslip(models.TransientModel):
 					'payroll_periode'		: self.payroll_periode.id,
 					'cost_center'			: self.cost_center.id,
 					'work_location'			: self.work_location.id,
-					'pay_freq'				: self.pay_freq,
-					'tax_location'			: self.tax_location.id,
-					'tax_type'				: self.tax_type
+					'send_email_status'		: self.send_email_status,
+					# 'pay_freq'				: self.pay_freq,
+					# 'tax_location'			: self.tax_location.id,
+					# 'tax_type'				: self.tax_type
 				}
 			)
 		else:
@@ -1680,9 +1760,10 @@ class FilterPayslip(models.TransientModel):
 				'payroll_periode'		: self.payroll_periode.id,
 				'cost_center'			: self.cost_center.id,
 				'work_location'			: self.work_location.id,
-				'pay_freq'				: self.pay_freq,
-				'tax_location'			: self.tax_location.id,
-				'tax_type'				: self.tax_type
+				'send_email_status'		: self.send_email_status,
+				# 'pay_freq'				: self.pay_freq,
+				# 'tax_location'			: self.tax_location.id,
+				# 'tax_type'				: self.tax_type
 			})
 
 		# name based on filter
@@ -1740,28 +1821,35 @@ class FilterPayslip(models.TransientModel):
 			string_filter = string_filter + ' '+ self.work_location.name
 			domain.append(('location_id','=',self.work_location.id))
 
-		if self.pay_freq != False:
-			string_filter = string_filter + ' '+ self.pay_freq
-			domain.append(('payfreq','=',self.pay_freq))
+		if self.send_email_status != False:
+			string_filter = string_filter + ' '+ self.send_email_status
+			domain.append(('send_email_status','=',self.send_email_status))
+		# if self.pay_freq != False:
+		# 	string_filter = string_filter + ' '+ self.pay_freq
+		# 	domain.append(('payfreq','=',self.pay_freq))
 
-		if self.tax_location.id != False:
-			string_filter = string_filter + ' '+ self.tax_location.name
-			domain.append(('tax_location_id','=',self.tax_location.id))
+		# if self.tax_location.id != False:
+		# 	string_filter = string_filter + ' '+ self.tax_location.name
+		# 	domain.append(('tax_location_id','=',self.tax_location.id))
 
-		if self.tax_type != False:
-			string_filter = string_filter + ' '+ self.tax_type
-			domain.append(('tax_type','=',self.tax_type))
+		# if self.tax_type != False:
+		# 	string_filter = string_filter + ' '+ self.tax_type
+		# 	domain.append(('tax_type','=',self.tax_type))
 		
 		
 
 
-		
+		if self.env.context.get('source_menu') == 'payslip_send_email':
+			view_id = self.env.ref('internal_memo.hr_payslip_send_email_tree')
+		else:
+			view_id = self.env.ref('om_hr_payroll.view_hr_payslip_tree')
+
 		return {
 			'type'					: 'ir.actions.act_window',
 			'name'					: 'Payslip Data '+string_filter,
 			'res_model'				: 'hr.payslip',
-			'view_id'				: False,
-			'views'					: [(False, 'tree'),(False,'form')],
+			'view_id'				: view_id.id,
+			'views'					: [(view_id.id, 'tree'),(False,'form')],
 			'view_type' 			: 'tree',
 			'view_mode' 			: 'tree,kanban,form',
 			'target' 				: 'main',

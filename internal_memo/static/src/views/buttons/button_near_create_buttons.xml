@@ -7,8 +7,28 @@
 			</button>
 		</xpath>
 	</t>
+	<t t-name="internal_memo.HrPayslipSendEmailButtonView.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary" owl="1">
+		<xpath expr="//t[@t-if='props.showButtons']" position="after">
+			<button type="button" t-on-click="OnFilterPayslipSendEmail" class="btn btn-primary" style="margin-left:5px;">
+				Advanced Filter
+			</button>
+			<button type="button" t-on-click="OnHrPayslipSendEmail" class="btn btn-primary" style="margin-left:5px;">
+				Send Email
+			</button>
+		</xpath>
+	</t>
+	<t t-name="internal_memo.HrPayslipBankTransferButtonView.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary" owl="1">
+		<xpath expr="//t[@t-if='props.showButtons']" position="after">
+			<button type="button" t-on-click="OnHrPayslipBankTransfer" class="btn btn-primary" style="margin-left:5px;">
+				Bank Transfer
+			</button>
+		</xpath>
+	</t>
 	<t t-name="internal_memo.KoreksiGajiImportButtonView.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary" owl="1">
 		<xpath expr="//t[@t-if='props.showButtons']" position="after">
+			<button type="button" t-on-click="OnFilterKoreksiNilaiGaji" class="btn btn-primary" style="margin-left:5px;">
+				Advanced Filter
+			</button>
 			<button type="button" t-on-click="OnImportKoreksiGaji" class="btn btn-primary" style="margin-left:5px;">
 				Import Data
 			</button>

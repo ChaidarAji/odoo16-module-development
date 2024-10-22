@@ -22,6 +22,18 @@ export const ButtonKoreksiGajiImportView = {
     buttonTemplate: 'internal_memo.KoreksiGajiImportButtonView.Buttons',
 };
 
+export const ButtonHrPayslipSendEmailView = {
+    ...listView,
+    Controller,
+    buttonTemplate: 'internal_memo.HrPayslipSendEmailButtonView.Buttons',
+};
+
+export const ButtonHrPayslipBankTransferView = {
+    ...listView,
+    Controller,
+    buttonTemplate: 'internal_memo.HrPayslipBankTransferButtonView.Buttons',
+};
+
 export const ButtonContractImportView = {
     ...listView,
     Controller,
@@ -65,6 +77,8 @@ export const ButtonPrePayrollImportView = {
 
 registry.category("views").add("button_regional_value_button", ButtonRegionalValueImportView);
 registry.category("views").add("button_koreksi_gaji_button", ButtonKoreksiGajiImportView);
+registry.category("views").add("button_hr_payslip_send_email_button", ButtonHrPayslipSendEmailView);
+registry.category("views").add("button_hr_payslip_bank_transfer_button", ButtonHrPayslipBankTransferView);
 registry.category("views").add("button_contract_button", ButtonContractImportView);
 registry.category("views").add("button_payslip_export_button", ButtonPayslipExportView);
 registry.category("views").add("button_employee_button", ButtonEmployeeView);

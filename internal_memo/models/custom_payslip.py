@@ -17,6 +17,10 @@ import json
 import requests
 import logging
 
+try:
+   from odoo.tools.misc import xlsxwriter
+except ImportError:
+   import xlsxwriter
 
 class HrPrePayroll(models.Model):
 	_name           = 'hr.pre.payroll'
@@ -25,6 +29,7 @@ class HrPrePayroll(models.Model):
 	periode 		= fields.Many2one(string = "Payroll Periode" ,comodel_name = "hr.periode") 
 	name			= fields.Many2one(string = "Pegawai" ,comodel_name = "hr.employee")
 	rule_id			= fields.Many2one(string = "Komponen Payroll" ,comodel_name = "hr.salary.rule")
+	rule_code		= fields.Char(string='Salary Rule Code', related="rule_id.code")
 	value			= fields.Float(string='Nominal')
 	status			= fields.Selection([('active','Aktif'),('inactive','Tidak Aktif')], string='Status Payroll')
 	year			= fields.Integer(string='Tahun')
@@ -1248,40 +1253,39 @@ class HrPayslipCustom(models.Model):
 						date_to	= child_id.name.date_end
 
 					# untuk presensi by default ikut parent aja
+					# hilangkan dulu ya split cost nya
+					#res2 = {
+					#	'employee_id'           : payslip.employee_id.id,
+					#	'name'                  : child_id.name.employee_id.nip +' '+child_id.name.employee_id.name+' '+child_id.name.master_id.name + ' '+child_id.name.area_id.name,
+					#	'struct_id'             : payslip.struct_id.id,
+					#	'contract_id'           : child_id.name.id,
+					#	'contract_ids'          : contract_ids_new,
+					#	'payslip_run_id'        : payslip.payslip_run_id.id,
+					#	'input_line_ids'        : False,
+					#	'worked_days_line_ids'  : worked_lines,
+					#	'date_from'             : date_from,
+					#	'date_to'               : date_to,
+					#	'credit_note'           : payslip.credit_note,
+					#	'company_id'            : payslip.employee_id.company_id.id,
+					#	'year'                  : payslip.year,
+					#	'month'                 : payslip.month,
+					#	'attend_start'          : payslip.attend_start,
+					#	'attend_end'            : payslip.attend_end,
+					#	'tax'                   : payslip.tax,
+					#	'paydate'               : payslip.paydate,
+					#	'parent_id'             : payslip.id
 
-					res2 = {
-						'employee_id'           : payslip.employee_id.id,
-						'name'                  : child_id.name.employee_id.nip +' '+child_id.name.employee_id.name+' '+child_id.name.master_id.name + ' '+child_id.name.area_id.name,
-						'struct_id'             : payslip.struct_id.id,
-						'contract_id'           : child_id.name.id,
-						'contract_ids'          : contract_ids_new,
-						'payslip_run_id'        : payslip.payslip_run_id.id,
-						'input_line_ids'        : False,
-						'worked_days_line_ids'  : worked_lines,
-						'date_from'             : date_from,
-						'date_to'               : date_to,
-						'credit_note'           : payslip.credit_note,
-						'company_id'            : payslip.employee_id.company_id.id,
-						'year'                  : payslip.year,
-						'month'                 : payslip.month,
-						'attend_start'          : payslip.attend_start,
-						'attend_end'            : payslip.attend_end,
-						'tax'                   : payslip.tax,
-						'paydate'               : payslip.paydate,
-						'parent_id'             : payslip.id
-
-					}
+					#}
 					
-					res2_result = self.env['hr.payslip'].create(res2)
-					res2_result.compute_sheet()
+					#res2_result = self.env['hr.payslip'].create(res2)
+					#res2_result.compute_sheet()
 
-			else:
+			#else:
 				# kasus child
-				payslip.compute_api_payslip2()
+			#	payslip.compute_api_payslip2()
 
-				number = payslip.number or self.env['ir.sequence'].next_by_code('salary.slip')
-				payslip.line_ids.unlink()
-				halo = 1
+			#	number = payslip.number or self.env['ir.sequence'].next_by_code('salary.slip')
+			#	payslip.line_ids.unlink()
 
 		return True
 	
@@ -1908,8 +1912,12 @@ class HrPayslipCustom(models.Model):
 		if self.send_mail == 'yes':
 			mail_template 	= self.env.ref('internal_memo.custom_mail_template_payslip')
 			email_values 	= {'email_from' :'noreply.it@virtusway.co.id'}
-			mail_template.send_mail(self.id, force_send=True,email_values=email_values)
-
+			mail = mail_template.send_mail(self.id, force_send=True,email_values=email_values)
+			mail_id = self.env['mail.mail'].sudo().search([('id','=',mail)])
+			if mail_id.state == 'sent':
+				self.write({'send_email_status': 'sent'})
+			elif mail_id.state == 'exception':
+				self.write({'send_email_status': 'error'})
 		#self.ensure_one()
 		#ir_model_data = self.env['ir.model.data']
 		#try:
@@ -2357,10 +2365,9 @@ class HrPayslipCustom(models.Model):
 
 					to_override = previous_data.filtered(lambda r: r.code == rule.code)
 
-					if to_override.is_override == True:
+					if to_override.id != False and to_override.is_override == True and to_override.ignore_formula == True:
 						amount_original	= amount
 						amount 			= to_override.amount_correction
-						
 					else:
 						amount_original = amount
 
@@ -2452,4 +2459,288 @@ class HrPayslipCustom(models.Model):
 			emp_info.write({
 				'send_mail'	: 'no'
 			})
-			
+
+	send_email_status = fields.Selection([('not_sent', 'Belum Dikirim'), ('sent', 'Terkirim'), ('error', 'Error')], string='Status Kirim Email', default='not_sent', readonly=True)
+
+	def action_send_email_from_wizard(self):
+		if self.send_mail == 'yes':
+			mail_template 	= self.env.ref('internal_memo.custom_mail_template_payslip')
+			email_values 	= {'email_from' :'noreply.it@virtusway.co.id'}
+			mail = mail_template.send_mail(self.id, force_send=True,email_values=email_values)
+			mail_id = self.env['mail.mail'].sudo().search([('id','=',mail)])
+			if mail_id.state == 'sent':
+				self.write({'send_email_status': 'sent'})
+			elif mail_id.state == 'exception':
+				self.write({'send_email_status': 'error'})
+			return mail_id
+		else:
+			return False
+
+class HrPayslipSendEmailWizard(models.TransientModel):
+	_name = "hr.payslip.send.email.wizard"
+
+	def _get_default_bulan(self):
+		payslip_id = self.env['hr.payslip'].sudo().search([], order="year desc, month desc", limit=1)
+		return payslip_id.month
+
+	def _get_default_tahun(self):
+		payslip_id = self.env['hr.payslip'].sudo().search([], order="year desc, month desc", limit=1)
+		return payslip_id.year
+
+	period_id = fields.Many2one("hr.periode", string="Payroll Periode")
+	year = fields.Integer(string='Tahun', default=_get_default_tahun)
+	month = fields.Selection(
+		[ 
+			('01', 'Januari'),
+			('02', 'Februari'),
+			('03', 'Maret'),
+			('04', 'April'),
+			('05', 'Mei'),
+			('06', 'Juni'),
+			('07', 'Juli'),
+			('08', 'Agustus'),
+			('09', 'September'),
+			('10', 'Oktober'),
+			('11', 'November'),
+			('12', 'Desember')
+		], 
+		string   = 'Bulan',    
+		required =True, default=_get_default_bulan)
+	send_email_status = fields.Selection([('not_sent', 'Belum Dikirim'), ('sent', 'Terkirim'), ('error', 'Error')], string='Status Kirim Email')
+	employee_ids = fields.Many2many("hr.employee", string="Pegawai")
+	employee_count = fields.Integer(string="Jumlah Pegawai")
+	error_ids = fields.One2many("hr.payslip.send.email.error.wizard", "wizard_id", string="Error")
+
+	@api.onchange('period_id', 'year', 'month', 'employee_ids', 'send_email_status')
+	def _onchange_employee_count(self):
+		domain = []
+		if self.period_id:
+			domain.append(('payroll_periode', '=', self.period_id.id))
+		if self.month:
+			domain.append(('month', '=', self.month))
+		if self.year:
+			domain.append(('year', '=', self.year))
+		if self.send_email_status:
+			domain.append(('send_email_status', '=', self.send_email_status))
+		if domain:
+			payslip_ids = self.env['hr.payslip'].sudo().search(domain)
+			self.employee_count = len(payslip_ids.mapped('employee_id'))
+			employee_ids_domain = [('id', 'in', payslip_ids.mapped('employee_id').ids)]
+			return {'domain': {'employee_ids': employee_ids_domain}}
+
+	def button_send_email(self):
+		domain = []
+		if self.period_id:
+			domain.append(('payroll_periode', '=', self.period_id.id))
+		if self.month:
+			domain.append(('month', '=', self.month))
+		if self.year:
+			domain.append(('year', '=', self.year))
+		if self.employee_ids:
+			domain.append(('employee_id', 'in', self.employee_ids.ids))
+		if self.send_email_status:
+			domain.append(('send_email_status', '=', self.send_email_status))
+		
+		payslip_ids = self.env['hr.payslip'].sudo().search(domain)
+		if self.error_ids:
+			payslip_ids = payslip_ids.filtered(lambda r: r.id in self.error_ids.mapped('payslip_id').ids)
+
+		for payslip in payslip_ids.with_progress(msg="Sending Email"):
+			error_id = self.error_ids.filtered(lambda r: r.payslip_id.id == payslip.id)
+			try:
+				mail = payslip.action_send_email_from_wizard()
+				if not mail:
+					if not error_id:
+						self.env['hr.payslip.send.email.error.wizard'].sudo().create({
+							'wizard_id'	: self.id,
+							'employee_id'	: payslip.employee_id.id,
+							'payslip_id'	: payslip.id,
+							'error'		: "Kolom 'Kirim Email Gaji' pada Payslip berisi 'Tidak'"
+						})
+					else:
+						error_id.write({
+							'error'		: "Kolom 'Kirim Email Gaji' pada Payslip berisi 'Tidak'"
+						})
+				elif mail.state == 'exception':
+					if not error_id:
+						self.env['hr.payslip.send.email.error.wizard'].sudo().create({
+							'wizard_id'	: self.id,
+							'employee_id'	: payslip.employee_id.id,
+							'payslip_id'	: payslip.id,
+							'error'		: mail.failure_reason
+						})
+					else:
+						error_id.write({
+							'error'		: mail.failure_reason
+						})
+			except Exception as e:
+				if not error_id:
+					self.env['hr.payslip.send.email.error.wizard'].sudo().create({
+						'wizard_id'	: self.id,
+						'employee_id'	: payslip.employee_id.id,
+						'payslip_id'	: payslip.id,
+						'error'		: str(e)
+					})
+				else:
+					error_id.write({
+						'error'		: str(e)
+					})	
+		if len(self.error_ids) > 0 :
+			return { 
+				'context'	: self.env.context, 
+				'view_type'	: 'form', 
+				'view_mode'	: 'form', 
+				'res_model'	: 'hr.payslip.send.email.wizard', 
+				'res_id'	: self.id, 
+				'type'		: 'ir.actions.act_window', 
+				'target'	: 'new' 
+			}
+		payslip_ids = self.env['hr.payslip'].sudo().search(domain)
+		return {
+			'type'			: 'ir.actions.act_window',
+			'name'			: 'Payslip Send Email',
+			'res_model'		: 'hr.payslip',
+			'view_id'		: self.env.ref('internal_memo.hr_payslip_send_email_tree').id,
+			'views'			: [(self.env.ref('internal_memo.hr_payslip_send_email_tree').id, 'tree')],
+			'view_type' 	: 'tree',
+			'view_mode' 	: 'tree',
+			'target' 		: 'current',
+			'domain'		: [('id', 'in', payslip_ids.ids)]
+		}
+	
+class HrPayslipSendEmailErrorWizard(models.TransientModel):
+	_name = "hr.payslip.send.email.error.wizard"
+
+	wizard_id = fields.Many2one("hr.payslip.send.email.wizard", string="Wizard ID")
+	employee_id = fields.Many2one("hr.employee", string="Pegawai")
+	payslip_id = fields.Many2one("hr.payslip", string="Payslip")
+	error = fields.Text(string="Error")
+
+
+class HrPayslipBankTransferWizard(models.TransientModel):
+	_name = "hr.payslip.bank.transfer.wizard"
+
+
+	def _get_default_bulan(self):
+		payslip_id = self.env['hr.payslip'].sudo().search([], order="year desc, month desc", limit=1)
+		return payslip_id.month
+
+	def _get_default_tahun(self):
+		payslip_id = self.env['hr.payslip'].sudo().search([], order="year desc, month desc", limit=1)
+		return payslip_id.year
+
+	period_id = fields.Many2one("hr.periode", string="Payroll Periode")
+	year = fields.Integer(string='Tahun', default=_get_default_tahun)
+	month = fields.Selection(
+		[ 
+			('01', 'Januari'),
+			('02', 'Februari'),
+			('03', 'Maret'),
+			('04', 'April'),
+			('05', 'Mei'),
+			('06', 'Juni'),
+			('07', 'Juli'),
+			('08', 'Agustus'),
+			('09', 'September'),
+			('10', 'Oktober'),
+			('11', 'November'),
+			('12', 'Desember')
+		], 
+		string   = 'Bulan',    
+		required =True, default=_get_default_bulan)
+	employee_count = fields.Integer(string="Pegawai Terhitung")
+	all_employee = fields.Boolean(string="Semua Pegawai", default=False)
+	# employee_ids_domain = fields.Many2many("hr.employee", string="Pegawai", compute="_onchange_employee_count")
+	employee_ids = fields.Many2many("hr.employee", string="Pegawai")
+	error_ids = fields.One2many("hr.payslip.bank.transfer.error.wizard", "wizard_id", string="Error")
+	excel_file = fields.Binary(string="File Excel")
+
+	@api.onchange('period_id', 'year', 'month')
+	def _onchange_employee_count(self):
+		domain = [('state', '=', 'done')]
+		if self.period_id:
+			domain.append(('payroll_periode', '=', self.period_id.id))
+		if self.month:
+			domain.append(('month', '=', self.month))
+		if self.year:
+			domain.append(('year', '=', self.year))
+
+		payslip_ids = self.env['hr.payslip'].sudo().search(domain)
+		self.employee_count = len(payslip_ids.mapped('employee_id'))
+		employee_ids_domain = [('id', 'in', payslip_ids.mapped('employee_id').ids)]
+		return {'domain': {'employee_ids': employee_ids_domain}}
+	
+	def button_process(self):
+		output 						= io.BytesIO()
+		workbook 					= xlsxwriter.Workbook(output, {'in_memory': True})
+		sheet 						= workbook.add_worksheet()
+
+		cell_format 			= workbook.add_format({'font_size': 12, 'align': 'center'})
+		head 					= workbook.add_format({'align': 'center', 'bold': True, 'font_size': 16})
+		header 					= workbook.add_format({'align': 'center', 'bold': True, 'font_size': 10, 'border' : 1})
+		cell_left 				= workbook.add_format({'font_size': 10, 'align': 'left', 'border' : 1})
+		cell_center 			= workbook.add_format({'font_size': 10, 'align': 'center', 'border' : 1})
+		cell_right 				= workbook.add_format({'font_size': 10, 'align': 'right', 'border' : 1})
+		cell_right_number 		= workbook.add_format({'font_size': 10, 'align': 'right', 'border' : 1, 'num_format': '#,##0'})
+
+
+		column_list = [
+						'C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB',
+				 		'AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR',
+						'AS','AT','AU', 'AV','AW','AX', 'AY','AZ','BA','BB',
+				 		'BC','BD','BE','BF','BG','BH','BI','BJ','BK','BL','BM','BN','BO','BP','BQ','BR',
+						'BS','BT','BU', 'BV','BW','BX', 'BY','BZ'
+					 ]
+		
+
+		sheet.set_column(0, 0, 20)
+		sheet.set_column(1, 1, 50)
+		sheet.write(0, 0, 'NIK', header)
+		sheet.write(0, 1, 'Nama', header)
+		header_names = {}
+		column = 2
+		for rule_line in self.export_rule_ids:
+			sheet.write(0, column, rule_line.rule_id.code, header)
+			header_names[rule_line.rule_id.code] = column
+			column+=1
+
+		all_data = {}
+		payslip_line_ids = self.env['hr.payslip.line'].sudo().search([('slip_id.state','=','draft'), ('slip_id.payroll_periode','=', self.period_id.id)], order='nik asc')
+		employee_ids = payslip_line_ids.mapped('employee_id')
+		for employee in employee_ids.with_progress(msg="Generating Data"):
+			rule_data = {}
+			for header in header_names.keys():
+				#Get rule data
+				payslip_line_header = payslip_line_ids.filtered(lambda p: p.employee_id.id == employee.id and p.salary_rule_id.code == header)
+				print('===========================',header, employee.name, payslip_line_header[0].amount if payslip_line_header else 0)
+				rule_data[header] = payslip_line_header[0].amount if payslip_line_header else 0
+			all_data[employee.id] = rule_data
+		print('=========================', all_data)
+		current_row = 1
+		for employee, data in all_data.items():
+			employee_id = self.env['hr.employee'].sudo().browse(employee)
+			sheet.write(current_row, 0, employee_id.nip, cell_left)
+			sheet.write(current_row, 1, employee_id.name, cell_left)
+			for header, value in data.items():
+				sheet.write(current_row, header_names[header], value, cell_right_number)
+			current_row+=1
+		
+		workbook.close()
+		output.seek(0)
+		file_base64 = base64.b64encode(output.read())
+		output.close()
+		self.excel_file = file_base64
+		return {
+            'type': 'ir.actions.act_url',
+            'url': 'web/content/?model=hr.payslip.bank.transfer.wizard&field=excel_file&download=true&id=%s&filename=%s' % (self.id, "Bank_Transfer_Data.xlsx"),
+            'target': 'self'
+        }
+
+
+class HrPayslipBankTransferErrorWizard(models.TransientModel):
+	_name = "hr.payslip.bank.transfer.error.wizard"
+
+	wizard_id = fields.Many2one("hr.payslip.bank.transfer.wizard", string="Wizard ID")
+	nik = fields.Char(string="NIK")
+	employee_id = fields.Many2one("hr.employee", string="Pegawai")
+	error = fields.Text(string="Error")

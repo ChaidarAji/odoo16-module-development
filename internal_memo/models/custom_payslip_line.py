@@ -34,7 +34,7 @@ class HrPayslipLineCustom(models.Model):
 	batch					= fields.Many2one('hr.payslip.run',string="Kelompok Penggajian", related="slip_id.payslip_run_id")				
 	employee_status_id 		= fields.Many2one("hr.employee.status", string="Employee Status", related="employee_id.employee_status_id")
 	employee_status_code 	= fields.Char(string='Status Code', related="employee_id.employee_status_id.code")
-
+	#salary_rule_code		= fields.Char(string='Salary Rule Code', related="salary_rule_id.code")
 
 
 	@api.depends('quantity', 'amount', 'rate')
