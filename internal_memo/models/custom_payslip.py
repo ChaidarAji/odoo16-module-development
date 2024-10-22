@@ -16,6 +16,8 @@ from odoo.tools import float_utils
 import json
 import requests
 import logging
+import base64
+import io
 
 try:
    from odoo.tools.misc import xlsxwriter
@@ -2622,11 +2624,11 @@ class HrPayslipBankTransferWizard(models.TransientModel):
 
 
 	def _get_default_bulan(self):
-		payslip_id = self.env['hr.payslip'].sudo().search([], order="year desc, month desc", limit=1)
+		payslip_id = self.env['hr.payslip'].sudo().search([('state', '=', 'done')], order="year desc, month desc", limit=1)
 		return payslip_id.month
 
 	def _get_default_tahun(self):
-		payslip_id = self.env['hr.payslip'].sudo().search([], order="year desc, month desc", limit=1)
+		payslip_id = self.env['hr.payslip'].sudo().search([('state', '=', 'done')], order="year desc, month desc", limit=1)
 		return payslip_id.year
 
 	period_id = fields.Many2one("hr.periode", string="Payroll Periode")
@@ -2649,8 +2651,8 @@ class HrPayslipBankTransferWizard(models.TransientModel):
 		string   = 'Bulan',    
 		required =True, default=_get_default_bulan)
 	employee_count = fields.Integer(string="Pegawai Terhitung")
+	employee_ids_count = fields.Many2many("hr.employee", "hr_payslip_bank_transfer_wizard_employee_ids_count_rel", string="Pegawai")
 	all_employee = fields.Boolean(string="Semua Pegawai", default=False)
-	# employee_ids_domain = fields.Many2many("hr.employee", string="Pegawai", compute="_onchange_employee_count")
 	employee_ids = fields.Many2many("hr.employee", string="Pegawai")
 	error_ids = fields.One2many("hr.payslip.bank.transfer.error.wizard", "wizard_id", string="Error")
 	excel_file = fields.Binary(string="File Excel")
@@ -2666,8 +2668,10 @@ class HrPayslipBankTransferWizard(models.TransientModel):
 			domain.append(('year', '=', self.year))
 
 		payslip_ids = self.env['hr.payslip'].sudo().search(domain)
-		self.employee_count = len(payslip_ids.mapped('employee_id'))
-		employee_ids_domain = [('id', 'in', payslip_ids.mapped('employee_id').ids)]
+		employee_ids = payslip_ids.mapped('employee_id')
+		self.employee_count = len(employee_ids)
+		self.employee_ids_count = [(6, 0, employee_ids.ids)]
+		employee_ids_domain = [('id', 'in', employee_ids.ids)]
 		return {'domain': {'employee_ids': employee_ids_domain}}
 	
 	def button_process(self):
@@ -2691,39 +2695,89 @@ class HrPayslipBankTransferWizard(models.TransientModel):
 				 		'BC','BD','BE','BF','BG','BH','BI','BJ','BK','BL','BM','BN','BO','BP','BQ','BR',
 						'BS','BT','BU', 'BV','BW','BX', 'BY','BZ'
 					 ]
-		
+		#Payslip Domain
+		domain = [('state', '=', 'done')]
+		if self.period_id:
+			domain.append(('payroll_periode', '=', self.period_id.id))
+		if self.month:
+			domain.append(('month', '=', self.month))
+		if self.year:
+			domain.append(('year', '=', self.year))
 
-		sheet.set_column(0, 0, 20)
-		sheet.set_column(1, 1, 50)
-		sheet.write(0, 0, 'NIK', header)
-		sheet.write(0, 1, 'Nama', header)
-		header_names = {}
-		column = 2
-		for rule_line in self.export_rule_ids:
-			sheet.write(0, column, rule_line.rule_id.code, header)
-			header_names[rule_line.rule_id.code] = column
-			column+=1
+		sheet.set_column(0, 0, 5)
+		sheet.set_column(1, 20, 20)
+		sheet.write(0, 0, 'No.', header)
+		sheet.write(0, 1, 'Nama Bank', header)
+		sheet.write(0, 2, 'No. Rekening', header)
+		sheet.write(0, 3, 'Rekening Atas Nama', header)
+		sheet.write(0, 4, 'NIK', header)
+		sheet.write(0, 5, 'Pegawai', header)
+		sheet.write(0, 6, 'Nama Bank', header)
+		sheet.write(0, 7, 'No. Rekening', header)
+		sheet.write(0, 8, 'Rekening Atas Nama', header)
+		sheet.write(0, 9, 'Kode', header)
+		sheet.write(0, 10, 'Jumlah', header)
 
-		all_data = {}
-		payslip_line_ids = self.env['hr.payslip.line'].sudo().search([('slip_id.state','=','draft'), ('slip_id.payroll_periode','=', self.period_id.id)], order='nik asc')
-		employee_ids = payslip_line_ids.mapped('employee_id')
-		for employee in employee_ids.with_progress(msg="Generating Data"):
-			rule_data = {}
-			for header in header_names.keys():
-				#Get rule data
-				payslip_line_header = payslip_line_ids.filtered(lambda p: p.employee_id.id == employee.id and p.salary_rule_id.code == header)
-				print('===========================',header, employee.name, payslip_line_header[0].amount if payslip_line_header else 0)
-				rule_data[header] = payslip_line_header[0].amount if payslip_line_header else 0
-			all_data[employee.id] = rule_data
-		print('=========================', all_data)
+		#generate data
+		if self.all_employee:
+			employee_ids = self.employee_ids_count
+		else:
+			employee_ids = self.employee_ids
+		domain.append(('employee_id', 'in', employee_ids.ids))
+		payslip_ids = self.env['hr.payslip'].sudo().search(domain)
+
+
 		current_row = 1
-		for employee, data in all_data.items():
-			employee_id = self.env['hr.employee'].sudo().browse(employee)
-			sheet.write(current_row, 0, employee_id.nip, cell_left)
-			sheet.write(current_row, 1, employee_id.name, cell_left)
-			for header, value in data.items():
-				sheet.write(current_row, header_names[header], value, cell_right_number)
-			current_row+=1
+		no = 0
+		total_net_pay = 0
+		self.error_ids.unlink()
+		for employee in employee_ids.with_progress(msg="Generating Data"):
+			payslip_id = payslip_ids.filtered(lambda p: p.employee_id.id == employee.id)
+			if payslip_id:
+				net_pay = payslip_id[0].line_ids.filtered(lambda p: p.code == 'NETPAY').amount
+				pembayaran_id = employee.pembayaran_ids.filtered(lambda p: p.category == self.period_id.category_id)
+				if not pembayaran_id:
+					self.env['hr.payslip.bank.transfer.error.wizard'].sudo().create({
+						'wizard_id'	: self.id,
+						'employee_id'	: employee.id,
+						'nik'			: employee.nip,
+						'error'			: "Pengaturan Pembayaran tidak ditemukan di Pegawai HR Settings"
+					})
+					rekening = False
+				else:
+					rekening = pembayaran_id[0].rekening
+					if not rekening:
+						self.env['hr.payslip.bank.transfer.error.wizard'].sudo().create({
+							'wizard_id'	: self.id,
+							'employee_id'	: employee.id,
+							'nik'			: employee.nip,
+							'error'			: "Rekening tidak ditemukan di Pengaturan Pembayaran Pegawai HR Settings"
+						})
+					
+				no += 1
+				sheet.write(current_row, 0, no, cell_left)
+				sheet.write(current_row, 1, 'nama bank', cell_left)
+				sheet.write(current_row, 2, 'no rekening', cell_left)
+				sheet.write(current_row, 3, 'rekening atas nama', cell_left)
+				sheet.write(current_row, 4, employee.nip, cell_left)
+				sheet.write(current_row, 5, employee.name, cell_left)
+				sheet.write(current_row, 6, rekening.bank_id.name if rekening else '', cell_left)
+				sheet.write(current_row, 7, rekening.acc_number if rekening else '', cell_left)
+				sheet.write(current_row, 8, rekening.acc_holder_name if rekening else '', cell_left)
+				sheet.write(current_row, 9, self.period_id.currency_code or 'IDR', cell_right_number)
+				sheet.write(current_row, 10, net_pay, cell_right_number)
+				total_net_pay += net_pay
+				current_row+=1
+			else:
+				self.env['hr.payslip.bank.transfer.error.wizard'].sudo().create({
+					'wizard_id'	: self.id,
+					'employee_id'	: employee.id,
+					'nik'			: employee.nip,
+					'error'			: "Payslip tidak ditemukan"
+				})
+			sheet.merge_range(current_row, 0, current_row, 8, 'Total', cell_right_number)
+			sheet.write(current_row, 9, self.period_id.currency_code or 'IDR', cell_right_number)
+			sheet.write(current_row, 10, total_net_pay, cell_right_number)
 		
 		workbook.close()
 		output.seek(0)
@@ -2733,7 +2787,7 @@ class HrPayslipBankTransferWizard(models.TransientModel):
 		return {
             'type': 'ir.actions.act_url',
             'url': 'web/content/?model=hr.payslip.bank.transfer.wizard&field=excel_file&download=true&id=%s&filename=%s' % (self.id, "Bank_Transfer_Data.xlsx"),
-            'target': 'self'
+            'target': 'new'
         }
 
 

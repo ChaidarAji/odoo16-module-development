@@ -428,7 +428,9 @@
                         <field name="month" class="oe_inline" placeholder="Bulan"/>
                         <field name="year" class="oe_inline" placeholder="Tahun"/>
                     </div>
-                    <field name="employee_count" readonly="1"/>
+                    <field name="employee_ids_count" invisible="1"/>
+                    <field name="excel_file" invisible="1"/>
+                    <field name="employee_count" readonly="1" force_save="1"/>
                     <field name="all_employee"/>
                     <field name="employee_ids" attrs="{'invisible': [('all_employee','=',True)]}">
                         <tree create="False">
