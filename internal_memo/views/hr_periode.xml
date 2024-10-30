@@ -9,6 +9,8 @@
                 <field name="name"/>
                 <field name="salarystartdate"/>
 				<field name="salaryenddate"/>
+                <field name="status"/>
+                <button name="button_close_periode" string="Tutup Periode" type="object" class="oe_highlight" attrs="{'invisible': [('status', '=', 'close')]}" />
             </tree>
         </field>
     </record>
@@ -80,6 +82,22 @@
 	</record>
 
 
+    <record id="hr_periode_close_wizard_view_form" model="ir.ui.view">
+        <field name="name">hr.periode.close.wizard.view.form</field>
+        <field name="model">hr.periode.close.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Tutup Periode">
+                <sheet>
+                    <group>
+                        <field name="periode_id"/>
+                        <field name="payslip_ids_draft" attrs="{'invisible': [('payslip_ids_draft', '=', [])], 'readonly': True}" />
+                        <field name="pre_payroll_ids_active" attrs="{'invisible': [('pre_payroll_ids_active', '=', [])], 'readonly': True}" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
     <record id="action_hr_periode" model="ir.actions.act_window">
             <field name="name">HR Periode</field>
             <field name="type">ir.actions.act_window</field>
@@ -95,8 +113,8 @@
     </record>
 
     <menuitem id="menu_hr_periode" name="HR Periode"
-                  parent="om_hr_payroll.menu_hr_payroll_configuration"
-                  sequence="11"
+                  parent="internal_memo.menu_internal_memo_payroll_process"
+                  sequence="111"
                   action="action_hr_periode"
                   groups="base.group_system"/>
 

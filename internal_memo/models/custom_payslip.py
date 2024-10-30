@@ -74,10 +74,10 @@ class HrPayslipContract(models.Model):
 class HrPayslipCustom(models.Model):
 	_inherit = "hr.payslip"
 
+	periode_id	= fields.Many2one('hr.periode',string="Payroll Periode", index=True)
+	is_active	= fields.Boolean(string='Aktif', default=True)
+
 	send_mail	= fields.Selection([('yes','Ya'),('no','Tidak')], string='Kirim Email Gaji', related="employee_id.send_mail") 
-
-	
-
 
 	currency_id = fields.Many2one('res.currency', string="Currency",
 								 default=lambda
@@ -1958,8 +1958,11 @@ class HrPayslipCustom(models.Model):
 		res = []
 		# fill only if the contract as a working schedule linked
 		for contract in contracts.filtered(lambda contract: contract.resource_calendar_id):
-			day_from = datetime.combine(fields.Date.from_string(date_from), time.min)
-			day_to = datetime.combine(fields.Date.from_string(date_to), time.max)
+			day_from 	= datetime.combine(fields.Date.from_string(date_from), time.min)
+			day_to 		= datetime.combine(fields.Date.from_string(date_to), time.max)
+
+			year 		= date_to.year
+			month		= str(date_to.month).zfill(2)
 
 			# compute leave days
 			leaves = {}
@@ -2016,24 +2019,34 @@ class HrPayslipCustom(models.Model):
 
 				# kasus presensi nggak jalan maka pakai api bulanan
 				if total_hari == 0:
-					headers 	= {
-						"Content-Type"	: "text/plain", 
-							"Accept"		: "*/*", 
-							"Catch-Control"	: "no-cache",
-							"apikey" 		: "ms3Rko81bTrbO85ZCpk691PBaItghIyEbCvw0Ex"
-					}
+					presensi_bulanan = self.env['hr.payroll.presensi.bulanan'].sudo().search([('name','=',contract.employee_id.id),('year','=', year),('month','=', month)])
 
-					url 		= "https://api.smartpresence.id/v1/customrequest/virtusabsence?startdate="+datetime.strftime(date_from, "%Y-%m-%d")+"&enddate="+datetime.strftime(date_to, "%Y-%m-%d")+"&employeenumber="+contract.employee_id.nip
-					response 	= requests.get(url, headers=headers)
-
-					json_response = response.json()
-
-					if json_response['status'] == 'OK':
-						if len(json_response['data']) > 0 :
-							total_hari 	= json_response['data'][0]['presence_count']
-							total_shift	= json_response['data'][0]['presence_count']
+					if presensi_bulanan.id != False:
+						total_hari 	= presensi_bulanan.work_days
+						total_shift	= presensi_bulanan.work_shift
 					else:
-						raise UserError('Pengambilan data smart presence gagal')
+						total_hari 	= 0
+						total_shift	= 0
+
+					#
+					#headers 	= {
+					#	"Content-Type"	: "text/plain", 
+					#		"Accept"		: "*/*", 
+					#		"Catch-Control"	: "no-cache",
+					#		"apikey" 		: "ms3Rko81bTrbO85ZCpk691PBaItghIyEbCvw0Ex"
+					#}
+
+					#url 		= "https://api.smartpresence.id/v1/customrequest/virtusabsence?startdate="+datetime.strftime(date_from, "%Y-%m-%d")+"&enddate="+datetime.strftime(date_to, "%Y-%m-%d")+"&employeenumber="+contract.employee_id.nip
+					#response 	= requests.get(url, headers=headers)
+
+					#json_response = response.json()
+
+					#if json_response['status'] == 'OK':
+					#	if len(json_response['data']) > 0 :
+					#		total_hari 	= json_response['data'][0]['presence_count']
+					#		total_shift	= json_response['data'][0]['presence_count']
+					#else:
+					#	raise UserError('Pengambilan data smart presence gagal')
 
 
 				attendances = {
@@ -2517,7 +2530,7 @@ class HrPayslipSendEmailWizard(models.TransientModel):
 	def _onchange_employee_count(self):
 		domain = []
 		if self.period_id:
-			domain.append(('payroll_periode', '=', self.period_id.id))
+			domain.append(('periode_id', '=', self.period_id.id))
 		if self.month:
 			domain.append(('month', '=', self.month))
 		if self.year:
@@ -2533,7 +2546,7 @@ class HrPayslipSendEmailWizard(models.TransientModel):
 	def button_send_email(self):
 		domain = []
 		if self.period_id:
-			domain.append(('payroll_periode', '=', self.period_id.id))
+			domain.append(('periode_id', '=', self.period_id.id))
 		if self.month:
 			domain.append(('month', '=', self.month))
 		if self.year:
@@ -2726,7 +2739,6 @@ class HrPayslipBankTransferWizard(models.TransientModel):
 		domain.append(('employee_id', 'in', employee_ids.ids))
 		payslip_ids = self.env['hr.payslip'].sudo().search(domain)
 
-
 		current_row = 1
 		no = 0
 		total_net_pay = 0
@@ -2734,6 +2746,7 @@ class HrPayslipBankTransferWizard(models.TransientModel):
 		for employee in employee_ids.with_progress(msg="Generating Data"):
 			payslip_id = payslip_ids.filtered(lambda p: p.employee_id.id == employee.id)
 			if payslip_id:
+				company_bank_id = payslip_id[0].company_id.bank_ids.filtered(lambda p: p.is_default == True)
 				net_pay = payslip_id[0].line_ids.filtered(lambda p: p.code == 'NETPAY').amount
 				pembayaran_id = employee.pembayaran_ids.filtered(lambda p: p.category == self.period_id.category_id)
 				if not pembayaran_id:
@@ -2756,9 +2769,9 @@ class HrPayslipBankTransferWizard(models.TransientModel):
 					
 				no += 1
 				sheet.write(current_row, 0, no, cell_left)
-				sheet.write(current_row, 1, 'nama bank', cell_left)
-				sheet.write(current_row, 2, 'no rekening', cell_left)
-				sheet.write(current_row, 3, 'rekening atas nama', cell_left)
+				sheet.write(current_row, 1, company_bank_id[0].bank_id.name or "", cell_left)
+				sheet.write(current_row, 2, company_bank_id[0].acc_number or "", cell_left)
+				sheet.write(current_row, 3, company_bank_id[0].acc_holder_name or "", cell_left)
 				sheet.write(current_row, 4, employee.nip, cell_left)
 				sheet.write(current_row, 5, employee.name, cell_left)
 				sheet.write(current_row, 6, rekening.bank_id.name if rekening else '', cell_left)

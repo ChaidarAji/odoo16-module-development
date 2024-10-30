@@ -9,9 +9,47 @@ import requests
 _logger = logging.getLogger(__name__)
 
 
+class HrPayrollPresensiBulanan(models.Model):
+	_name           = 'hr.payroll.presensi.bulanan'
+	_description    = "Presensi Bulanan"
+
+	name 			= fields.Many2one(string = "Pegawai" ,comodel_name = "hr.employee") 
+	nik				= fields.Char(string='NIK')
+	start           = fields.Date(string='Tanggal Awal', required = True, index = True)
+	end           	= fields.Date(string='Tanggal Akhir', required = True, index = True)
+
+	year 			= fields.Integer(string='Tahun', Default  = int(datetime.now().strftime("%Y")), index=True)
+
+	month    		= fields.Selection(
+		[ 
+			('01', 'January'),
+			('02', 'February'),
+			('03', 'March'),
+			('04', 'April'),
+			('05', 'May'),
+			('06', 'June'),
+			('07', 'July'),
+			('08', 'August'),
+			('09', 'September'),
+			('10', 'Oktober'),
+			('11', 'November'),
+			('12', 'December')
+		], 
+		string   = 'Bulan',    
+		required = False, 
+		Default  = datetime.now().strftime("%m"),
+		index = True
+		)
+	
+	work_days 	= fields.Integer(string='Hari Kerja')
+	work_shift	= fields.Integer(string='Jumlah Shift')
+	
+	
+
+
 class HrPayrollPresensi(models.Model):
 	_name           = 'hr.payroll.presensi'
-	_description    = "Presensi Smart Presence"
+	_description    = "Presensi Harian"
 	
 	name            = fields.Char(string = 'Name')
 	start           = fields.Date(string='Tanggal Awal', required = True, index = True)

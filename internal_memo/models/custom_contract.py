@@ -44,8 +44,34 @@ class HrPeriode(models.Model):
 
 	category_id 	= fields.Many2one('hr.periode.category',string="Category")
 	status_id 		= fields.Many2one('hr.employee.status' , string="Employee Status")
+	status			= fields.Selection([('open', 'Open'),('close', 'Close')], string="Status", default='open')
 
-		
+
+	def button_close_periode(self):
+		#check hr.payslip draft
+		payslip_draft = self.env['hr.payslip'].sudo().search([('periode_id', '=', self.id), ('state', '=', 'draft')])
+		#chek hr.pre.payroll active
+		pre_payroll_active = self.env['hr.pre.payroll'].sudo().search([('status', '=', 'active'), ('periode', '=', self.id)])
+		if payslip_draft or pre_payroll_active:
+			return {
+				'type': 'ir.actions.act_window',
+				'res_model': 'hr.periode.close.wizard',
+				'view_mode': 'form',
+				'target': 'new',
+				'context': {
+					'default_periode_id': self.id,
+					'default_payslip_ids_draft': [(6, 0, payslip_draft.ids)],
+					'default_pre_payroll_ids_active': [(6, 0, pre_payroll_active.ids)],
+				}
+			}
+			
+class HrPeriodeCloseWizard(models.TransientModel):
+	_name = 'hr.periode.close.wizard'
+	_description = 'HR Periode Close Wizard'
+
+	periode_id = fields.Many2one('hr.periode', string="Periode")
+	payslip_ids_draft = fields.Many2many('hr.payslip', string="Payslip Draft")
+	pre_payroll_ids_active = fields.Many2many('hr.pre.payroll', string="Pre Payroll Active")
 	
 
 class HrContractType(models.Model):

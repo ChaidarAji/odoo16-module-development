@@ -63,7 +63,7 @@
             <xpath expr="//field[@name='date_to']" position="after">
                 <field name="payfreq" />
                 <field name="tax_type" />
-                <field name="payroll_periode" />
+                <field name="periode_id" />
                 <field name="tax_location_id" />
                 <field name="send_mail" />
 
@@ -113,7 +113,7 @@
                 <field name="send_mail" />
             </xpath>
             <filter name="done" position="after">
-                <filter string="Advanced Filter" name="payroll_advanced" domain="[]" />
+                <filter string="Advanced Filter" name="payroll_advanced" domain="[('is_active','=', True)]" />
             </filter>
 
         </field>
@@ -199,6 +199,7 @@
             (0, 0, {'view_mode': 'tree', 'view_id': ref('om_hr_payroll.view_hr_payslip_tree')})]"/>
         <field name="view_mode">tree,kanban,form</field>
         <field name="search_view_id" ref="om_hr_payroll.view_hr_payslip_filter"/>
+        <field name="context">{"search_default_payroll_advanced":1}</field>
     </record>
 
     <record id="hr_pre_payroll_view_tree" model="ir.ui.view">
@@ -303,7 +304,7 @@
                 <field name="payroll_periode" />
                 <field name="send_mail" />
                 <field name="send_email_status" />
-                <filter name="default_filter" string="Default" domain="[('send_email_status', 'in', ['error', 'not_send'])]"/>
+                <filter name="default_filter" string="Belum Terkirim" domain="[('send_email_status', 'in', ['error', 'not_sent']), ('is_active', '=', True)]"/>
                 <filter name="month_filter" string="Month" domain="[]" context="{'group_by': 'month'}" />
             </search>
         </field>
@@ -406,7 +407,7 @@
             (0, 0, {'view_mode': 'tree', 'view_id': ref('internal_memo.hr_payslip_bank_transfer_tree')})]"/>
         <field name="view_mode">tree,kanban,form</field>
         <field name="search_view_id" ref="om_hr_payroll.view_hr_payslip_filter"/>
-        <field name="domain">[('state','=','done')]</field>
+        <field name="domain">[('state','in',['draft','done'])]</field>
     </record>
 
     <menuitem
@@ -422,34 +423,36 @@
         <field name="arch" type="xml">
             <form string="Bank Transfer Process">
                 <group>
-                    <label for="period_id" string="Payroll Periode"/>
-                    <div>
-                        <field name="period_id" options="{'no_create_edit': True, 'no_create': True}" class="oe_inline"/>
-                        <field name="month" class="oe_inline" placeholder="Bulan"/>
-                        <field name="year" class="oe_inline" placeholder="Tahun"/>
-                    </div>
-                    <field name="employee_ids_count" invisible="1"/>
-                    <field name="excel_file" invisible="1"/>
-                    <field name="employee_count" readonly="1" force_save="1"/>
-                    <field name="all_employee"/>
-                    <field name="employee_ids" attrs="{'invisible': [('all_employee','=',True)]}">
-                        <tree create="False">
-                            <field name="nip"/>
-                            <field name="name"/>
-                        </tree>
-                    </field>
-                    <field name="error_ids" attrs="{'invisible': [('error_ids','=',[])], 'readonly': 1}">
-                        <tree>
-                            <field name="wizard_id" invisible="1"/>
-                            <field name="nik"/>
-                            <field name="employee_id"/>
-                            <field name="error"/>
-                        </tree>
-                    </field>
+                    <group>
+                        <label for="period_id" string="Payroll Periode"/>
+                        <div>
+                            <field name="period_id" options="{'no_create_edit': True, 'no_create': True}" class="oe_inline"/>
+                            <field name="month" class="oe_inline" placeholder="Bulan"/>
+                            <field name="year" class="oe_inline" placeholder="Tahun"/>
+                        </div>
+                        <field name="employee_ids_count" invisible="1"/>
+                        <field name="excel_file" invisible="1"/>
+                        <field name="employee_count" readonly="1" force_save="1"/>
+                        <field name="all_employee"/>
+                        <field name="employee_ids" attrs="{'invisible': [('all_employee','=',True)]}">
+                            <tree create="False">
+                                <field name="nip"/>
+                                <field name="name"/>
+                            </tree>
+                        </field>
+                        <field name="error_ids" attrs="{'invisible': [('error_ids','=',[])], 'readonly': 1}">
+                            <tree>
+                                <field name="wizard_id" invisible="1"/>
+                                <field name="nik"/>
+                                <field name="employee_id"/>
+                                <field name="error"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="button_process" string="Process" type="object" class="btn-primary"/>
+                    </footer>
                 </group>
-                <footer>
-                    <button name="button_process" string="Process" type="object" class="btn-primary"/>
-                </footer>
             </form>
         </field>
     </record>

@@ -117,10 +117,19 @@
     <menuitem id="menu_internal_memo_payroll_additional" name="Additional Input" parent="om_hr_payroll.menu_hr_payroll_root" sequence="100"/>
 
     <menuitem
-        id="menu_hr_payroll_presensi"
-        action="hr_payroll_presensi_action"
+        id="menu_hr_payroll_presensi_root"
         parent="om_hr_payroll.menu_hr_payroll_root"
         sequence="57"
+        name="Presensi"
+        groups="custom_payroll_access_smart_presence_grant_group" />
+
+
+    <menuitem
+        id="menu_hr_payroll_presensi"
+        action="hr_payroll_presensi_action"
+        parent="internal_memo.menu_hr_payroll_presensi_root"
+        sequence="57"
+        name="Presensi Harian"
         groups="custom_payroll_access_smart_presence_grant_group" />
 
     <menuitem

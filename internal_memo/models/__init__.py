@@ -19,3 +19,4 @@ from . import divisi
 from . import ir_action_report
 from . import custom_payslip_line
 from . import payfield
+from . import wizard

@@ -153,10 +153,9 @@
             <form string="Filter Payslip">
                 <group>
                     <group>
+                        <field name="periode_id"/>
                         <field name="year"/>
-                        <field name="month"/>
-                        <field name="category"/>
-                        <field name="payroll_periode"/>
+                        <field name="month"/>                       
                         <field name="cost_center"/>
                         <field name="work_location"/>
                         <field name="send_email_status"/>

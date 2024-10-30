@@ -411,6 +411,9 @@ class ImportPayrollKoreksiGajiWizard(models.TransientModel):
 		#except:
 		#	raise UserError(_('Please insert a valid file'))
 
+
+
+
 class ImportPayrollKoreksiGajiErrorWizard(models.TransientModel):
 	_name = "import.payroll.koreksi.gaji.error.wizard"
 
@@ -1703,14 +1706,16 @@ class FilterPayslip(models.TransientModel):
 			('12', 'December')
 		], 
 		string   = 'Month',    
-		required =True, 
+		required =False, 
 		Default  = datetime.now().strftime("%m"))
 	
-	category 			= fields.Many2one('hr.periode.category',string="Kategori Gaji", required=True)
-	payroll_periode		= fields.Many2one('hr.employee.status',string="Payroll Periode")
+	#category 			= fields.Many2one('hr.periode.category',string="Kategori Gaji", required=True)
+	#payroll_periode		= fields.Many2one('hr.employee.status',string="Payroll Periode")
+	
+	periode_id			= fields.Many2one('hr.periode',string="Payroll Periode")
 	cost_center			= fields.Many2one('area',string="Cost Center")
 	work_location		= fields.Many2one('hr.work.location',string="Work Location")
-	send_email_status = fields.Selection([('not_sent', 'Belum Dikirim'), ('sent', 'Terkirim'), ('error', 'Error')], string='Status Kirim Email', default='not_sent', readonly=False)
+	send_email_status 	= fields.Selection([('not_sent', 'Belum Dikirim'), ('sent', 'Terkirim'), ('error', 'Error')], string='Status Kirim Email', default='not_sent', readonly=False)
 	# pay_freq			= fields.Selection([('DAILY','DAILY'),('MONTHLY','MONTHLY')], string='Pay Freq')
 	# tax_location		= fields.Many2one('tax.location',string="Tax Location")
 	# tax_type			= fields.Selection([('local','Local'),('fixed','Fixed')], string='Tax Type')
@@ -1737,13 +1742,20 @@ class FilterPayslip(models.TransientModel):
 		#raise UserError(str(current_uid))
 		wizard_info = self.env['filter.payslip.wizard'].sudo().search([('create_uid','=',current_uid)], order="create_uid desc", limit=1)
 
+		# if only based on periode
+		if self.periode_id.id != False:
+			self.year 		= self.periode_id.salaryenddate.year
+			self.month		= str(self.periode_id.salaryenddate.month).zfill(2)
+		
+
 		if wizard_info.id != False:
 			wizard_info.write(
 				{
 					'year' 					: self.year,
 					'month'					: self.month,
-					'category'				: self.category.id,
-					'payroll_periode'		: self.payroll_periode.id,
+					#'category'				: self.category.id,
+					'periode_id'			: self.periode_id.id,
+					#'payroll_periode'		: self.payroll_periode.id,
 					'cost_center'			: self.cost_center.id,
 					'work_location'			: self.work_location.id,
 					'send_email_status'		: self.send_email_status,
@@ -1756,8 +1768,9 @@ class FilterPayslip(models.TransientModel):
 			self.env['filter.payslip.wizard'].create({
 				'year' 					: self.year,
 				'month'					: self.month,
-				'category'				: self.category.id,
-				'payroll_periode'		: self.payroll_periode.id,
+				#'category'				: self.category.id,
+				#'payroll_periode'		: self.payroll_periode.id,
+				'periode_id'			: self.periode_id.id,
 				'cost_center'			: self.cost_center.id,
 				'work_location'			: self.work_location.id,
 				'send_email_status'		: self.send_email_status,
@@ -1805,13 +1818,17 @@ class FilterPayslip(models.TransientModel):
 			string_filter = string_filter + ' '+str(self.year)
 			domain.append(('year','=',self.year))
 
-		if self.category.id != False:
-			string_filter = string_filter + ' '+self.category.name
-			domain.append(('category','=',self.category.id))
+		#if self.category.id != False:
+		#	string_filter = string_filter + ' '+self.category.name
+		#	domain.append(('category','=',self.category.id))
 
-		if self.payroll_periode.id != False:
-			string_filter = string_filter + ' '+ self.payroll_periode.name
-			domain.append(('payroll_periode','=',self.payroll_periode.id))
+		#if self.payroll_periode.id != False:
+		#	string_filter = string_filter + ' '+ self.payroll_periode.name
+		#	domain.append(('payroll_periode','=',self.payroll_periode.id))
+
+		if self.periode_id.id != False:
+			string_filter = string_filter + ' '+ self.periode_id.name
+			domain.append(('periode_id','=',self.periode_id.id))
 
 		if self.cost_center.id != False:
 			string_filter = string_filter + ' '+ self.cost_center.name

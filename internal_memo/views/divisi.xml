@@ -562,7 +562,26 @@
         </field>
     </record>
 
-
-    
+    <record id="hr_contract_bank_custom_model_view_partner" model="ir.ui.view">
+        <field name="name">hr.contact.bank.custom.model.view.partner</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='contact_addresses']" position="after">
+                <page string="Bank Account" name="bank_account">
+                    <field name="bank_ids">
+                        <tree editable="bottom">
+                            <field name="bank_id"/>
+                            <field name="acc_number"/>
+                            <field name="acc_holder_name"/>
+                            <field name="allow_out_payment"/>
+                            <field name="is_default"/>
+                            <field name="active"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
 
 </odoo>

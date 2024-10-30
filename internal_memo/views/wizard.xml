@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record id="custom_payroll_generate_payslip_group" model="res.groups">
+		<field name="name">Generate Payslip</field>
+        <field name="category_id" ref="custom_payroll_access_setting"/>
+	</record>
+
+    <record id="custom_payroll_generate_payslip_rule" model="ir.rule">
+		<field name="name">Upload Data Process Payroll</field>
+		<field name="model_id" ref="model_hr_payslip_generate_wizard"/>
+		<field name="groups" eval="[(4,ref('custom_payroll_generate_payslip_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+
+    <record id="custom_payroll_generate_payslip2_rule" model="ir.rule">
+		<field name="name">Upload Data Process Payroll</field>
+		<field name="model_id" ref="model_hr_payslip_generate_employee_wizard"/>
+		<field name="groups" eval="[(4,ref('custom_payroll_generate_payslip_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+
+    <record id="custom_payroll_generate_payslip3_rule" model="ir.rule">
+		<field name="name">Upload Data Process Payroll</field>
+		<field name="model_id" ref="model_hr_payslip_generate_error_wizard"/>
+		<field name="groups" eval="[(4,ref('custom_payroll_generate_payslip_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+
+
+    <record id="internal_memo_payslip_generate_wizard_view_form" model="ir.ui.view">
+		<field name="name">hr.payslip.generate.wizard.view.form</field>
+		<field name="model">hr.payslip.generate.wizard</field>
+		<field name="arch" type="xml">
+			<form string="">
+					<group>
+                        <field name="is_error_visible" invisible="1" />
+						<field name="name"/>
+                        <field name="periode_label"/>
+                        <field name="area_id"/>
+                        <field name="employee_number"/>
+                        <field name="choose_employee" />
+                        <field name="show_employee" attrs="{'invisible': [('choose_employee' ,'=', False)]}"/>
+                        <field name="employee_list" attrs="{'invisible': [('show_employee' ,'=', False)]}"/>
+                        <field name="employee_ids" attrs="{'invisible': [('choose_employee' ,'=', False)]}"/>
+                        <field name="processed" />
+                        <field name="error_ids" attrs="{'invisible': [('is_error_visible' ,'=', False)]}" />
+                        <button name="button_generate_payslip"
+                        string="Generate Payslip"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    </group>
+
+                    
+			</form>
+		</field>
+	</record>
+
+    <record id="internal_memo_payslip_generate_employee_wizard_view_tree" model="ir.ui.view">
+        <field name="name">hr.payslip.generate.employee.wizard.view.tree</field>
+        <field name="model">hr.payslip.generate.employee.wizard</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="employee_id"/>
+                <field name="nik"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="internal_memo_payslip_generate_error_wizard_view_tree" model="ir.ui.view">
+        <field name="name">hr.payslip.generate.error.wizard.view.tree</field>
+        <field name="model">hr.payslip.generate.error.wizard</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="employee_id"/>
+                <field name="nik"/>
+                <field name="description" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="internal_memo_payslip_generate_list_wizard_view_tree" model="ir.ui.view">
+        <field name="name">hr.payslip.generate.list.wizard.view.tree</field>
+        <field name="model">hr.payslip.generate.list.wizard</field>
+        <field name="arch" type="xml">
+            <tree create="0" >
+                <field name="employee_id"/>
+                <button name="button_selected_employee"
+                        string="Pilih"
+                        type="object"
+                        class="btn-primary"
+
+                />
+            </tree>
+        </field>
+    </record>
+
+
+
+    <record id="internal_memo_payslip_generate_wizard_action" model="ir.actions.act_window">
+		<field name="name">Pembuatan Payslip Gaji</field>
+		<field name="res_model">hr.payslip.generate.wizard</field>
+		<field name="view_mode">form</field>
+    </record>
+    <record id="internal_memo_payslip_generate_employee_wizard_action" model="ir.actions.act_window">
+		<field name="name">Pembuatan Payslip Gaji</field>
+		<field name="res_model">hr.payslip.generate.employee.wizard</field>
+		<field name="view_mode">tree</field>
+    </record>
+    <record id="internal_memo_payslip_generate_error_wizard_action" model="ir.actions.act_window">
+		<field name="name">Pembuatan Payslip Gaji</field>
+		<field name="res_model">hr.payslip.generate.error.wizard</field>
+		<field name="view_mode">tree</field>
+    </record>
+
+    <record id="internal_memo_payslip_generate_list_wizard_action" model="ir.actions.act_window">
+		<field name="name">Pembuatan Payslip Gaji</field>
+		<field name="res_model">hr.payslip.generate.list.wizard</field>
+		<field name="view_mode">tree</field>
+    </record>
+
+    
+
+    <menuitem
+        id="menu_hr_generate_payslip"
+        action="internal_memo_payslip_generate_wizard_action"
+        parent="internal_memo.menu_internal_memo_payroll_process"
+        sequence="60"
+        groups="custom_payroll_generate_payslip_group" />
+
+
+</odoo>

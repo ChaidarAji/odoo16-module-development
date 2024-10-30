@@ -70,6 +70,7 @@
         'reports/report_payslip_custom3_template.xml',
         'views/salary_rule.xml',
         'views/custom_button.xml',
+        'views/wizard.xml',
         #'views/assets.xml',
         'views/mail_template.xml'
     ],
