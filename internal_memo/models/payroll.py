@@ -332,7 +332,7 @@ class ImportPayrollKoreksiGajiWizard(models.TransientModel):
 			employee_name = record[1]
 			data_gaji = record[2:]
 			for index, value in enumerate(data_gaji):
-				payslip_line_info = self.env['hr.payslip.line'].sudo().search([('slip_id.state','=','draft'),('nik','=', nik),('code','=', column_name[str(index)]), ('slip_id.payroll_periode', '=', self.period_id.id)])
+				payslip_line_info = self.env['hr.payslip.line'].sudo().search([('slip_id.state','=','draft'),('nik','=', nik),('code','=', column_name[str(index)]), ('slip_id.periode_id', '=', self.period_id.id)])
 			#if len(payslip_line_info) > 0:
 				if payslip_line_info:
 					for line in payslip_line_info:
@@ -1902,13 +1902,10 @@ class ExportPayslipExcel(models.TransientModel):
 		required =True, 
 		Default  = datetime.now().strftime("%m"))
 	
-	category 			= fields.Many2one('hr.periode.category',string="Kategori Gaji", required=True)
-	payroll_periode		= fields.Many2one('hr.employee.status',string="Payroll Periode")
+	#category 			= fields.Many2one('hr.periode.category',string="Kategori Gaji", required=True)
+	#payroll_periode	= fields.Many2one('hr.employee.status',string="Payroll Periode")
+	periode_id			= fields.Many2one('hr.periode',string="Payroll Periode")
 	cost_center			= fields.Many2one('area',string="Cost Center")
-	work_location		= fields.Many2one('hr.work.location',string="Work Location")
-	pay_freq			= fields.Selection([('DAILY','DAILY'),('MONTHLY','MONTHLY')], string='Pay Freq')
-	tax_location		= fields.Many2one('tax.location',string="Tax Location")
-	tax_type			= fields.Selection([('local','Local'),('fixed','Fixed')], string='Tax Type')
 
 
 	def export_payslip_save(self):
@@ -1922,52 +1919,27 @@ class ExportPayslipExcel(models.TransientModel):
 		else:
 			month 	= self.month
 
-		if self.category == False:
-			category 	= False
-		else:
-			category 	= self.category.id
+		#if self.category == False:
+		#	category 	= False
+		#else:
+		#	category 	= self.category.id
 
-		if self.payroll_periode.id == False:
-			payroll_periode 	= False
+		if self.periode_id.id == False:
+			periode_id 	= False
 		else:
-			payroll_periode 	= self.payroll_periode.id
+			periode_id 	= self.periode_id.id
 
 		if self.cost_center.id == False:
 			cost_center 	= False
 		else:
 			cost_center 	= self.cost_center.id
 
-		if self.work_location.id == False:
-			work_location 	= False
-		else:
-			work_location 	= self.work_location.id
-
-		if self.pay_freq == False:
-			pay_freq 	= False
-		else:
-			pay_freq 	= self.pay_freq
-
-		if self.tax_location.id == False:
-			tax_location 	= False
-		else:
-			tax_location 	= self.tax_location.id
-
-		if self.tax_type == False:
-			tax_type 	= False
-		else:
-			tax_type 	= self.tax_type
-
-
 		data = {
 		   'year'					: year,
 		   'month'					: month,
-		   'category'				: category,
-			'payroll_periode'		: payroll_periode,
-			'cost_center'			: cost_center,
-			'work_location'			: work_location,
-			'pay_freq'				: pay_freq,
-			'tax_location'			: tax_location,
-			'tax_type'				: tax_type
+		   #'category'				: category,
+		   'periode_id'				: periode_id,
+		   'cost_center'			: cost_center
 	   	}
 
 		return {
@@ -1977,7 +1949,7 @@ class ExportPayslipExcel(models.TransientModel):
 						'model'				: 'export.payslip.wizard',
 						'options'			: json.dumps(data,default=date_utils.json_default),
 						'output_format'		: 'xlsx',
-						'report_name'		: 'Laporan Payroll',
+						'report_name'		: 'Monthly Report',
 					},
 		   'report_type': 'xlsx',
 	   }

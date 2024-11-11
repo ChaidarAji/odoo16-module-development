@@ -36,6 +36,7 @@ class HrPayfieldInputLine(models.Model):
 	#employee_id		= fields.Many2one("hr.employee", string="Pegawai", related="payfield_input_id.employee_id")
 	employee_id			= fields.Many2one("hr.employee", string="Pegawai")
 	employee_nik		= fields.Char(string='NIP', related="employee_id.nip")
+	effective_date		= fields.Date(string='Effectife Date')
 
 	# def create and write to insert employee_id
 	@api.model_create_multi
@@ -44,8 +45,8 @@ class HrPayfieldInputLine(models.Model):
 
 		# struktur id harus di set ulang
 		for val in values:
-			_logger.error('CHECK EMPLOYEE')
-			_logger.error(val)
+			#_logger.error('CHECK EMPLOYEE')
+			#_logger.error(val)
 
 			if 'employee_id' in val.keys(): 
 				# jika payfield input kosong, insert baru, kasus input dari massal

@@ -49,11 +49,12 @@ class HrPeriode(models.Model):
 
 	def button_close_periode(self):
 		#check hr.payslip draft
-		payslip_draft = self.env['hr.payslip'].sudo().search([('periode_id', '=', self.id), ('state', '=', 'draft')])
+		payslip_draft = self.env['hr.payslip'].sudo().search([('periode_id', '=', self.id), ('state', '=', 'draft'), ('date_from', '>=', self.salarystartdate), ('date_to', '<=', self.salaryenddate)])
 		#chek hr.pre.payroll active
-		pre_payroll_active = self.env['hr.pre.payroll'].sudo().search([('status', '=', 'active'), ('periode', '=', self.id)])
+		pre_payroll_active = self.env['hr.pre.payroll'].sudo().search([('status', '=', 'active'), ('periode', '=', self.id), ('bulan', '=', self.salarystartdate.strftime('%m')), ('year', '=', self.salarystartdate.strftime('%Y'))])
 		if payslip_draft or pre_payroll_active:
 			return {
+				'name': 'Tutup Periode',
 				'type': 'ir.actions.act_window',
 				'res_model': 'hr.periode.close.wizard',
 				'view_mode': 'form',
@@ -64,7 +65,14 @@ class HrPeriode(models.Model):
 					'default_pre_payroll_ids_active': [(6, 0, pre_payroll_active.ids)],
 				}
 			}
-			
+		else:
+			self.status = 'close'
+
+	def write(self, vals):
+		if 'salarystartdate' in vals or 'salaryenddate' in vals:
+			self.status = 'open'
+		return super(HrPeriode, self).write(vals)
+
 class HrPeriodeCloseWizard(models.TransientModel):
 	_name = 'hr.periode.close.wizard'
 	_description = 'HR Periode Close Wizard'
@@ -73,6 +81,16 @@ class HrPeriodeCloseWizard(models.TransientModel):
 	payslip_ids_draft = fields.Many2many('hr.payslip', string="Payslip Draft")
 	pre_payroll_ids_active = fields.Many2many('hr.pre.payroll', string="Pre Payroll Active")
 	
+
+	def button_close_periode(self):
+		for payslip in self.payslip_ids_draft:
+			payslip.action_payslip_done()
+
+		for pre_payroll in self.pre_payroll_ids_active:
+			pre_payroll.status = 'inactive'
+		
+		self.periode_id.status = 'close'
+
 
 class HrContractType(models.Model):
 	_inherit = "hr.contract.type"

@@ -13,6 +13,7 @@
 				<field name="amount" readonly="1"/>
                 <field name="amount_correction"/>
                 <field name="is_override" readonly="1"/>
+                <field name="ignore_formula"/>
                 <button name="correction_confirm" string="Confirm" type="object" class="btn btn-primary"/>
                 <button name="correction_cancel" string="Reverse" type="object" class="btn btn-danger"/>
 			</tree>

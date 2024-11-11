@@ -75,6 +75,11 @@ class HrPayslipCustom(models.Model):
 	_inherit = "hr.payslip"
 
 	periode_id	= fields.Many2one('hr.periode',string="Payroll Periode", index=True)
+	divisi_id	= fields.Many2one('divisi',string="Divisi", index=True)
+	#contract_id = fields.Many2one('hr.contract', string='Contract', readonly=True, index = True, states={'draft': [('readonly', False)]})
+	#grade_id	= fields.Many2one('hr.grade',string="Grade", index=True)
+	grading		= fields.Selection([('OPERATOR','Operator'),('PENGAWAS','Pengawas')], string='Grading', index = True)
+
 	is_active	= fields.Boolean(string='Aktif', default=True)
 
 	send_mail	= fields.Selection([('yes','Ya'),('no','Tidak')], string='Kirim Email Gaji', related="employee_id.send_mail") 
@@ -152,38 +157,38 @@ class HrPayslipCustom(models.Model):
 
 	position_id = fields.Many2one(
 		'master.job',
-		string="Job Position"
+		string="Job Position", index = True
 	)
 
 	departement_id = fields.Many2one(
 		'hr.department',
-		string="Departement"
+		string="Departement", index = True
 	)
 
 	location_id = fields.Many2one(
 		'hr.work.location',
-		string="Work Location"
+		string="Work Location", index = True
 	)
 
 	area_id = fields.Many2one(
 		'area',
-		string="Cost Centre"
+		string="Cost Centre", index = True
 	)
 
 	grade_id = fields.Many2one(
 		'hr.grade',
-		string="Grade"
+		string="Grade", index = True
 	)
 
-	tax_type 		= fields.Selection([('local','Local'),('fixed','Fixed')], string='Tax Type')
-	tax_location_id = fields.Many2one('tax.location',string="Tax Location")
-	payfreq			= fields.Selection([('DAILY','DAILY'),('MONTHLY','MONTHLY')], string='PayFreq')
-	payroll_periode	= fields.Many2one('hr.periode',string="Payroll Periode")
-	category		= fields.Many2one('hr.periode.category',string="Categori Gaji", related="payroll_periode.category_id")
+	tax_type 		= fields.Selection([('local','Local'),('fixed','Fixed')], string='Tax Type', index = True)
+	tax_location_id = fields.Many2one('tax.location',string="Tax Location", index = True)
+	payfreq			= fields.Selection([('DAILY','DAILY'),('MONTHLY','MONTHLY')], string='PayFreq', index = True)
+	payroll_periode	= fields.Many2one('hr.periode',string="Payroll Periode", index = True)
+	category		= fields.Many2one('hr.periode.category',string="Categori Gaji", related="payroll_periode.category_id", index = True)
 
-	periode_search	= fields.Char(string='Periode Gaji')
+	periode_search	= fields.Char(string='Periode Gaji', index = True)
 
-	ptkp_id			= fields.Many2one('hr.ptkp',string="PTKP")
+	ptkp_id			= fields.Many2one('hr.ptkp',string="PTKP", index = True)
 
 
 	is_resign = fields.Boolean(
@@ -526,7 +531,7 @@ class HrPayslipCustom(models.Model):
 
 	# additional for report
 	paydate				= fields.Date(string='Pay Date')
-	bank_transfer		= fields.Many2one('res.partner.bank', string='Bank Transfer')
+	bank_transfer		= fields.Many2one('res.partner.bank', string='Bank Transfer', index = True)
 	bank_name			= fields.Char(string='Nama Bank')
 	bank_owner			= fields.Char(string='Nama Pemilik')
 	bank_number			= fields.Char(string='Nomor Rekening')
@@ -581,6 +586,12 @@ class HrPayslipCustom(models.Model):
 			rec.payfreq				= rec.employee_id.custom3
 			rec.tax_location_id		= rec.contract_id.work_location_id.tax_location_id.id
 			rec.area_id				= rec.contract_id.area_id.id
+
+			if rec.employee_id.grade_id.category_id.code == 'FRONTLINER':
+				rec.grading = 'OPERATOR'
+			else:
+				rec.grading = 'PENGAWAS'
+
 
 			if rec.contract_id.employee_status2_id.code == 'STAFF' or rec.contract_id.employee_status2_id.code == 'OP':
 				rec.tax_type = 'local'
@@ -684,6 +695,7 @@ class HrPayslipCustom(models.Model):
 			rec.payfreq			= rec.employee_id.custom3
 			rec.tax_location_id	= rec.employee_id.work_location_id.tax_location_id.id
 			rec.area_id			= rec.employee_id.area.id
+			rec.divisi_id		= rec.employee_id.divisi.id
 
 			if rec.employee_id.employee_status_id.code == 'STAFF' or rec.employee_id.employee_status_id.code == 'OP':
 				rec.tax_type = 'local'
@@ -2528,7 +2540,7 @@ class HrPayslipSendEmailWizard(models.TransientModel):
 
 	@api.onchange('period_id', 'year', 'month', 'employee_ids', 'send_email_status')
 	def _onchange_employee_count(self):
-		domain = []
+		domain = [('send_mail','=','yes')]
 		if self.period_id:
 			domain.append(('periode_id', '=', self.period_id.id))
 		if self.month:
@@ -2544,7 +2556,7 @@ class HrPayslipSendEmailWizard(models.TransientModel):
 			return {'domain': {'employee_ids': employee_ids_domain}}
 
 	def button_send_email(self):
-		domain = []
+		domain = [('send_mail','=','yes')]
 		if self.period_id:
 			domain.append(('periode_id', '=', self.period_id.id))
 		if self.month:
@@ -2562,44 +2574,53 @@ class HrPayslipSendEmailWizard(models.TransientModel):
 
 		for payslip in payslip_ids.with_progress(msg="Sending Email"):
 			error_id = self.error_ids.filtered(lambda r: r.payslip_id.id == payslip.id)
-			try:
-				mail = payslip.action_send_email_from_wizard()
-				if not mail:
+
+			if payslip.employee_id.work_email == False or payslip.employee_id.work_email =='':
+				self.env['hr.payslip.send.email.error.wizard'].sudo().create({
+					'wizard_id'		: self.id,
+					'employee_id'	: payslip.employee_id.id,
+					'payslip_id'	: payslip.id,
+					'error'			: "Pegawai tidak memiliki Email"
+				})
+			else:
+				try:
+					mail = payslip.action_send_email_from_wizard()
+					if not mail:
+						if not error_id:
+							self.env['hr.payslip.send.email.error.wizard'].sudo().create({
+								'wizard_id'	: self.id,
+								'employee_id'	: payslip.employee_id.id,
+								'payslip_id'	: payslip.id,
+								'error'		: "Kolom 'Kirim Email Gaji' pada Payslip berisi 'Tidak'"
+							})
+						else:
+							error_id.write({
+								'error'		: "Kolom 'Kirim Email Gaji' pada Payslip berisi 'Tidak'"
+							})
+					elif mail.state == 'exception':
+						if not error_id:
+							self.env['hr.payslip.send.email.error.wizard'].sudo().create({
+								'wizard_id'	: self.id,
+								'employee_id'	: payslip.employee_id.id,
+								'payslip_id'	: payslip.id,
+								'error'		: mail.failure_reason
+							})
+						else:
+							error_id.write({
+								'error'		: mail.failure_reason
+							})
+				except Exception as e:
 					if not error_id:
 						self.env['hr.payslip.send.email.error.wizard'].sudo().create({
 							'wizard_id'	: self.id,
 							'employee_id'	: payslip.employee_id.id,
 							'payslip_id'	: payslip.id,
-							'error'		: "Kolom 'Kirim Email Gaji' pada Payslip berisi 'Tidak'"
+							'error'		: str(e)
 						})
 					else:
 						error_id.write({
-							'error'		: "Kolom 'Kirim Email Gaji' pada Payslip berisi 'Tidak'"
-						})
-				elif mail.state == 'exception':
-					if not error_id:
-						self.env['hr.payslip.send.email.error.wizard'].sudo().create({
-							'wizard_id'	: self.id,
-							'employee_id'	: payslip.employee_id.id,
-							'payslip_id'	: payslip.id,
-							'error'		: mail.failure_reason
-						})
-					else:
-						error_id.write({
-							'error'		: mail.failure_reason
-						})
-			except Exception as e:
-				if not error_id:
-					self.env['hr.payslip.send.email.error.wizard'].sudo().create({
-						'wizard_id'	: self.id,
-						'employee_id'	: payslip.employee_id.id,
-						'payslip_id'	: payslip.id,
-						'error'		: str(e)
-					})
-				else:
-					error_id.write({
-						'error'		: str(e)
-					})	
+							'error'		: str(e)
+						})	
 		if len(self.error_ids) > 0 :
 			return { 
 				'context'	: self.env.context, 
@@ -2674,7 +2695,7 @@ class HrPayslipBankTransferWizard(models.TransientModel):
 	def _onchange_employee_count(self):
 		domain = [('state', '=', 'done')]
 		if self.period_id:
-			domain.append(('payroll_periode', '=', self.period_id.id))
+			domain.append('|', ('periode_id', '=', self.period_id.id), ('payroll_periode', '=', self.period_id.id))
 		if self.month:
 			domain.append(('month', '=', self.month))
 		if self.year:
@@ -2711,7 +2732,7 @@ class HrPayslipBankTransferWizard(models.TransientModel):
 		#Payslip Domain
 		domain = [('state', '=', 'done')]
 		if self.period_id:
-			domain.append(('payroll_periode', '=', self.period_id.id))
+			domain.append('|', ('periode_id', '=', self.period_id.id), ('payroll_periode', '=', self.period_id.id))
 		if self.month:
 			domain.append(('month', '=', self.month))
 		if self.year:

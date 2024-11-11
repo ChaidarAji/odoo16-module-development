@@ -89,11 +89,15 @@
             <form string="Tutup Periode">
                 <sheet>
                     <group>
-                        <field name="periode_id"/>
+                        <field name="periode_id" readonly="1" />
                         <field name="payslip_ids_draft" attrs="{'invisible': [('payslip_ids_draft', '=', [])], 'readonly': True}" />
                         <field name="pre_payroll_ids_active" attrs="{'invisible': [('pre_payroll_ids_active', '=', [])], 'readonly': True}" />
                     </group>
                 </sheet>
+                <footer>
+                    <button name="button_close_periode" string="Lewati" type="object" class="oe_highlight" />
+                    <button string="Cancel" class="btn btn-secondary" special="cancel" data-hotkey="z" />
+                </footer>
             </form>
         </field>
     </record>

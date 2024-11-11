@@ -77,6 +77,8 @@
 				<field name="employee_nik"/>
 				<field name="payfield_id"/>
 				<field name="value"/>
+				<field name="effective_date"/>
+				
 			</tree>
 		</field>
 	</record>

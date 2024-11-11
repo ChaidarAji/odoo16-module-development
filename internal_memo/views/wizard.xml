@@ -36,6 +36,44 @@
         <field name="perm_unlink" eval="True"/>
 	</record>
 
+    <record id="custom_payroll_report_payslip_group" model="res.groups">
+		<field name="name">Payroll Report</field>
+        <field name="category_id" ref="custom_payroll_access_setting"/>
+	</record>
+
+    <record id="custom_payroll_report_payslip_monthly_rule" model="ir.rule">
+		<field name="name">Payroll Report Monthly</field>
+		<field name="model_id" ref="model_hr_payslip_monthly_report_wizard"/>
+		<field name="groups" eval="[(4,ref('custom_payroll_report_payslip_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+
+    <record id="custom_payroll_report_payslip_cash_rule" model="ir.rule">
+		<field name="name">Payroll Report Cash</field>
+		<field name="model_id" ref="model_hr_payslip_cash_report_wizard"/>
+		<field name="groups" eval="[(4,ref('custom_payroll_report_payslip_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+
+    <record id="custom_payroll_report_payslip_employee_data_rule" model="ir.rule">
+		<field name="name">Payroll Report Employee Data</field>
+		<field name="model_id" ref="model_hr_payslip_employee_data_report_wizard"/>
+		<field name="groups" eval="[(4,ref('custom_payroll_report_payslip_group'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+	</record>
+
+
+
+
 
     <record id="internal_memo_payslip_generate_wizard_view_form" model="ir.ui.view">
 		<field name="name">hr.payslip.generate.wizard.view.form</field>
@@ -107,6 +145,129 @@
 
 
 
+    <record id="internal_memo_payslip_monthly_report_view_form" model="ir.ui.view">
+		<field name="name">hr.payslip.monthly.report.wizard.view.form</field>
+		<field name="model">hr.payslip.monthly.report.wizard</field>
+		<field name="arch" type="xml">
+			<form string="">
+					<group>
+						<field name="name"/>
+                        <field name="year"/>
+                        <field name="month"/>
+                        <field name="divisi"/>
+                        <field name="cost_center"/>
+                        <button name="button_monthly_report"
+                        string="Generate Report"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    </group>
+			</form>
+		</field>
+	</record>
+
+    <record id="internal_memo_payslip_cash_report_view_form" model="ir.ui.view">
+		<field name="name">hr.payslip.cash.report.wizard.view.form</field>
+		<field name="model">hr.payslip.cash.report.wizard</field>
+		<field name="arch" type="xml">
+			<form string="">
+					<group>
+						<field name="name"/>
+                        <field name="year"/>
+                        <field name="month"/>
+                        <field name="divisi"/>
+                        <field name="cost_center"/>
+                        <button name="button_cash_report"
+                        string="Generate Report"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    </group>
+			</form>
+		</field>
+	</record>
+    <record id="internal_memo_payslip_employee_data_report_view_form" model="ir.ui.view">
+		<field name="name">hr.payslip.employee.data.report.wizard.view.form</field>
+		<field name="model">hr.payslip.employee.data.report.wizard</field>
+		<field name="arch" type="xml">
+			<form string="">
+					<group>
+                        <field name="name"/>
+                        <field name="divisi"/>
+                        <field name="cost_center"/>
+                        <button name="button_employee_data_report"
+                        string="Generate Report"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    </group>
+			</form>
+		</field>
+	</record>
+
+    <record id="internal_memo_journal_estimasi_gaji_view_form" model="ir.ui.view">
+		<field name="name">hr.journal.estimasi.gaji.wizard.view.form</field>
+		<field name="model">hr.journal.estimasi.gaji.wizard</field>
+		<field name="arch" type="xml">
+			<form string="">
+					<group>
+                        <field name="name"/>
+                        <field name="year"/>
+                        <field name="month"/>
+                        <field name="divisi"/>
+                        <field name="cost_center"/>
+                        <button name="button_journal_estimasi_gaji"
+                        string="Generate Report"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    </group>
+			</form>
+		</field>
+	</record>
+
+    <record id="internal_memo_journal_pengembalian_pajak_view_form" model="ir.ui.view">
+		<field name="name">hr.journal.pengembalian.pajak.wizard.view.form</field>
+		<field name="model">hr.journal.pengembalian.pajak.wizard</field>
+		<field name="arch" type="xml">
+			<form string="">
+					<group>
+                        <field name="name"/>
+                        <field name="year"/>
+                        <field name="month"/>
+                        <field name="divisi_ids" widget="many2many_tags"/>
+                        <button name="button_journal_pengembalian_pajak"
+                        string="Generate Report"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    </group>
+			</form>
+		</field>
+	</record>
+
+  <record id="internal_memo_journal_detail_gaji_view_form" model="ir.ui.view">
+		<field name="name">hr.journal.detail.gaji.wizard.view.form</field>
+		<field name="model">hr.journal.detail.gaji.wizard</field>
+		<field name="arch" type="xml">
+			<form string="">
+					<group>
+                        <field name="name"/>
+                        <field name="year"/>
+                        <field name="month"/>
+                        <field name="divisi_ids" widget="many2many_tags"/>
+                        <button name="button_journal_detail_gaji"
+                        string="Generate Report"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    </group>
+			</form>
+		</field>
+	</record>
+
+
+
     <record id="internal_memo_payslip_generate_wizard_action" model="ir.actions.act_window">
 		<field name="name">Pembuatan Payslip Gaji</field>
 		<field name="res_model">hr.payslip.generate.wizard</field>
@@ -138,5 +299,96 @@
         sequence="60"
         groups="custom_payroll_generate_payslip_group" />
 
+
+
+    
+
+    
+    <record id="internal_memo_hr_payroll_report_monthly_action" model="ir.actions.act_window">
+		<field name="name">Laporan Bulanan</field>
+		<field name="res_model">hr.payslip.monthly.report.wizard</field>
+		<field name="view_mode">form</field>
+    </record>
+    <record id="internal_memo_hr_payroll_report_cash_action" model="ir.actions.act_window">
+		<field name="name">Laporan Penggajian Cash</field>
+		<field name="res_model">hr.payslip.cash.report.wizard</field>
+		<field name="view_mode">form</field>
+    </record>
+
+    <record id="internal_memo_hr_payroll_report_employee_data_action" model="ir.actions.act_window">
+		<field name="name">Laporan Payroll Pegawai</field>
+		<field name="res_model">hr.payslip.employee.data.report.wizard</field>
+		<field name="view_mode">form</field>
+    </record>
+
+    <record id="internal_memo_hr_payroll_report_journal_estimasi_gaji_action" model="ir.actions.act_window">
+		<field name="name">Laporan Estimasi Gaji</field>
+		<field name="res_model">hr.journal.estimasi.gaji.wizard</field>
+		<field name="view_mode">form</field>
+    </record>
+
+    <record id="internal_memo_hr_payroll_report_journal_pengembalian_pajak_action" model="ir.actions.act_window">
+		<field name="name">Laporan Pengembalian Pajak</field>
+		<field name="res_model">hr.journal.pengembalian.pajak.wizard</field>
+		<field name="view_mode">form</field>
+    </record>
+
+    <record id="internal_memo_hr_payroll_report_journal_detail_gaji_action" model="ir.actions.act_window">
+		<field name="name">Laporan Detail Gaji</field>
+		<field name="res_model">hr.journal.detail.gaji.wizard</field>
+		<field name="view_mode">form</field>
+    </record>
+
+    
+
+    <menuitem id="menu_internal_memo_payroll_report" name="Laporan Payroll" parent="om_hr_payroll.menu_hr_payroll_root" sequence="160"/>
+
+    <menuitem
+        id="menu_hr_payroll_report_monthly"
+        action="internal_memo_hr_payroll_report_monthly_action"
+        parent="internal_memo.menu_internal_memo_payroll_report"
+        sequence="161"
+        name="Laporan Bulanan"
+        groups="custom_payroll_report_payslip_group" />
+    
+    <menuitem
+        id="menu_hr_payroll_report_cash"
+        action="internal_memo_hr_payroll_report_cash_action"
+        parent="internal_memo.menu_internal_memo_payroll_report"
+        sequence="162"
+        name="Laporan Gaji Cash"
+        groups="custom_payroll_report_payslip_group" />
+   
+    <menuitem
+        id="menu_hr_payroll_report_employee_data"
+        action="internal_memo_hr_payroll_report_employee_data_action"
+        parent="internal_memo.menu_internal_memo_payroll_report"
+        sequence="163"
+        name="Laporan Gaji Employee Data"
+        groups="custom_payroll_report_payslip_group" />
+
+    <menuitem
+        id="menu_hr_payroll_report_journal_estimasi_gaji"
+        action="internal_memo_hr_payroll_report_journal_estimasi_gaji_action"
+        parent="internal_memo.menu_internal_memo_payroll_report"
+        sequence="164"
+        name="Laporan Estimasi Gaji"
+        groups="custom_payroll_report_payslip_group" />
+
+    <menuitem
+        id="menu_hr_payroll_report_journal_pengembalian_pajak"
+        action="internal_memo_hr_payroll_report_journal_pengembalian_pajak_action"
+        parent="internal_memo.menu_internal_memo_payroll_report"
+        sequence="165"
+        name="Laporan Pengembalian Pajak"
+        groups="custom_payroll_report_payslip_group" />
+
+    <menuitem
+        id="menu_hr_payroll_report_journal_detail_gaji"
+        action="internal_memo_hr_payroll_report_journal_detail_gaji_action"
+        parent="internal_memo.menu_internal_memo_payroll_report"
+        sequence="166"
+        name="Laporan Detail Gaji"
+        groups="custom_payroll_report_payslip_group" />
 
 </odoo>

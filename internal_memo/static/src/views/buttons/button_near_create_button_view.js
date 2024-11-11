@@ -109,7 +109,40 @@ registry.category("ir.actions.report handlers").add("xlsx", async (action) => {
             complete: framework.unblockUI,
         });
         return def;
-    }
+    }  else if (action.report_type === 'xlsx' && action.data.model =='hr.payslip.monthly.report.wizard') {
+        framework.blockUI();
+        var def = $.Deferred();
+        session.get_file({
+            url: '/excel_payroll_monthly_reports',
+            data: action.data,
+            success: def.resolve.bind(def),
+            error: (error) => this.call('crash_manager', 'rpc_error', error),
+            complete: framework.unblockUI,
+        });
+        return def;
+    }  else if (action.report_type === 'xlsx' && action.data.model =='hr.payslip.cash.report.wizard') {
+        framework.blockUI();
+        var def = $.Deferred();
+        session.get_file({
+            url: '/excel_payroll_cash_reports',
+            data: action.data,
+            success: def.resolve.bind(def),
+            error: (error) => this.call('crash_manager', 'rpc_error', error),
+            complete: framework.unblockUI,
+        });
+        return def;
+    }  else if (action.report_type === 'xlsx' && action.data.model =='hr.payslip.employee.data.report.wizard') {
+        framework.blockUI();
+        var def = $.Deferred();
+        session.get_file({
+            url: '/excel_payroll_employee_data_reports',
+            data: action.data,
+            success: def.resolve.bind(def),
+            error: (error) => this.call('crash_manager', 'rpc_error', error),
+            complete: framework.unblockUI,
+        });
+        return def;
+    } 
  });
 
 

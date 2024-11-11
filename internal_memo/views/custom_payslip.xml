@@ -113,7 +113,7 @@
                 <field name="send_mail" />
             </xpath>
             <filter name="done" position="after">
-                <filter string="Advanced Filter" name="payroll_advanced" domain="[('is_active','=', True)]" />
+                <filter string="Hanya Payroll Aktif" name="payroll_advanced" domain="[('is_active','=', True)]" />
             </filter>
 
         </field>
@@ -314,7 +314,7 @@
 		<field name="name">Payslip Send Email</field>
 		<field name="res_model">hr.payslip</field>
 		<field name="view_mode">tree</field>
-        <field name="context">{'search_default_default_filter':1, 'search_default_month_filter':1}</field>
+        <field name="context">{'search_default_default_filter':1}</field>
         <field name="view_id" ref="hr_payslip_send_email_tree"/>
         <field name="search_view_id" ref="hr_payslip_send_email_tree_filter"/>
 	</record>
@@ -389,8 +389,8 @@
                 <field name="employee_name"/>
                 <field name="position_id"/>
                 <field name="area_id"/>
-                <field name="date_from"/>
-                <field name="date_to"/>
+                <field name="year"/>
+                <field name="month"/>
                 <field name="payfreq"/>
                 <field name="tax_type"/>
                 <field name="payroll_periode"/>
